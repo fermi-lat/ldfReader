@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Jan 14 11:56:11 PST 2005
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+ignore UDF contributions for now
+    *
+------------------------------------------------------------
 User: heather  Fri Jan 14 11:55:41 PST 2005
 ldfReader/src/iterators
 
