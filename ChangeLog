@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Nov  1 11:01:57 PST 2004
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+pick up first event seq from any contribution not just GEM
+    *
+------------------------------------------------------------
 User: heather  Wed Oct 27 14:25:08 PDT 2004
 ldfReader/src/iterators
 
