@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Aug 25 15:34:14 PDT 2004
+ldfReader/ldfReader/data
+
+Added Files:
+	AemData.h ErrData.h OswData.h TemData.h EventSummaryCommon.h 
+Log Message:
+add some simple classes to store event summary for each contribution
+    *
+------------------------------------------------------------
 User: heather  Wed Aug  4 14:44:20 PDT 2004
 ldfReader/src/iterators
 
