@@ -5,7 +5,7 @@
 /** @file test_ldfReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.2 2004/04/21 22:20:00 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.3 2004/05/13 21:50:43 heather Exp $
 */
 
 #include <iostream>
@@ -69,7 +69,7 @@ int main(int argn, char** argc) {
                 printf("CAL data\n");
 
                 //      for (it = calData.begin(); it != calData.end(); it++) {
-                unsigned int iLayer, iCol;
+                int iLayer, iCol;
                 const int maxLayerNum = 20;
                 const int maxColNum = 15;
                 for (iLayer = 0; iLayer < maxLayerNum; iLayer++) {
