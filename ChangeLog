@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Dec 22 15:11:30 PST 2004
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+handle error bits
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r3, operation: add
 Package: ldfReader
