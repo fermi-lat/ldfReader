@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Aug  4 14:40:34 PDT 2004
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+update to remove parsing errors - now based on latest LDFdump.cpp
+    *
+------------------------------------------------------------
 User: heather  Thu Jul 29 21:39:46 PDT 2004
 ldfReader/src/data
 
