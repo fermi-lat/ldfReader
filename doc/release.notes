@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v1r5p0  21-Jan-2005 hmk Fix up check on OSW error summary bit
 v1r5    14-Jan-2005 hmk Ignore all UDF for now until defined
 v1r4    22-Dec-2004 hmk Check Packet and Event Summary Errors
 v1r3    24-Nov-2004 hmk Store tower and layer or gtcc for CAL/TKR diagnostics
