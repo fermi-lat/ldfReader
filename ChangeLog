@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Oct  4 14:38:08 PDT 2004
+ldfReader/src/iterators
+
+Modified Files:
+	LatComponentParser.cxx 
+Log Message:
+clean up OSW length
+    *
+------------------------------------------------------------
 User: heather  Mon Oct  4 14:37:48 PDT 2004
 ldfReader/ldfReader/data
 
