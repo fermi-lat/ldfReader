@@ -6,7 +6,7 @@
 
 /** @class OswParser 
 @brief Provides callbacks for OSW .
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatContributionParser.h,v 1.1.1.1 2004/04/15 20:02:23 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/OswParser.h,v 1.1 2004/07/29 22:02:10 heather Exp $
 */
 namespace ldfReader {
     class OswParser : public OSWcontributionIterator
@@ -29,6 +29,7 @@ namespace ldfReader {
 
         virtual int OSW_UDF(EBFevent* event, OSWcontribution* contribution)const {
             fprintf(stderr, "Undefined OSW contribution encountered with identity %08x\n", contribution->identity().value());  
+            return 0;
         } ;
 
     private:
