@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.8 2004/12/22 23:12:58 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.9 2005/01/04 23:30:37 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -183,18 +183,21 @@ namespace ldfReader {
         if (diagnostic()->exist()) 
             orAll |= diagnostic()->summary().error();
 
+        unsigned int temOrAll = 0;
         std::map<unsigned int, TowerData*>::const_iterator towerIter = m_towerMap.begin();
         while(towerIter != m_towerMap.end())
         {
             TowerData* tower = (towerIter++)->second;
             const TemData tem = tower->getTem();
-            if (tem.exist())
+            if (tem.exist()) {
+                temOrAll |= tem.summary().error();
                 orAll |= tem.summary().error();
+            }
         }
         if ( getOsw().exist()) {
             orAll |= getOsw().summary().error();
-            if (orAll != getOsw().summary().error()) 
-                printf("OSW error summary bit does not match OR of all error bits across all contributions\n");
+            if (temOrAll != getOsw().summary().error()) 
+                printf("OSW error summary bit does not match OR of all error bits across all TEM contributions, event Seq: %d\n", getOsw().summary().eventSequence());
         }
         if (orAll != 0) setErrorSummaryFlag();
         return (orAll);
