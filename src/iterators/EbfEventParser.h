@@ -9,7 +9,7 @@
 @brief Calls the appropriate routines in the Online/EBF library to start
 processing the event.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfEventParser.h,v 1.1.1.1 2003/03/19 18:18:06 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfEventParser.h,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
 */
 namespace ldfReader {
     class EbfEventParser : public EBFeventIterator
@@ -22,6 +22,8 @@ namespace ldfReader {
         virtual ~EbfEventParser() {}
 
         virtual int process(EBFevent* event);
+
+       virtual int handleError(EBFevent *evt, unsigned code, unsigned p1=0, unsigned p2=0) const;
 
     };
 

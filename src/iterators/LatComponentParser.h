@@ -5,7 +5,7 @@
 
 /** @class LatComponentParser
 @brief Provides callbacks for each component.
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.h,v 1.2 2004/04/21 22:18:54 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.h,v 1.3 2004/07/29 22:02:10 heather Exp $
 */
 namespace ldfReader {
     class LatComponentParser : public LATcomponentIterator
@@ -32,6 +32,12 @@ namespace ldfReader {
 
         int commonComponentData(EBFcontribution *contribution);
         void dumpLATPcellheader(const unsigned header, const char* pfx="  ");
+
+        virtual int handleError(EBFcontribution* contrib, unsigned code,
+                                unsigned p1=0, unsigned p2=0) const;
+
+        virtual int handleError(EBFevent* event, unsigned code,
+                                unsigned p1=0, unsigned p2=0) const;
 
     private:
         unsigned _calSrc;

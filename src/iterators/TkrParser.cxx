@@ -4,7 +4,7 @@
 /** @file TkrParser.cxx
 @brief Implementation of the TkrParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.3 2004/06/28 23:58:05 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.4 2004/08/04 21:44:20 heather Exp $
 */
 #include <stdio.h> // included for TKRcontributionIterator.h
 // Online EBF library includes
@@ -198,6 +198,25 @@ namespace ldfReader {
         }
 
     }
+
+
+
+    int TkrParser::handleError(TKRcontribution *contribution, unsigned code, 
+                    unsigned p1, unsigned p2) const {
+
+        switch (code)
+        {
+            case TKRcontributionIterator::ERR_WrongOrder:
+            {
+                fprintf(stderr, "TKRiterator.iterateTOTs: TOTs can not be accessed before TKRiterator.iterateStrips has executed.\n");
+               return 0;
+              break;
+            }
+            default: break;
+        }
+        return 0;
+   }
+
 }
 #endif
 

@@ -1,7 +1,7 @@
 #ifndef TKRPARSER_H
 #define TKRPARSER_H 1
 
-// $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.h,v 1.8 2004/02/13 05:32:12 heather Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.h,v 1.1.1.1 2004/04/15 20:02:23 heather Exp $
 
 #include "TKRcontribution.h"
 #include "TKRcontributionIterator.h"
@@ -37,6 +37,8 @@ namespace ldfReader {
 
         // Unused with EBF library v3 and later
         //static void setInstrument(const std::string& ) {}
+
+        virtual int handleError(TKRcontribution*, unsigned code, unsigned p1=0, unsigned p2=0) const;
 
     private:
         EBFevent *m_event;

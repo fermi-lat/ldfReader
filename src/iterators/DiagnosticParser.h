@@ -11,7 +11,7 @@
 @brief Calls the appropriate routines in the Online/EBF library to 
 processing the diagnostic data
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/DiagnosticParser.h,v 1.2 2004/02/05 17:29:51 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/DiagnosticParser.h,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
 */
 
 namespace ldfReader {
@@ -30,6 +30,8 @@ namespace ldfReader {
         virtual int CALdiag(unsigned tower, unsigned layer, CALdiagnostic diag);
         virtual int TKRdiag(unsigned tower, unsigned gtcc,  TKRdiagnostic diag);
 
+        virtual int handleError(TEMcontribution*, unsigned code, unsigned p1=0, unsigned p2=0) const;
+
     private:
         ldfReader::DiagnosticData *m_diagData;
     };
@@ -44,5 +46,7 @@ namespace ldfReader {
     return 0;// Return non-zero to abort iteration
     }
     */
+
+
 }
 #endif
