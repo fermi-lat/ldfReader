@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Jul 21 17:24:58 PDT 2004
+ldfReader/ldfReader/data
+
+Modified Files:
+	AcdDigi.h 
+Log Message:
+store channel and more bit for posterity
+    *
+------------------------------------------------------------
 User: heather  Tue Jul 20 22:09:26 PDT 2004
 ldfReader/src/iterators
 
