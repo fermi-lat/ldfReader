@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Jul 29 15:01:34 PDT 2004
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+handle GEM and store EBF Format Id
+    *
+------------------------------------------------------------
 User: heather  Thu Jul 29 15:01:18 PDT 2004
 ldfReader/src/test
 
