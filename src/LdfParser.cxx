@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.10 2005/01/27 21:58:08 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.11 2005/01/31 20:18:23 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -115,7 +115,7 @@ namespace ldfReader {
                 // Get value of keyword "EVTCOUNT".  The 4th argument could be
                 // a pointer to char if we cared about the comment string.
                 fits_read_key_lng(ffile, "EVTCOUNT", &m_evtCount, 0, &status);
-                if (m_evtCount < 0) throw LdfException("Negative event count in FITS");
+                if (m_evtCount <= 0) throw LdfException("Zero or Negative event count in FITS File");
 
 
                 // Believe that first row in FITS table is called 1.
