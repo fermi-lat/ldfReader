@@ -5,13 +5,15 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.5 2004/08/27 22:16:39 jrb Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.6 2004/12/22 23:12:58 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
 #include "iterators/EbfDatagramParser.h"
 #include "iterators/TkrParser.h"
 #include "EbfDebug.h"
+#include "ldfReader/LdfException.h"
+#include <exception>
 #include <iostream>
 
 #include "fitsio.h" 
@@ -37,18 +39,23 @@ namespace ldfReader {
                 // Do fits open on file (ffopen)
                 fits_open_file(&ffile, fileName.c_str(), READONLY,
                     &status);
+                if (status != 0)
+                   throw LdfException("Failed to open FITS file)");
                 m_fitsfile = (void *) ffile;
                 fits_get_num_hdus(ffile, &m_maxHdu, &status); // ffthdu
 
                 if ((status != 0) || (m_maxHdu < 2)) {
                     ;  // complain
-                    throw Exception();
+                    throw LdfException("FITS HDUs");
                 }
 
                 // Move to Primary Header
                 int hduType;
                 m_currentHdu = 1;
                 fits_movabs_hdu(ffile, m_currentHdu, &hduType, &status); // ffmahd
+
+                if (status != 0) 
+                    throw LdfException("Could not move to primary HDU");
 
                 // Get the RunId from the Primary Header
                 char* comment=0;
@@ -69,19 +76,19 @@ namespace ldfReader {
                 fits_movabs_hdu(ffile, m_currentHdu, &hduType, &status); // ffmahd
                 if ((status != 0) || (hduType != BINARY_TBL)) {
                     ;  // complain
-                    throw Exception();
+                    throw LdfException("Unable to retrieve Binary Table in FITS");
                 }
                 // Find out total # of rows; initialize counter
                 fits_get_num_rows(ffile, &m_maxRow, &status);   // ffgnrw
                 if (status != 0) {
                     ;  // complain
-                    throw Exception();
+                    throw LdfException("Unable to get rows from FITS");
                 }
 
                 // Get value of keyword "EVTCOUNT".  The 4th argument could be
                 // a pointer to char if we cared about the comment string.
                 fits_read_key_lng(ffile, "EVTCOUNT", &m_evtCount, 0, &status);
-                if (m_evtCount < 0) throw Exception();
+                if (m_evtCount < 0) throw LdfException("Negative event count in FITS");
 
 
                 // Believe that first row in FITS table is called 1.
@@ -107,6 +114,9 @@ namespace ldfReader {
                 m_start = start;
                 m_end = end;
             }
+        } catch( LdfException& e) {
+            std::cerr << "Caught LdfException: " << e.what() << std::endl;
+            throw;
         } catch(...) {
             std::cerr << "Error setting up LdfParser" << std::endl;
             throw;
@@ -143,6 +153,9 @@ namespace ldfReader {
         fits_read_descript(ffile, 1, m_currentRow, &nbytes,     // ffgdes
             &heapAddr, &status);
 
+        if (status != 0)
+            throw LdfException("Failed to read row description");
+
         if (!m_rowBuf) { // just allocate what we need for this event 
             m_maxSize = nbytes;
             m_rowBuf = new unsigned char[nbytes];
@@ -178,6 +191,7 @@ namespace ldfReader {
 
 
     int LdfParser::nextEvent() {
+      try {
         if (m_fitsWrap) {
             int status = 0;
             int hduType;
@@ -196,20 +210,20 @@ namespace ldfReader {
                     m_datagram = 0;
 
                     // complain
-                    return -1;
+                   return -1; 
                 }
                 else if (hduType != BINARY_TBL) {
                     m_datagram = 0;
 
                     // complain
-                    return -1; 
+                    return -1;
                 }
 
                 fits_get_num_rows(ffile, &m_maxRow, &status);  // ffgnrw
                 if (status != 0) {
                     m_datagram = 0;
                     // complain
-                    return -1;  
+                    return -1;
                 }
 
                 // Get value of keyword "EVTCOUNT".  The 4th argument could be
@@ -226,6 +240,16 @@ namespace ldfReader {
             m_datagram = m_datagram->next();
             return 0;
         }
+      } catch(LdfException &e) {
+
+        std::cerr << "LdfException caught: " << e.what() << std::endl;
+        throw;
+      } catch(...) {
+
+        std::cerr << "Unknown Exception caught " << std::endl;
+        throw;
+      }
+
     }
 
     int LdfParser::loadData() {
@@ -236,6 +260,8 @@ namespace ldfReader {
         // From Ric Claus Aug, 2004
         const long maxEventSeqNum = 131071;
 
+
+      try {
         // First clear the LatData
         ldfReader::LatData::instance()->clearTowers();
         ldfReader::LatData::instance()->setRunId(m_runId);
@@ -248,7 +274,8 @@ namespace ldfReader {
         if (m_datagramParser->process(m_datagram) != 0)
         {
             // An error occured
-            return -1;
+            throw(LdfException("LDF processing failed"));
+            //return -1;
         }
 
         // Only do this check on the event sequence if we have a recent
@@ -281,6 +308,13 @@ namespace ldfReader {
             ldfReader::LatData::instance()->checkErrorInEventSummary();
             ldfReader::LatData::instance()->checkPacketError();
 
+         } catch (LdfException& e) {
+            std::cerr << "Caught LdfException: " << e.what() << std::endl;
+           throw;
+         } catch(...) {
+           std::cerr << "Caught Exception" << std::endl;
+           throw;
+         }
             return 0;
     }
 
