@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.3 2004/06/21 16:41:44 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.4 2004/06/23 18:02:38 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -18,6 +18,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser
 #include "AcdParser.h"
 #include "TkrParser.h"
 #include "CalParser.h"
+#include "OswParser.h"
 #include "ldfReader/data/LatData.h"
 #include "../EbfDebug.h"
 
@@ -35,21 +36,38 @@ namespace ldfReader {
     {
         const char* prefix = "  ";
         ldfReader::LatData::instance()->setSummary(event->summary());
-        printf("\nOSW:\n");
-        //((MyEBFcontribution*)contribution)->dump(event, prefix);
-        //printf("%sOSW:\n", prefix);
-        //MyOSWiterator iterator(event, contribution, prefix);
-        //iterator.dump();
+        // OSW contribution only exists in later versions starting in Feb 2004
+        if (ldfReader::LatData::instance()->getFormatIdentity() >= ID_WITH_OSW) {
+            OswParser osw(event, contribution);
+            osw.iterate();
+        }
         return 0;
     }
 
     int LatComponentParser::GEMcomponent(EBFevent *event, GEMcontribution *contribution) {
+        
+        //if (EbfDebug::getDebug())  printf("\nGEM:\n");
+        ldfReader::GemData gem;
+        const GEMtileList *onlineTiles = contribution->tileList();
+        ldfReader::GemDataTileList tileList(onlineTiles->XZM(), onlineTiles->XZP(),
+                   onlineTiles->YZM(), onlineTiles->YZP(), onlineTiles->XY(),
+                   onlineTiles->RBN(), onlineTiles->NA());
+        ldfReader::GemDataOnePpsTime time(contribution->onePPStime().timebase(), contribution->onePPStime().seconds());
+        gem.initTrigger(contribution->tkrVector(), contribution->roiVector(),
+            contribution->calLEvector(), contribution->calHEvector(), 
+            contribution->cnoVector(), contribution->conditionSummary(),
+            tileList);
+        gem.initSummary(contribution->liveTime(), contribution->prescaled(),
+            contribution->discarded(), contribution->sent(), 
+            contribution->triggerTime(), time, contribution->deltaEventTime());
+
+        ldfReader::LatData::instance()->setGem(gem);
         return 0;
     }
 
     int LatComponentParser::GLTcomponent(EBFevent* event, GLTcontribution* glt)
     {
-        if (EbfDebug::getDebug())  printf("\nGLT:\n");
+        //if (EbfDebug::getDebug())  printf("\nGLT:\n");
         ldfReader::LatData::instance()->setSummary(event->summary());
 
         // N.B. the payload of the GEM contribution will change in the future
@@ -57,12 +75,11 @@ namespace ldfReader {
         //unsigned nanoSeconds = ((unsigned*)gem->data())[1];
         //ldfReader::LatData::instance()->setTime(seconds, nanoSeconds);
 
-  const struct timespec* ts = glt->timeStamp();
-  const OSWtimeBase*     tb = glt->timebase();
+        // Only attempt to retrieve time if this is an older EBF file
+        if (ldfReader::LatData::instance()->getFormatIdentity() < ID_WITH_OSW ) {
+        const struct timespec* ts = glt->timeStamp();
+        const OSWtimeBase*     tb = glt->timebase();
 
- // printf("%sGLT:\n", prefix);
-  //printf("%s  Event GMT timestamp   = %u.%09u seconds after 1/1/1970\n",
-  //       prefix, ts->tv_sec, ts->tv_nsec);
         ldfReader::LatData::instance()->setTime(ts->tv_sec, ts->tv_nsec);
 
 
@@ -70,6 +87,7 @@ namespace ldfReader {
             unsigned upperPpcWord = tb->upper();//((unsigned*)gem->data())[2];
             unsigned lowerPpcWord = tb->lower();//((unsigned*)gem->data())[3];
             ldfReader::LatData::instance()->setPpcTimeBase(upperPpcWord, lowerPpcWord);
+        }
         }
 
         return 0;
