@@ -18,12 +18,16 @@ namespace ldfReader {
     {
     public:
         DiagnosticData()  { clear(); }
+        DiagnosticData(const DiagnosticData& d) {
+            m_tkr = d.m_tkr;
+            m_cal = d.m_cal;
+            m_lenInBytes = d.m_lenInBytes;
+        }
         ~DiagnosticData() {}
 
         void clear() { 
-            m_tkrVec.clear(); m_calVec.clear(); 
+            m_tkr.clear(); m_cal.clear(); 
             m_lenInBytes = 0; 
-            //m_summary.clear();
             m_exist = false; };
 
         void print() const {
@@ -35,17 +39,12 @@ namespace ldfReader {
             printf("Len: %lu\n\n", m_lenInBytes);
         }
 
-        void addCalDiagnostic(const CalDiagnosticData &cal) { m_calVec.push_back(cal); };
-        const CalDiagnosticData& getCalDiagnosticByIndex(unsigned int index) const{ return m_calVec[index]; };
-        int getNumCalDiagnostic() const { return m_calVec.size(); };
+        void addCalDiagnostic(const CalDiagnosticData &cal) { m_cal = cal; };
+        const CalDiagnosticData& getCalDiagnostic() const{ return m_cal; };
 
-        void addTkrDiagnostic(const TkrDiagnosticData &tkr) { m_tkrVec.push_back(tkr); };
-        const TkrDiagnosticData& getTkrDiagnosticByIndex(unsigned int index) const { return m_tkrVec[index]; };
-        int getNumTkrDiagnostic() const { return m_tkrVec.size(); };
+        void addTkrDiagnostic(const TkrDiagnosticData &tkr) { m_tkr = tkr; };
+        const TkrDiagnosticData& getTkrDiagnostic() const { return m_tkr; };
 
-
-        //const EventSummaryCommon& summary() const { return m_summary; }
-        //void setSummary(unsigned summary) {m_summary.setSummary(summary); };
 
        void setExist() { m_exist = true; };
        bool exist() const { return m_exist; };
@@ -57,11 +56,9 @@ namespace ldfReader {
        unsigned packetError() const { return m_packetError; };
 
     private:
-        std::vector<CalDiagnosticData> m_calVec;
-        std::vector<TkrDiagnosticData> m_tkrVec;
+        CalDiagnosticData m_cal;
+        TkrDiagnosticData m_tkr;
 
-        // Store the event sequence number for this contribution
-        //EventSummaryCommon m_summary;
         bool m_exist; 
 
         unsigned m_packetError;

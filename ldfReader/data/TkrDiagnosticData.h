@@ -14,8 +14,19 @@ namespace ldfReader {
 
         TkrDiagnosticData(unsigned datum, unsigned tower, unsigned gtcc) : m_datum(datum),m_tower(tower),m_gtcc(gtcc) {}
 
-        TkrDiagnosticData()  {}
+        TkrDiagnosticData(const TkrDiagnosticData &t) {
+            m_datum = t.m_datum;
+            m_tower = t.m_tower;
+            m_gtcc = t.m_gtcc;
+        }
+        TkrDiagnosticData()  {clear();}
         ~TkrDiagnosticData() {}
+
+        void clear() {
+            m_datum = 0;
+            m_tower = 0;
+            m_gtcc = 0;
+        }
 
         void init(unsigned data, unsigned tower, unsigned gtcc) { 
              m_datum = data; m_tower=tower; m_gtcc=gtcc; };

@@ -4,12 +4,14 @@
 #include <vector>
 
 #include "EventSummaryCommon.h"
+#include "DiagnosticData.h"
+#include "ErrData.h"
 
 namespace ldfReader {
 
     /** @class TemData
       * @brief Local storage of TEM data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TemData.h,v 1.8 2005/01/27 21:57:29 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TemData.h,v 1.9 2005/01/31 20:16:18 heather Exp $
     */
     class TemData {
     public:
@@ -21,7 +23,10 @@ namespace ldfReader {
             m_lenInBytes = tem.m_lenInBytes; 
             m_calEnd = tem.m_calEnd;
             m_tkrEnd = tem.m_tkrEnd;
-            m_exist = tem.m_exist; };
+            m_exist = tem.m_exist; 
+            m_diag = tem.m_diag;
+            m_err = tem.m_err;
+          };
         TemData(const EventSummaryCommon& summary) {clear(); m_summary = summary; };
         ~TemData() { clear(); };
 
@@ -32,6 +37,8 @@ namespace ldfReader {
             m_packetError = 0;
             m_calEnd = 0;
             m_tkrEnd = 0;
+            m_diag.clear();
+            m_err.clear();
         };
 
         void print() const { 
@@ -43,10 +50,22 @@ namespace ldfReader {
              printf("contribution length = %lu Bytes\n", m_lenInBytes);
              m_summary.print();
              printf("\n");
+             m_diag.print();
+             printf("\n");
+             m_err.print();
+             printf("\n");
         };
 
         const EventSummaryCommon& summary() const { return m_summary; };
         void initSummary(unsigned summary) { m_summary.setSummary(summary);};
+
+//       void setDiagnostic(const DiagnosticData& diag) { m_diag = diag; };
+       DiagnosticData* getDiagnostic() { return &m_diag; };
+       const DiagnosticData& getDiagnostic() const { return m_diag; };
+
+ //       void setErr(const ErrData& err) { m_err = err; };
+        ErrData* getErr() { return &m_err; };
+        const ErrData& getErr() const { return m_err; };
 
        void setExist() { m_exist = true; };
        bool exist() const { return m_exist; };
@@ -63,6 +82,7 @@ namespace ldfReader {
         unsigned long calEnd() const { return m_calEnd; };
         unsigned long tkrEnd() const { return m_tkrEnd; };
 
+
     private:
 
         // Store the event sequence number for this contribution
@@ -75,6 +95,10 @@ namespace ldfReader {
         unsigned long m_lenInBytes;
 
         unsigned long m_calEnd, m_tkrEnd;
+
+        DiagnosticData m_diag;
+    
+        ErrData m_err;
 
     };
 } // end namespace
