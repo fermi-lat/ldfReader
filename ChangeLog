@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Jun 22 14:16:51 PDT 2004
+ldfReader/ldfReader/data
+
+Modified Files:
+	AcdDigi.h 
+Log Message:
+handle tileNumber
+    *
+------------------------------------------------------------
 User: heather  Tue Jun 22 14:16:33 PDT 2004
 ldfReader/cmt
 
