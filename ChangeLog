@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Oct  4 14:37:48 PDT 2004
+ldfReader/ldfReader/data
+
+Modified Files:
+	TowerData.h 
+Log Message:
+clean up OSW length
+    *
+------------------------------------------------------------
 User: heather  Mon Oct  4 14:37:14 PDT 2004
 ldfReader/cmt
 
