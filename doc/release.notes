@@ -4,6 +4,8 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v0r5p0  03-Aug-2004 hmk Fixes to remove parsing errors - now based on latest
+        LDFdump.cpp in Online/LDF v05-01-01
 v0r5    29-Jul-2004 hmk Handle GEM, store EBF Format Identity, and fix up time
         stamp handling to look at EBF format Id
 v0r4    21-Jul-2004 hmk Store channel and more bit in case they are useful later
