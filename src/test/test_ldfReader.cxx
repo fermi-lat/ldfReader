@@ -5,7 +5,7 @@
 /** @file test_ldfReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.5 2004/06/23 18:03:21 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.6 2004/07/22 00:26:27 heather Exp $
 */
 
 #include <iostream>
@@ -41,11 +41,18 @@ int main(int argn, char** argc) {
         // Retrieve the LAT data for this event and print out its contents
         LatData* myLatData = LatData::instance();
 
+        printf("\nSTART NEW EVENT\n");
+        printf("EBF Format Identity 0x%08x\n", myLatData->getFormatIdentity());
         // Event Summary
         EventSummaryData summary = myLatData->summaryData();
-        printf("event summary:\n");
-        printf("summary: %u time:  sec: %d, nanosec: %d \n", summary.summary(), summary.timeSec(), summary.timeNanoSec());
-        printf("summary contd: marker: %d\n", EventSummary::marker(summary.summary()));
+        summary.print();
+        printf("   Event GMT timestamp   = %ld.%09ld seconds after 1/1/1970\n",
+          summary.timeSec(), summary.timeNanoSec());
+
+
+        // Check GEM data
+        GemData gem = myLatData->getGem();
+        gem.print();
 
         // Check the ACD data
         printf("ACD Data\n");

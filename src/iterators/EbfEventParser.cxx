@@ -2,6 +2,7 @@
 #define EBFEVENTPARSER_CXX 1
 
 #include "EbfEventParser.h"
+#include "ldfReader/data/LatData.h"
 
 namespace ldfReader {
 
@@ -16,6 +17,7 @@ namespace ldfReader {
             return event->status();
         }
 
+        ldfReader::LatData::instance()->setFormatIdentity(event->identity().value());
         LatComponentParser lci;
         lci.EBFcontributionIterator::iterate(event);
 

@@ -3,6 +3,7 @@
 
 #include "TowerData.h"
 #include "AcdDigi.h"
+#include "GemData.h"
 #include "EventSummaryData.h"
 #include "DiagnosticData.h"
 #include <map>
@@ -34,6 +35,12 @@ namespace ldfReader {
         void setRunId(unsigned int runId) { m_runId = runId; };
         unsigned int runId() const { return m_runId; };
 
+        void setGem(const GemData& gem) { m_gem = gem; };
+        const GemData& getGem() const { return m_gem; };
+
+        void setFormatIdentity(unsigned id) { m_formatIdentity = id; };
+        unsigned getFormatIdentity() const { return m_formatIdentity; };
+
         const DiagnosticData* diagnostic() const { return &m_diagnostic; };
         DiagnosticData* diagnostic() { return &m_diagnostic; };
 
@@ -59,6 +66,11 @@ namespace ldfReader {
         unsigned int m_runId;
         std::map<unsigned int, TowerData*> m_towerMap;
         std::map<const char*, AcdDigi*> m_acdCol;
+        GemData m_gem;
+        // Corresponds to the EBF format identity printed in LDFdump
+        // Right now we "know" this is an unsigned from LATtypeId.h
+        // Be better to do this in a nicer fashion
+        unsigned m_formatIdentity;
 
     };
 }

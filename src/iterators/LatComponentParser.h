@@ -5,12 +5,17 @@
 
 /** @class LatComponentParser
 @brief Provides callbacks for each component.
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.h,v 1.1.1.1 2004/04/15 20:02:23 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.h,v 1.2 2004/04/21 22:18:54 heather Exp $
 */
 namespace ldfReader {
     class LatComponentParser : public LATcomponentIterator
     {
     public:
+        typedef enum {
+            ID_ORG = 0x101f0010,
+            ID_WITH_OSW = 0x102f0010
+        } EBF_FORMAT_ID;
+
         LatComponentParser() : _calSrc(0xffffffff) {}
         virtual ~LatComponentParser() {}
 
