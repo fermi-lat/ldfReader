@@ -3,6 +3,7 @@
 
 #include "TkrLayer.h"
 #include "CalDigi.h"
+#include "TemData.h"
 
 #include <vector>
 #include <map>
@@ -11,7 +12,7 @@
 /** @class TowerData
 @brief Local storage of tower data for one event
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TowerData.h,v 1.5 2004/02/14 05:11:04 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TowerData.h,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
 */
 
 namespace ldfReader {
@@ -39,12 +40,16 @@ namespace ldfReader {
 
         CalDigi* getCalDigi(unsigned int layer, unsigned int col);
 
+        void setTem(const TemData &tem) { m_tem = tem; };
+        const TemData& getTem() const { return m_tem; };
+
     private:
 
         unsigned short m_towerId;
         std::map<unsigned int, TkrLayer*> m_tkrMap;
         //std::vector<CalDigi> m_calDigiCol;
         std::map<unsigned int, CalDigi*> m_calDigiCol;
+        TemData m_tem;
 
     };
 }

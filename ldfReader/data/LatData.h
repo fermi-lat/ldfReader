@@ -6,6 +6,9 @@
 #include "GemData.h"
 #include "EventSummaryData.h"
 #include "DiagnosticData.h"
+#include "OswData.h"
+#include "AemData.h"
+#include "ErrData.h"
 #include <map>
 
 /** @class LatData
@@ -18,6 +21,11 @@ namespace ldfReader {
 
     class LatData {
     public:
+
+        typedef enum {
+            GOOD = 0,
+            EVTSEQ = 1
+        } EventFlags;
 
         static LatData *instance();
         ~LatData() { clearTowers(); };
@@ -37,6 +45,15 @@ namespace ldfReader {
 
         void setGem(const GemData& gem) { m_gem = gem; };
         const GemData& getGem() const { return m_gem; };
+
+        void setOsw(const OswData& osw) { m_osw = osw; };
+        const OswData& getOsw() const { return m_osw; };
+
+        void setAem(const AemData& aem) { m_aem = aem; };
+        const AemData& getAem() const { return m_aem; };
+
+        void setErr(const ErrData& err) { m_err = err; };
+        const ErrData& getErr() const { return m_err; };
 
         void setFormatIdentity(unsigned id) { m_formatIdentity = id; };
         unsigned getFormatIdentity() const { return m_formatIdentity; };
@@ -58,6 +75,16 @@ namespace ldfReader {
 
         void clearTowers();
 
+        /// Checks all of the event Sequence numbers across all contributions
+        /// If they do not all match - we should set the appropriate flag in 
+        /// badEvent
+        bool eventSeqConsistent() const;
+
+        void setBadEventSeqFlag() { m_flags |= EVTSEQ; };
+        unsigned int getEventFlags() const { return m_flags; };
+        bool badEventSequence() const { return (m_flags && EVTSEQ); };
+        bool goodEvent() const { return (m_flags == GOOD); };
+
     private:
 
         static LatData *m_instance;
@@ -71,7 +98,11 @@ namespace ldfReader {
         // Right now we "know" this is an unsigned from LATtypeId.h
         // Be better to do this in a nicer fashion
         unsigned m_formatIdentity;
+        OswData m_osw;
+        AemData m_aem;
+        ErrData m_err;
 
+        unsigned int m_flags;
     };
 }
 #endif

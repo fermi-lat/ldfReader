@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include "EventSummaryCommon.h"
+
 namespace ldfReader {
 
 class GemDataTileList
@@ -114,7 +116,7 @@ private:
 
     /** @class GemData
       * @brief Local storage of GEM data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/GemData.h,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/GemData.h,v 1.1 2004/07/29 22:00:50 heather Exp $
     */
     class GemData {
     public:
@@ -153,6 +155,8 @@ private:
         const GemDataOnePpsTime& onePpsTime() const { return m_onePpsTime; };
         unsigned deltaEventTime() const { return m_deltaEventTime; };
 
+        const EventSummaryCommon& summary() const { return m_summary; };
+        void setSummary(const EventSummaryCommon &summary) { m_summary = summary; };
 
     private:
 
@@ -170,6 +174,9 @@ private:
         unsigned  m_triggerTime;
         GemDataOnePpsTime m_onePpsTime;
         unsigned  m_deltaEventTime;
+
+        // Store the event sequence number for this contribution
+        EventSummaryCommon m_summary;
 
     };
 } // end namespace
