@@ -5,6 +5,7 @@ Coordinator:H.Kelly
 @verbatim
 
 v0r3    22-Jun-2004 hmk more work on ACD data  - adding parity error
+        also fix up handling of EventSummary - pick up OSW contribution
 v0r1    20-Apr-2004 hmk Update for Acd data and LDF v05-00-01
 v0      14-Apr-2004 hmk Initial version using the Online/LDF library
 ------------------------------------------- end of ldfReader release notes  
