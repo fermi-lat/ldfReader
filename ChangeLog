@@ -1,0 +1,54 @@
+------------------------------------------------------------
+User: heather  Thu Apr 15 13:02:23 PDT 2004
+ldfReader
+
+Log Message:
+initial import of new ldfReader package
+
+Status:
+
+Vendor Tag:	GLAST
+Release Tags:	v0
+		
+N ldfReader/.cvsignore
+N ldfReader/cmt/.cvsignore
+N ldfReader/cmt/requirements
+N ldfReader/doc/.cvsignore
+N ldfReader/doc/release.notes
+N ldfReader/ldfReader/EbfException.h
+N ldfReader/ldfReader/EbfParser.h
+N ldfReader/ldfReader/data/CalDiagnosticData.h
+N ldfReader/ldfReader/data/CalDigi.h
+N ldfReader/ldfReader/data/DiagnosticData.h
+N ldfReader/ldfReader/data/EventSummaryData.h
+N ldfReader/ldfReader/data/LatData.h
+N ldfReader/ldfReader/data/TkrDiagnosticData.h
+N ldfReader/ldfReader/data/TkrLayer.h
+N ldfReader/ldfReader/data/TowerData.h
+N ldfReader/src/.cvsignore
+N ldfReader/src/EbfDebug.cxx
+N ldfReader/src/EbfDebug.h
+N ldfReader/src/EbfParser.cxx
+N ldfReader/src/mainpage.h
+N ldfReader/src/data/CalDigi.cxx
+N ldfReader/src/data/LatData.cxx
+N ldfReader/src/data/TkrLayer.cxx
+N ldfReader/src/data/TowerData.cxx
+N ldfReader/src/iterators/CalParser.cxx
+N ldfReader/src/iterators/CalParser.h
+N ldfReader/src/iterators/DiagnosticParser.cxx
+N ldfReader/src/iterators/DiagnosticParser.h
+N ldfReader/src/iterators/EbfDatagramParser.h
+N ldfReader/src/iterators/EbfEventParser.cxx
+N ldfReader/src/iterators/EbfEventParser.h
+N ldfReader/src/iterators/LatComponentParser.cxx
+N ldfReader/src/iterators/LatComponentParser.h
+N ldfReader/src/iterators/LatContributionParser.cxx
+N ldfReader/src/iterators/LatContributionParser.h
+N ldfReader/src/iterators/TkrParser.cxx
+N ldfReader/src/iterators/TkrParser.h
+N ldfReader/src/test/test_ldfReader.cxx
+
+No conflicts created by this import
+
+    *
