@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: heather  Wed Apr 21 15:18:55 PDT 2004
+ldfReader/src/iterators
+
+Modified Files:
+	LatComponentParser.h LatComponentParser.cxx 
+Added Files:
+	AcdParser.cxx AcdParser.h 
+Log Message:
+first pass at ACD data
+    *
+------------------------------------------------------------
 User: heather  Wed Apr 21 15:16:26 PDT 2004
 ldfReader/src/data
 
