@@ -4,16 +4,18 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.20 2004/02/14 05:14:08 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.1.1.1 2004/04/15 20:02:23 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
 #include "LatComponentParser.h"
 #include "LATp.h"
 #include "GEMcontribution.h"
+#include "GLTcontribution.h"
 #include "CALcontribution.h"
 #include "TKRcontribution.h"
 #include "DiagnosticParser.h"
+#include "AcdParser.h"
 #include "TkrParser.h"
 #include "CalParser.h"
 #include "ldfReader/data/LatData.h"
@@ -40,32 +42,50 @@ namespace ldfReader {
         return 0;
     }
 
-    int LatComponentParser::GLTcomponent(EBFevent* event, GEMcontribution* gem)
-    {
-        if (EbfDebug::getDebug())  printf("\nGEM:\n");
-        ldfReader::LatData::instance()->setSummary(event->summary());
-
-        // N.B. the payload of the GEM contribution will change in the future
-        unsigned seconds     = ((unsigned*)gem->data())[0];
-        unsigned nanoSeconds = ((unsigned*)gem->data())[1];
-        ldfReader::LatData::instance()->setTime(seconds, nanoSeconds);
-        if (gem->payloadSize() > 8) {              // Timebase does not exist in old data
-            unsigned upperPpcWord = ((unsigned*)gem->data())[2];
-            unsigned lowerPpcWord = ((unsigned*)gem->data())[3];
-            ldfReader::LatData::instance()->setPpcTimeBase(upperPpcWord, lowerPpcWord);
-        }
-
-        //((MyEBFcontribution*)contribution)->dump("  ");
-        //((MyGLTcontribution*)contribution)->dump("  ");
+    int LatComponentParser::GEMcomponent(EBFevent *event, GEMcontribution *contribution) {
         return 0;
     }
 
-    int LatComponentParser::ACDcomponent(EBFevent*, AEMcontribution* )
+    int LatComponentParser::GLTcomponent(EBFevent* event, GLTcontribution* glt)
     {
-        if (EbfDebug::getDebug() ) printf("\nAEM:\n");
-        //((MyEBFcontribution*)contribution)->dumpCommon("  ");
-        //((MyACDcontribution*)contribution)->dump("  ");
+        if (EbfDebug::getDebug())  printf("\nGLT:\n");
+        ldfReader::LatData::instance()->setSummary(event->summary());
+
+        // N.B. the payload of the GEM contribution will change in the future
+        //unsigned seconds     = ((unsigned*)gem->data())[0];
+        //unsigned nanoSeconds = ((unsigned*)gem->data())[1];
+        //ldfReader::LatData::instance()->setTime(seconds, nanoSeconds);
+
+  const struct timespec* ts = glt->timeStamp();
+  const OSWtimeBase*     tb = glt->timebase();
+
+ // printf("%sGLT:\n", prefix);
+  //printf("%s  Event GMT timestamp   = %u.%09u seconds after 1/1/1970\n",
+  //       prefix, ts->tv_sec, ts->tv_nsec);
+        ldfReader::LatData::instance()->setTime(ts->tv_sec, ts->tv_nsec);
+
+
+        if (glt->payloadSize() > 8) {              // Timebase does not exist in old data
+            unsigned upperPpcWord = tb->upper();//((unsigned*)gem->data())[2];
+            unsigned lowerPpcWord = tb->lower();//((unsigned*)gem->data())[3];
+            ldfReader::LatData::instance()->setPpcTimeBase(upperPpcWord, lowerPpcWord);
+        }
+
         return 0;
+    }
+
+    int LatComponentParser::ACDcomponent(EBFevent* event, AEMcontribution* contribution)
+    {
+        using namespace ldfReader;
+
+//        _acdSrc = LATPcellHeader::source(contribution->header());
+//        if (EbfDebug::getDebug() ) printf("\nAEM %2d:\n", _acdSrc);
+        if (EbfDebug::getDebug() ) commonComponentData((EBFcontribution*)contribution);
+
+        // Actually do the parsing
+        AcdParser acd(event, contribution, "   ");
+        acd.parse();
+         return 0;
     }
 
     int LatComponentParser::CALcomponent(EBFevent* event, CALcontribution* contribution)
@@ -75,7 +95,7 @@ namespace ldfReader {
         using namespace ldfReader;
 
         _calSrc = LATPcellHeader::source(contribution->header());
-        if (EbfDebug::getDebug() ) printf("\nTEM %2d:\n", _calSrc);
+       // if (EbfDebug::getDebug() ) printf("\nTEM %2d:\n", dumpLATPcellHeader(_calSrc));
 
         // Actually do the parsing
         CalParser cal(event, contribution, "   ");
@@ -161,6 +181,25 @@ namespace ldfReader {
         }
         return 0;
     }
+
+    LatComponentParser::commonComponentData(EBFcontribution *contribution) {
+        int len = contribution->length();
+        // printed in hex
+        int error = contribution->packetError();
+        int seqNum = contribution->sequence();
+        // LCB header  printed in hex
+        int header = contribution->header();
+        return 0;
+    }
+
+void LatComponentParser::dumpLATPcellheader(const unsigned header, const char* pfx)
+{
+  printf("%s     source = 0x%02x\n", pfx, LATPcellHeader::source     (header));
+  printf("%sdestination = 0x%02x\n", pfx, LATPcellHeader::destination(header));
+  printf("%s    respond = %d\n"    , pfx, LATPcellHeader::respond    (header));
+  printf("%s   protocol = %d\n"    , pfx, LATPcellHeader::protocol   (header));
+  printf("%s     parity = %d\n"    , pfx, LATPcellHeader::parity     (header));
+}
 
 }
 #endif

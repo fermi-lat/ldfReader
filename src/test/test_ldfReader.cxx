@@ -5,7 +5,7 @@
 /** @file test_ldfReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.10 2004/02/14 05:15:13 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.1.1.1 2004/04/15 20:02:23 heather Exp $
 */
 
 #include <iostream>
@@ -46,6 +46,15 @@ int main(int argn, char** argc) {
         printf("event summary:\n");
         printf("summary: %d time:  sec: %d, nanosec: %d \n", summary.summary(), summary.timeSec(), summary.timeNanoSec());
 
+        // Check the ACD data
+        printf("ACD Data\n");
+        const std::map<const char*, AcdDigi*> acdCol = myLatData->getAcdCol();
+        std::map<const char*, AcdDigi*>::const_iterator acdIter;
+        for (acdIter = acdCol.begin(); acdIter != acdCol.end(); acdIter++) {
+            (acdIter->second)->print();
+        }
+
+        // Check the data in the Towers
         unsigned int iTower;
         for (iTower = 0; iTower < 16; iTower++) {
             TowerData *tem = myLatData->getTower(iTower);
