@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.15 2005/01/28 23:02:45 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.16 2005/01/31 20:18:31 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -207,7 +207,6 @@ namespace ldfReader {
        
         //ldfReader::LatData::instance()->diagnostic()->setSummary(contribution->summary());
         //ldfReader::LatData::instance()->diagnostic()->initPacketError(contribution->packetError());
-        ldfReader::LatData::instance()->diagnostic()->initLength(((EBFcontribution*)contribution)->length());
         if ( EventSummary::diagnostic(contribution->summary())) {
             //   Process the trigger primitives in the diagnostic data
             ldfReader::LatData::instance()->diagnostic()->setExist();
