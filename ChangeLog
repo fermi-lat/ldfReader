@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Feb  9 10:14:51 PST 2005
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+search for Event Data HDUs in a better way
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r6, operation: add
 Package: ldfReader
