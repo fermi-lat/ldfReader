@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.6 2004/09/23 05:17:40 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.7 2004/11/01 19:02:45 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -133,6 +133,74 @@ namespace ldfReader {
         return true;
     }
 
+
+    unsigned LatData::checkPacketError() {
+        // Returns true if OR of all is TRUE
+        // Returns false if OR of all packetError words is FALSE
+
+        unsigned orAll = 0;
+
+        if(getGem().exist()) 
+            orAll |= getGem().packetError();
+
+        if (getAem().exist()) 
+            orAll |= getAem().packetError();
+
+        if ( getErr().exist()) 
+            orAll |= getErr().packetError();
+
+        if ( getOsw().exist()) 
+            orAll |= getOsw().packetError();
+
+        if (diagnostic()->exist()) 
+            orAll |= diagnostic()->packetError();
+
+        std::map<unsigned int, TowerData*>::const_iterator towerIter = m_towerMap.begin();
+        while(towerIter != m_towerMap.end())
+        {
+            TowerData* tower = (towerIter++)->second;
+            const TemData tem = tower->getTem();
+            if (tem.exist())
+                orAll |= tem.packetError();
+        }
+        m_packetErrorOR = orAll;
+        if (orAll != 0) setPacketErrorFlag();
+        return (orAll);
+    }
+
+    unsigned LatData::checkErrorInEventSummary() {
+        unsigned orAll = 0;
+
+        if(getGem().exist()) 
+            orAll |= getGem().summary().error();
+
+        if (getAem().exist()) 
+            orAll |= getAem().summary().error();
+
+        if ( getErr().exist()) 
+            orAll |= getErr().summary().error();
+
+
+        if (diagnostic()->exist()) 
+            orAll |= diagnostic()->summary().error();
+
+        std::map<unsigned int, TowerData*>::const_iterator towerIter = m_towerMap.begin();
+        while(towerIter != m_towerMap.end())
+        {
+            TowerData* tower = (towerIter++)->second;
+            const TemData tem = tower->getTem();
+            if (tem.exist())
+                orAll |= tem.summary().error();
+        }
+        if ( getOsw().exist()) {
+            orAll |= getOsw().summary().error();
+            if (orAll != getOsw().summary().error()) 
+                printf("OSW error summary bit does not match OR of all error bits across all contributions\n");
+        }
+        m_errorSummaryOR = orAll;
+        if (orAll != 0) setErrorSummaryFlag();
+        return (orAll);
+    }
 
 }
 

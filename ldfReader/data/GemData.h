@@ -116,7 +116,7 @@ private:
 
     /** @class GemData
       * @brief Local storage of GEM data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/GemData.h,v 1.3 2004/09/21 17:57:19 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/GemData.h,v 1.4 2004/09/23 05:16:56 heather Exp $
     */
     class GemData {
     public:
@@ -160,8 +160,11 @@ private:
        void setExist() { m_exist = true; };
        bool exist() const { return m_exist; };
 
-        void initLength(unsigned long length) { m_lenInBytes = length; };
-        unsigned long lenInBytes() const { return m_lenInBytes; };
+       void initLength(unsigned long length) { m_lenInBytes = length; };
+       unsigned long lenInBytes() const { return m_lenInBytes; };
+
+       void initPacketError(unsigned packetError) { m_packetError=packetError; };
+       unsigned packetError() const { return m_packetError; };
 
     private:
 
@@ -184,7 +187,9 @@ private:
         EventSummaryCommon m_summary;
         bool m_exist;
 
+        unsigned m_packetError;
+
         unsigned long m_lenInBytes;
-    };
-} // end namespace
+       };
+    } // end namespace
 #endif

@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v1r4    22-Dec-2004 hmk Check Packet and Event Summary Errors
 v1r3    24-Nov-2004 hmk Store tower and layer or gtcc for CAL/TKR diagnostics
 v1r2p0  01-Nov-2004 hmk Pick up first evntSeq from any contribution not just GEM
 v1r2    27-Oct-2004 hmk handle veto discrim correctly

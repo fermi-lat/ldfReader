@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.9 2004/09/23 05:18:01 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.10 2004/10/04 21:38:07 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -38,6 +38,7 @@ namespace ldfReader {
         const char* prefix = "  ";
         ldfReader::LatData::instance()->setSummary(event->summary());
         ldfReader::OswData osw(ldfReader::EventSummaryCommon(contribution->summary()));
+        osw.initPacketError(contribution->packetError());
         osw.setExist(); 
         //ldfReader::LatData::instance()->getOsw().initLength(((EBFcontribution*)contribution)->length());
         osw.initLength(((EBFcontribution*)contribution)->length());
@@ -57,6 +58,7 @@ namespace ldfReader {
 
         ldfReader::EventSummaryCommon summary(contribution->summary());
         gem.setExist();
+        gem.initPacketError(contribution->packetError());
         gem.setSummary(summary);
         gem.initLength(((EBFcontribution*)contribution)->length());
 
@@ -111,6 +113,7 @@ namespace ldfReader {
 
         ldfReader::AemData summary(contribution->summary());
         summary.setExist();
+        summary.initPacketError(contribution->packetError());
         ldfReader::LatData::instance()->setAem(summary);
         ldfReader::LatData::instance()->getAem().initLength(((EBFcontribution*)contribution)->length());
 
@@ -143,6 +146,7 @@ namespace ldfReader {
             ldfReader::EventSummaryCommon summary(contribution->summary());
             ldfReader::TemData tem(summary);
             tem.setExist();
+            tem.initPacketError(contribution->packetError());
             tem.initLength(((EBFcontribution*)contribution)->length());
             tower->setTem(tem);
         }
@@ -179,6 +183,7 @@ namespace ldfReader {
             ldfReader::EventSummaryCommon summary(contribution->summary());
             ldfReader::TemData tem(summary);
             tem.setExist();
+            tem.initPacketError(contribution->packetError());
             tem.initLength(((EBFcontribution*)contribution)->length());
             tower->setTem(tem);
         }
@@ -195,6 +200,7 @@ namespace ldfReader {
        
         ldfReader::LatData::instance()->diagnostic()->setSummary(contribution->summary());
         ldfReader::LatData::instance()->diagnostic()->setExist();
+        ldfReader::LatData::instance()->diagnostic()->initPacketError(contribution->packetError());
         ldfReader::LatData::instance()->diagnostic()->initLength(((EBFcontribution*)contribution)->length());
         if ( EventSummary::diagnostic(contribution->summary())) {
             //   Process the trigger primitives in the diagnostic data
@@ -211,6 +217,7 @@ int LatComponentParser::error(EBFevent* event, TEMcontribution* contribution) {
     ldfReader::ErrData err(contribution->summary());
     err.setExist();
     err.initLength(((EBFcontribution*)contribution)->length());    
+    err.initPacketError(((EBFcontribution*)contribution)->packetError());
     ldfReader::LatData::instance()->setErr(err);
     if ( EventSummary::error(contribution->summary())) {
         unsigned offset;

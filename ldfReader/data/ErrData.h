@@ -9,7 +9,7 @@ namespace ldfReader {
 
     /** @class ErrData
       * @brief Local storage of error data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/ErrData.h,v 1.3 2004/09/23 05:16:56 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/ErrData.h,v 1.4 2004/10/01 06:22:30 heather Exp $
     */
     class ErrData {
     public:
@@ -36,6 +36,9 @@ namespace ldfReader {
         void initLength(unsigned long length) { m_lenInBytes = length; };
         unsigned long lenInBytes() const { return m_lenInBytes; };
 
+        void initPacketError(unsigned packetError) { m_packetError=packetError; };
+        unsigned packetError() const { return m_packetError; };
+
     private:
 
         // Store the event sequence number for this contribution
@@ -43,6 +46,7 @@ namespace ldfReader {
         // denotes if this contribution exists for this event
         bool m_exist;
 
+        unsigned m_packetError;
         unsigned long m_lenInBytes;
     };
 } // end namespace

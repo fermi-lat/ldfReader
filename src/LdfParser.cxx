@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.4 2004/08/27 15:02:24 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.5 2004/08/27 22:16:39 jrb Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -257,29 +257,31 @@ namespace ldfReader {
         if (ldfReader::LatData::instance()->getFormatIdentity() >= 
             LatComponentParser::ID_WITH_OSW) {
 
-        if (!ldfReader::LatData::instance()->eventSeqConsistent()) {
-            printf("Event Sequence numbers are not consistent within all contributions\n");
-            printf("Setting bad event flag\n");
-            ldfReader::LatData::instance()->setBadEventSeqFlag();
+                if (!ldfReader::LatData::instance()->eventSeqConsistent()) {
+                    printf("Event Sequence numbers are not consistent within all contributions\n");
+                    printf("Setting bad event flag\n");
+                    ldfReader::LatData::instance()->setBadEventSeqFlag();
+                    return 0;
+                }
+
+                // Now check to see that the event sequences are monotonically increasing
+                if (ldfReader::LatData::instance()->summaryData().eventSequence() < eventSeqNum) {
+                    printf("Setting Bad Event Flag\n");
+                    ldfReader::LatData::instance()->setBadEventSeqFlag();
+                    return 0;
+                } else {
+                    eventSeqNum = ldfReader::LatData::instance()->summaryData().eventSequence();
+                }
+
+                // reset the stored event sequence number when we hit the LDF's rollover
+                // value
+                if (eventSeqNum == maxEventSeqNum) eventSeqNum = -1;
+            }
+
+            ldfReader::LatData::instance()->checkErrorInEventSummary();
+            ldfReader::LatData::instance()->checkPacketError();
+
             return 0;
-        }
-
-        // Now check to see that the event sequences are monotonically increasing
-        if (ldfReader::LatData::instance()->summaryData().eventSequence() < eventSeqNum) {
-            printf("Setting Bad Event Flag\n");
-            ldfReader::LatData::instance()->setBadEventSeqFlag();
-            return 0;
-        } else {
-            eventSeqNum = ldfReader::LatData::instance()->summaryData().eventSequence();
-        }
-
-       // reset the stored event sequence number when we hit the LDF's rollover
-       // value
-       if (eventSeqNum == maxEventSeqNum) eventSeqNum = -1;
-       }
-
-     
-        return 0;
     }
 
     bool LdfParser::setDebug(bool on) {
