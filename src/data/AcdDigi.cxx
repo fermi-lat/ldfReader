@@ -9,8 +9,8 @@ namespace ldfReader {
       clear();
     }
 
-    AcdDigi::AcdDigi(const char *name, int id) {
-        init(name, id);
+    AcdDigi::AcdDigi(const char *name, int tileNumber, int id) {
+        init(name, tileNumber, id);
     }
 
     AcdDigi::~AcdDigi() { clear(); }
@@ -21,15 +21,16 @@ namespace ldfReader {
         m_tileId = -1;
     }
     
-    void AcdDigi::init(const char *name, int id) {
+    void AcdDigi::init(const char *name, int number, int id) {
         m_tileName = name;
+        m_tileNumber = number;
         m_tileId = id;
     }
 
     void AcdDigi::print() const {
         printf("AcdDigi\n");
-        printf("(tileName, tileId): (  %s, %d )\n", m_tileName, m_tileId);
-        printf("num readouts: \n", m_readout.size());
+        printf("(tileName, tileNumber, tileId): (  %s, %d, %d )\n", m_tileName, m_tileNumber, m_tileId);
+        printf("num readouts: %d\n", m_readout.size());
         unsigned int i;
         for (i = 0; i < m_readout.size(); i++) {
             m_readout[i].print();
