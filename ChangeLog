@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Mar 11 15:43:50 PST 2005
+ldfReader/src
+
+Modified Files:
+	LdfParser.cxx 
+Log Message:
+suppress mucho warnings.. print it out once
+    *
+------------------------------------------------------------
 User: heather  Fri Mar 11 15:43:40 PST 2005
 ldfReader/doc
 
