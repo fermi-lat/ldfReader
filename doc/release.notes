@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v1r1p0  24-Sep-2004 hmk patch tile id conversion from string
 v1r1    21-Sep-2004 hmk handle event contribution length
 v1r0p2  27-Aug-2004 jrb Little bug fix for linux compile
 v1r0p1  27-Aug-2004 jrb (for hmk) only check event seqs for newer EBF/LDF file

@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.5 2004/06/22 21:01:25 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.6 2004/07/22 00:26:04 heather Exp $
 */
 
 // EBF Online Library includes
@@ -66,7 +66,7 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
   //       m_prefix, channel, map()->tileName(id, tile), side,
   //       p.ADCrange(), p.ADCvalue(), p.ADCvalue(), p.parityError(), p.more());
   char *pEnd;
-  unsigned int tileNum = strtol(pmt->name(), &pEnd, 0);
+  unsigned int tileNum = strtol(pmt->name(), &pEnd, 10);
 
   // Retrieve the tower or create a new TowerData object if necessary
   ldfReader::LatData* curLatData = ldfReader::LatData::instance();
