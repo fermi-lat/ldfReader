@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v1r0    25-Aug-2004 hmk increment version
 v0r6    25-Aug-2004 hmk Store event summary for each contribution and check
                     at the end of loading each event whether the event seq is
                     consistent across all contributions and monotonically 
