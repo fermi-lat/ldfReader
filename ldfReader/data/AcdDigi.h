@@ -6,7 +6,7 @@
 namespace ldfReader {
     /** @class AcdDigi
       * @brief Local storage of CAL log data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.3 2004/06/22 21:16:51 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.4 2004/07/22 00:24:57 heather Exp $
     */
     class AcdDigi {
     public:
@@ -25,12 +25,14 @@ namespace ldfReader {
         class AcdPmt {
         public:
             AcdPmt() {};
-            AcdPmt(unsigned int pha, int r, PmtSide s, short c, short m, ParityError err = NOERROR) {
+            AcdPmt(unsigned int pha, int r, PmtSide s, short c, short m, bool hit, bool phaAccept, ParityError err = NOERROR) {
                 m_pha = pha;
                 m_range = r;
                 m_side = s;
                 m_channel = c;
                 m_more = m;
+                m_hit = hit;
+                m_accept = phaAccept;
                 m_error = err;
             };
 
@@ -39,10 +41,10 @@ namespace ldfReader {
             void print(bool header=true) const {
                 char side = m_side ? 'A' : 'B';
                 if (header) {
-                    printf("Channel\tPHA\trange\tside\tparity\tmore\n");
+                    printf("Channel\tPHA\trange\tside\tparity\tmore\tVeto\tAccept\n");
                     printf("\t\t\t\terror\n");
                 }
-                printf("%d\t%d\t%d\t%c\t%d\t%d\n", m_channel, m_pha,  m_range, side, m_error, m_more);
+                printf("%d\t%d\t%d\t%c\t%d\t%d\t%d\t%d\n", m_channel, m_pha, m_range, side, m_error, m_more, m_hit, m_accept);
             };
 
             unsigned int getPha() const { return m_pha; };
@@ -51,6 +53,8 @@ namespace ldfReader {
             ParityError getParityError() const { return m_error; };
             short getChannel() const { return m_channel; };
             short getMore() const { return m_more; };
+            bool getHit() const { return m_hit; };
+            bool getAccept() const { return m_accept; };
 
             bool operator < (const AcdPmt& a) const{ return m_channel < a.m_channel;}
 
@@ -61,6 +65,8 @@ namespace ldfReader {
             ParityError m_error;
             short m_channel;
             short m_more;
+            bool m_hit; /// veto
+            bool m_accept; // PHA threshold
         };
 
 
