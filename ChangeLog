@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Oct 27 14:23:04 PDT 2004
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+handle veto discrim correctly
+    *
+------------------------------------------------------------
 User: heather  Tue Oct 12 13:44:23 PDT 2004
 ldfReader/src/test
 
