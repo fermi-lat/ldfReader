@@ -9,7 +9,7 @@ namespace ldfReader {
 
     /** @class AemData
       * @brief Local storage of AEM data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AemData.h,v 1.5 2004/12/22 23:12:18 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AemData.h,v 1.6 2005/01/26 07:25:41 heather Exp $
     */
     class AemData {
     public:
@@ -28,6 +28,16 @@ namespace ldfReader {
             m_lenInBytes = 0; 
             m_exist = false;
             m_packetError=0; };
+
+        void print() const {
+            if (!exist()) {
+                printf("No AEM\n");
+                return;
+            }
+            printf("AEM: \n");
+            m_summary.print();
+            printf("Len:  %lu", m_lenInBytes);
+         }
 
         const EventSummaryCommon& summary() const { return m_summary; };
         void initSummary(unsigned summary) { m_summary.setSummary(summary);};

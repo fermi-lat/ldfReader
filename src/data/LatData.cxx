@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.11 2005/01/25 09:21:33 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.12 2005/01/26 07:27:00 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -76,7 +76,7 @@ namespace ldfReader {
     //Purpose and Method:  Checks that the event sequence number is consistent
     // accross all contributions.  If not false is returned... 
 
-        unsigned long firstEvtSeq;
+        unsigned long firstEvtSeq=0;
         bool foundFirst = false;
 
         if(getGem().exist()) {
@@ -88,7 +88,7 @@ namespace ldfReader {
             firstEvtSeq = getAem().summary().eventSequence(); 
             foundFirst = true;
         } else if ( (getAem().exist()) && (firstEvtSeq != getAem().summary().eventSequence()) ) {
-            printf("AEM does not match event Seq %d \n", getAem().summary().eventSequence());
+            printf("AEM does not match event Seq %lu \n", getAem().summary().eventSequence());
             return false;
         }
 
@@ -96,7 +96,7 @@ namespace ldfReader {
         //    firstEvtSeq = getErr().summary().eventSequence(); 
         //    foundFirst = true;
         //} else if ( (getErr().exist()) && (firstEvtSeq != getErr().summary().eventSequence()) ) {
-         //   printf("ERR does not match event Seq %d \n", getErr().summary().eventSequence());
+         //   printf("ERR does not match event Seq %lu \n", getErr().summary().eventSequence());
          //   return false;
        // }
 
@@ -104,7 +104,7 @@ namespace ldfReader {
             firstEvtSeq = getOsw().summary().eventSequence();
             foundFirst = true;
         } else if ( (getOsw().exist()) && (firstEvtSeq != getOsw().summary().eventSequence()) ){
-            printf("OSW does not match event Seq %d \n", getOsw().summary().eventSequence());
+            printf("OSW does not match event Seq %lu \n", getOsw().summary().eventSequence());
             return false;
         }
 
@@ -112,7 +112,7 @@ namespace ldfReader {
         //    firstEvtSeq = diagnostic()->summary().eventSequence();
         //    foundFirst = true;
        // } else if ((diagnostic()->exist()) && (firstEvtSeq != diagnostic()->summary().eventSequence()) ){
-      //      printf("DIAG does not match event Seq %d \n", getGem().summary().eventSequence());
+      //      printf("DIAG does not match event Seq %lu \n", getGem().summary().eventSequence());
       //      return false; 
        // }
 
@@ -125,7 +125,7 @@ namespace ldfReader {
                 firstEvtSeq = tem.summary().eventSequence();
                 foundFirst = true;
             } else if ( (tem.exist()) && (firstEvtSeq != tem.summary().eventSequence())) {
-                printf("TEM does not match event Seq %d \n", tem.summary().eventSequence());
+                printf("TEM does not match event Seq %lu \n", tem.summary().eventSequence());
                 return false;
             }
         }
@@ -168,7 +168,7 @@ namespace ldfReader {
             }
         }
         if (orAll != 0) {
-            unsigned int firstEvtSeq;
+            unsigned int firstEvtSeq=0;
             if (getOsw().exist()) firstEvtSeq = getOsw().summary().eventSequence();
             printf("Setting Packet Error Flag, Event: %u\n", firstEvtSeq);
             setPacketErrorFlag();
@@ -204,19 +204,23 @@ namespace ldfReader {
             const TemData tem = tower->getTem();
             if (tem.exist()) {
                 temOrAll |= tem.summary().error();
+                //tem.summary().print();
+                //printf("tem error %d\n", tem.summary().error());
                 orAll |= tem.summary().error();
+                //printf("orAll = %d\n", orAll);
             }
         }
         if ( getOsw().exist()) {
             orAll |= getOsw().summary().error();
             printf("OSW: error: %u\n", getOsw().summary().error());
             if (temOrAll != getOsw().summary().error()) 
-                printf("OSW error summary bit does not match OR of all error bits across all TEM contributions, %d event Seq: %d\n", getOsw().summary().error(), getOsw().summary().eventSequence());
+                printf("OSW error summary bit does not match OR of all error bits across all TEM contributions, %d event Seq: %lu\n", getOsw().summary().error(), getOsw().summary().eventSequence());
         }
         if (orAll != 0) {
-            unsigned int firstEvtSeq;
+            static unsigned int firstEvtSeq=0;
             if (getOsw().exist()) firstEvtSeq = getOsw().summary().eventSequence();
             printf("Event Summary Error Flag Set, Event:  %u\n", firstEvtSeq);
+            firstEvtSeq++;
             setErrorSummaryFlag();
         }
         return (orAll);

@@ -9,7 +9,7 @@ namespace ldfReader {
 
     /** @class OswData
       * @brief Local storage of OSW data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/OswData.h,v 1.5 2004/12/22 23:12:18 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/OswData.h,v 1.6 2005/01/26 07:25:41 heather Exp $
     */
     class OswData {
     public:
@@ -28,6 +28,16 @@ namespace ldfReader {
             m_lenInBytes = 0; 
             m_packetError = 0;
             m_exist = false;};
+
+        void print() const {
+            if(!exist()) {
+                printf("No OSW\n");
+                return;
+            }
+            printf("OSW: \n");
+            m_summary.print();
+            printf("Len: %lu", m_lenInBytes);
+        }
 
         const EventSummaryCommon& summary() const { return m_summary; };
         void initSummary(unsigned summary) { m_summary.setSummary(summary);};
@@ -48,7 +58,7 @@ namespace ldfReader {
         EventSummaryCommon m_summary;
         bool m_exist;
 
-		unsigned m_packetError;
+        unsigned m_packetError;
         unsigned long m_lenInBytes;
 
     };

@@ -26,6 +26,15 @@ namespace ldfReader {
             //m_summary.clear();
             m_exist = false; };
 
+        void print() const {
+            if( !exist()) {
+                printf("No Diagnostic Data\n");
+                return;
+            }
+            printf("Diagnostic Data:\n");
+            printf("Len: %lu\n\n", m_lenInBytes);
+        }
+
         void addCalDiagnostic(const CalDiagnosticData &cal) { m_calVec.push_back(cal); };
         const CalDiagnosticData& getCalDiagnosticByIndex(unsigned int index) const{ return m_calVec[index]; };
         int getNumCalDiagnostic() const { return m_calVec.size(); };

@@ -4,7 +4,7 @@
 /** @file GemData.cxx
 @brief Implementation of the GemData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/GemData.cxx,v 1.3 2004/09/23 05:17:40 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/GemData.cxx,v 1.4 2005/01/26 07:27:00 heather Exp $
 */
 
 
@@ -78,8 +78,12 @@ namespace ldfReader {
     }
 
    void GemData::print() const {
+       if (!exist()) {
+           printf("No GEM\n");
+           return;
+       }
        printf("GEM:\n");
-       printf("Contribution length = %d Bytes\n", m_lenInBytes);
+       printf("Contribution length = %lu Bytes\n", m_lenInBytes);
        printf("ROI vector = 0x%04x\n", roiVector());
        printf("TKR vector = 0x%04x\n", tkrVector());
        printf("CAL HE vector = 0x%04x\n", m_cal_HE_Vector);

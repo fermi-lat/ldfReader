@@ -9,7 +9,7 @@ namespace ldfReader {
 
     /** @class TemData
       * @brief Local storage of TEM data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TemData.h,v 1.6 2005/01/25 09:20:26 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TemData.h,v 1.7 2005/01/26 07:25:41 heather Exp $
     */
     class TemData {
     public:
@@ -31,8 +31,14 @@ namespace ldfReader {
         };
 
         void print() const { 
+             if (!exist()) {
+                 printf("No TEM\n");  
+                 return;
+             }
              printf("TemData:\n");
-             printf("contribution length = %d Bytes", m_lenInBytes);
+             printf("contribution length = %lu Bytes\n", m_lenInBytes);
+             m_summary.print();
+             printf("\n");
         };
 
         const EventSummaryCommon& summary() const { return m_summary; };
