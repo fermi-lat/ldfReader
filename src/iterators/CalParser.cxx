@@ -4,7 +4,7 @@
 /** @file CalParser.cxx
 @brief Implementation of the CalParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.2 2004/05/12 06:27:36 heather Exp $
 */
 
 // EBF Online Library includes
@@ -44,7 +44,8 @@ namespace ldfReader {
         unsigned length = contribution()->numLogAccepts();
         if (length == 0)
         {
-            printf("%sCAL: no data - empty contribution\n", m_prefix);
+            if (EbfDebug::getDebug())
+                printf("%sCAL: no data - empty contribution\n", m_prefix);
             return;
         }
         if (EbfDebug::getDebug()) {
