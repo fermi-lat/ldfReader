@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Sep 21 10:58:27 PDT 2004
+ldfReader/src/iterators
+
+Modified Files:
+	LatComponentParser.cxx 
+Log Message:
+handle event contribution lengths
+    *
+------------------------------------------------------------
 User: heather  Tue Sep 21 10:57:19 PDT 2004
 ldfReader/ldfReader/data
 
