@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Dec 22 15:12:58 PST 2004
+ldfReader/src
+
+Modified Files:
+	LdfParser.cxx 
+Log Message:
+handle error bits
+    *
+------------------------------------------------------------
 User: heather  Wed Dec 22 15:12:18 PST 2004
 ldfReader/ldfReader/data
 
