@@ -4,6 +4,8 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v2r0p0  01-Apr-2005 hmk Set up m_datagram in LdfParser to keep a now bogus
+        check for EOF working
 v2r0    31-Mar-2005 hmk change reading of pure LDF files to use new interface
                     rather than the old EBF_file
 v1r11   30-Mar-2005 hmk retrieve run id completely generically
