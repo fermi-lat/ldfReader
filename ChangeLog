@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: heather  Tue Mar 15 11:57:33 PST 2005
+ldfReader/ldfReader/data
+
+Modified Files:
+	CalDiagnosticData.h DiagnosticData.h ErrData.h LatData.h 
+	TemData.h TkrDiagnosticData.h 
+Log Message:
+move diagnostic & error into tem data structure
+    *
+------------------------------------------------------------
 User: heather  Tue Mar 15 11:52:22 PST 2005
 ldfReader/cmt
 
