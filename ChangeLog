@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Mar 15 12:15:55 PST 2005
+ldfReader/src/test
+
+Modified Files:
+	test_ldfReader.cxx 
+Log Message:
+move diagnostic & error into tem data structure
+    *
+------------------------------------------------------------
 User: heather  Tue Mar 15 12:15:54 PST 2005
 ldfReader/src/iterators
 
