@@ -4,7 +4,7 @@
 /** @file TkrParser.cxx
 @brief Implementation of the TkrParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.2 2004/05/12 06:27:36 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.3 2004/06/28 23:58:05 heather Exp $
 */
 #include <stdio.h> // included for TKRcontributionIterator.h
 // Online EBF library includes
@@ -81,6 +81,7 @@ namespace ldfReader {
         {
             if (EbfDebug::getDebug()) 
                 printf("%sTKR: no data - empty contribution\n", m_prefix);
+            endTots((unsigned)(m_contribution->accepts(m_event) + 3*sizeof(unsigned) - (char*)contribution()));
             return;
         }
 

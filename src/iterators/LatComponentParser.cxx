@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.4 2004/06/23 18:02:38 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.5 2004/07/29 22:02:40 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -19,6 +19,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser
 #include "TkrParser.h"
 #include "CalParser.h"
 #include "OswParser.h"
+#include "ErrParser.h"
 #include "ldfReader/data/LatData.h"
 #include "../EbfDebug.h"
 
@@ -119,6 +120,7 @@ namespace ldfReader {
         // Actually do the parsing
         CalParser cal(event, contribution, "   ");
         cal.parse();
+        CALend(cal.CALend());
         return 0;
     }
 
@@ -156,7 +158,7 @@ namespace ldfReader {
     }
 
     int LatComponentParser::diagnostic (EBFevent* event, TEMcontribution* contribution) {
-        if ( EventSummary::diagnostic(event->summary())) {
+        if ( EventSummary::diagnostic(contribution->summary())) {
             //   Process the trigger primitives in the diagnostic data
             DiagnosticParser iter(event,contribution,TKRend(),ldfReader::LatData::instance()->diagnostic());
             iter.iterateCAL();
@@ -167,20 +169,31 @@ namespace ldfReader {
         return 0;
     }
 
-    int LatComponentParser::error(EBFevent* event, TEMcontribution* contribution) {
-        return 0;
+int LatComponentParser::error(EBFevent* event, TEMcontribution* contribution) {
+    if ( EventSummary::error(contribution->summary())) {
+        unsigned offset;
+        if (0 != diagnosticEnd())
+            offset=diagnosticEnd();
+        else
+            offset=TKRend();
+        ErrParser err(event,contribution,offset);
+        err.iterate();
+        errorEnd(offset+err.size());
     }
+    return 0;
+}
 
-    int LatComponentParser::cleanup (EBFevent*        /*event*/,
+int LatComponentParser::cleanup (EBFevent*        /*event*/,
         TEMcontribution* contribution)
-    {
+{
         // determine whether the remainder of the contribution is
         // a: less than one cell away
         // b: all zeroes
         char* prefix = "  ";
 
-        //  printf("CALend: %d, TKRend: %d, diagEnd: %d, errEnd: %d\n",
-        //	   CALend(),TKRend(),diagnosticEnd(),errorEnd());
+        if (EbfDebug::getDebug())  
+            printf("CALend: %d, TKRend: %d, diagEnd: %d, errEnd: %d\n",
+        	   CALend(),TKRend(),diagnosticEnd(),errorEnd());
 
         unsigned* contribEnd = (unsigned*)((char*)contribution + contribution->length() );
 
@@ -199,7 +212,7 @@ namespace ldfReader {
             mbz++;
         }
         return 0;
-    }
+}
 
 int LatComponentParser::commonComponentData(EBFcontribution *contribution) {
         int len = contribution->length();

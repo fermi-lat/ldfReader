@@ -13,16 +13,16 @@
 @brief Calls the appropriate routines in the Online/EBF library to start
 processing the event.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDatagramParser.h,v 1.5 2003/05/20 16:10:27 jrb Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDatagramParser.h,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
 */
 namespace ldfReader {
     class EbfDatagramParser : public LATdatagramIterator
     {
     public:
         EbfDatagramParser(LATdatagram* start, LATdatagram* end) : LATdatagramIterator(start, end) {}
-        ~EbfDatagramParser() {}
+        virtual ~EbfDatagramParser() {}
 
-        int process(LATdatagram*);
+        virtual int process(LATdatagram*);
     private:
         LatContributionParser m_lci;
     };
