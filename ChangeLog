@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Jun 28 16:58:05 PDT 2004
+ldfReader/src/iterators
+
+Modified Files:
+	TkrParser.cxx 
+Log Message:
+make print statement debug mode
+    *
+------------------------------------------------------------
 User: heather  Wed Jun 23 11:03:59 PDT 2004
 ldfReader/doc
 
