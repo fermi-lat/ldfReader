@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.3 2004/08/26 20:06:29 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.4 2004/08/27 15:02:24 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -254,7 +254,8 @@ namespace ldfReader {
         // Only do this check on the event sequence if we have a recent
         // enough file..  I believe we want one where they started to store the
         // event summary in each contribution separately
-        if (ldfReader::LatData::instance()->getFormatIdentity() >= ID_WITH_OSW) {
+        if (ldfReader::LatData::instance()->getFormatIdentity() >= 
+            LatComponentParser::ID_WITH_OSW) {
 
         if (!ldfReader::LatData::instance()->eventSeqConsistent()) {
             printf("Event Sequence numbers are not consistent within all contributions\n");
