@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Jan 20 21:29:19 PST 2005
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+more exception handling
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r5p0, operation: add
 Package: ldfReader
