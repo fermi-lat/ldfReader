@@ -33,7 +33,7 @@ namespace ldfReader {
         printf("num readouts: %d\n", m_readout.size());
         unsigned int i;
         for (i = 0; i < m_readout.size(); i++) {
-            m_readout[i].print();
+            m_readout[i].print(i==0);
         }
 
     }
