@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Feb 21 21:47:18 PST 2005
+ldfReader/src/iterators
+
+Modified Files:
+	LatComponentParser.cxx 
+Log Message:
+prepare for new GEM
+    *
+------------------------------------------------------------
 User: heather  Mon Feb 21 21:46:55 PST 2005
 ldfReader/ldfReader/data
 
