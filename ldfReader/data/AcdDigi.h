@@ -6,7 +6,7 @@
 namespace ldfReader {
     /** @class AcdDigi
       * @brief Local storage of CAL log data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.1 2004/04/21 22:11:38 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.2 2004/06/22 21:00:05 heather Exp $
     */
     class AcdDigi {
     public:
@@ -58,7 +58,7 @@ namespace ldfReader {
         ~AcdDigi();
 
         void clear();
-        void init(const char *name, int number = 0, int id =0);
+        void init(const char *name, int tileNumber = 0, int id =0);
         void print() const ;
 
         /// add readout to CalXtalReadout collection
