@@ -1,14 +1,14 @@
-#ifndef ldfReader_EBFPARSER_CXX
-#define ldfReader_EBFPARSER_CXX
+#ifndef ldfReader_LdfParser_CXX
+#define ldfReader_LdfParser_CXX
 
 
-/** @file EbfParser.cxx
-@brief Implementation of the EbfParser class
+/** @file LdfParser.cxx
+@brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/EbfParser.cxx,v 1.15 2003/11/11 20:20:48 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
 */
 
-#include "ldfReader/EbfParser.h"
+#include "ldfReader/LdfParser.h"
 #include "iterators/EbfDatagramParser.h"
 #include "iterators/TkrParser.h"
 #include "EbfDebug.h"
@@ -19,11 +19,11 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/EbfParser.cxx,v 1.15 2003/11
 #include "longnam.h"
 
 namespace ldfReader {
-    EbfParser::EbfParser() {
+    LdfParser::LdfParser() {
         clear();
     }
 
-    EbfParser::EbfParser(std::string fileName, bool fitsWrap, 
+    LdfParser::LdfParser(std::string fileName, bool fitsWrap, 
         const std::string& instrument) :
     m_fileName(fileName), m_fitsWrap(fitsWrap), m_fitsfile(0),
         m_maxRow(0), m_currentRow(0), m_maxHdu(0), m_currentHdu(0),
@@ -108,19 +108,19 @@ namespace ldfReader {
                 m_end = end;
             }
         } catch(...) {
-            std::cerr << "Error setting up EbfParser" << std::endl;
+            std::cerr << "Error setting up LdfParser" << std::endl;
             throw;
         }
     }
 
 
-    EbfParser::~EbfParser() {
+    LdfParser::~LdfParser() {
         clear();
         fitsfile* ffile = (fitsfile *) m_fitsfile;
         delete ffile;
     }
 
-    void EbfParser::clear() {
+    void LdfParser::clear() {
         //if (m_datagram) delete m_datagram;
         //m_datagram = 0;
         m_runId = 0;
@@ -132,7 +132,7 @@ namespace ldfReader {
         //m_evt = 0;
     }
 
-    long EbfParser::getRow() {
+    long LdfParser::getRow() {
         int status = 0;
         //  get next row length and starting address
         long nbytes;
@@ -177,7 +177,7 @@ namespace ldfReader {
     }
 
 
-    int EbfParser::nextEvent() {
+    int LdfParser::nextEvent() {
         if (m_fitsWrap) {
             int status = 0;
             int hduType;
@@ -228,7 +228,7 @@ namespace ldfReader {
         }
     }
 
-    int EbfParser::loadData() {
+    int LdfParser::loadData() {
         // Purpose and Method:  This routine loads the data from one event
         // The current event in the EBF file.
 
@@ -249,11 +249,11 @@ namespace ldfReader {
         return 0;
     }
 
-    bool EbfParser::setDebug(bool on) {
+    bool LdfParser::setDebug(bool on) {
         return EbfDebug::setDebug(on);
     }
 
-    bool EbfParser::end() {
+    bool LdfParser::end() {
         return (m_datagram < m_end);
     }
 
