@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: heather  Tue May 11 23:26:07 PDT 2004
+ldfReader/src
+
+Added Files:
+	LdfParser.cxx 
+Removed Files:
+	EbfParser.cxx 
+Log Message:
+rename to Ldf
+    *
+------------------------------------------------------------
 User: heather  Tue May 11 23:20:32 PDT 2004
 ldfReader/ldfReader
 
