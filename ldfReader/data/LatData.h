@@ -88,7 +88,7 @@ namespace ldfReader {
 
         void setBadEventSeqFlag() { m_flags |= EVTSEQ; };
         unsigned int getEventFlags() const { return m_flags; };
-        bool badEventSequence() const { return (m_flags && EVTSEQ); };
+        bool badEventSequence() const { return (m_flags & EVTSEQ); };
         bool goodEvent() const { return (m_flags == GOOD); };
         void setPacketErrorFlag() { m_flags |= PACKETERROR; };
         void setErrorSummaryFlag() { m_flags |= SUMMARYERROR; };
@@ -96,8 +96,8 @@ namespace ldfReader {
         unsigned checkErrorInEventSummary();
         unsigned checkPacketError();
 
-        unsigned packetError() const { return m_packetErrorOR; };
-        unsigned errorEventSummary() const { return m_errorSummaryOR; }
+        unsigned packetError() const { return (m_flags & PACKETERROR); };
+        unsigned errorEventSummary() const { return (m_flags & SUMMARYERROR); }
 
     private:
 
@@ -115,9 +115,6 @@ namespace ldfReader {
         OswData m_osw;
         AemData m_aem;
         ErrData m_err;
-
-        unsigned m_packetErrorOR;
-        unsigned m_errorSummaryOR;
 
         unsigned int m_flags;
     };
