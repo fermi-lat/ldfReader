@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Sep 24 08:30:54 PDT 2004
+ldfReader/src/iterators
+
+Modified Files:
+	AcdParser.cxx 
+Log Message:
+patch conversion of tile ids
+    *
+------------------------------------------------------------
 User: heather  Fri Sep 24 08:30:35 PDT 2004
 ldfReader/doc
 
