@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v1r2p0  01-Nov-2004 hmk Pick up first evntSeq from any contribution not just GEM
 v1r2    27-Oct-2004 hmk handle veto discrim correctly
 v1r1p3  12-Oct-2004 hmk create LDFROOT env var for use in unit test
 v1r1p2  04-Oct-2004 hmk clean up osw length

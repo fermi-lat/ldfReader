@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.5 2004/09/21 17:59:01 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.6 2004/09/23 05:17:40 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -77,30 +77,54 @@ namespace ldfReader {
     // accross all contributions.  If not false is returned... 
 
         unsigned long firstEvtSeq;
-        if(getGem().exist()) firstEvtSeq = getGem().summary().eventSequence();
+        bool foundFirst = false;
 
-        if ( (getAem().exist()) && (firstEvtSeq != getAem().summary().eventSequence()) ) {
+        if(getGem().exist()) {
+            firstEvtSeq = getGem().summary().eventSequence();
+            foundFirst = true;
+        }
+
+        if ( (getAem().exist()) && !foundFirst) {
+            firstEvtSeq = getAem().summary().eventSequence(); 
+            foundFirst = true;
+        } else if ( (getAem().exist()) && (firstEvtSeq != getAem().summary().eventSequence()) ) {
             printf("AEM does not match event Seq %d \n", getAem().summary().eventSequence());
             return false;
         }
-        if ( (getErr().exist()) && (firstEvtSeq != getErr().summary().eventSequence()) ) {
+
+        if ( (getErr().exist()) && !foundFirst ) {
+            firstEvtSeq = getErr().summary().eventSequence(); 
+            foundFirst = true;
+        } else if ( (getErr().exist()) && (firstEvtSeq != getErr().summary().eventSequence()) ) {
             printf("ERR does not match event Seq %d \n", getErr().summary().eventSequence());
             return false;
         }
-        if ( (getOsw().exist()) && (firstEvtSeq != getOsw().summary().eventSequence()) ){
+
+        if ( (getOsw().exist()) && !foundFirst ){
+            firstEvtSeq = getOsw().summary().eventSequence();
+            foundFirst = true;
+        } else if ( (getOsw().exist()) && (firstEvtSeq != getOsw().summary().eventSequence()) ){
             printf("OSW does not match event Seq %d \n", getOsw().summary().eventSequence());
             return false;
         }
-        if ((diagnostic()->exist()) && (firstEvtSeq != diagnostic()->summary().eventSequence()) ){
+
+        if ((diagnostic()->exist()) && !foundFirst ){
+            firstEvtSeq = diagnostic()->summary().eventSequence();
+            foundFirst = true;
+        } else if ((diagnostic()->exist()) && (firstEvtSeq != diagnostic()->summary().eventSequence()) ){
             printf("DIAG does not match event Seq %d \n", getGem().summary().eventSequence());
             return false; 
         }
+
         std::map<unsigned int, TowerData*>::const_iterator towerIter = m_towerMap.begin();
         while(towerIter != m_towerMap.end())
         {
             TowerData* tower = (towerIter++)->second;
             const TemData tem = tower->getTem();
-            if ( (tem.exist()) && (firstEvtSeq != tem.summary().eventSequence())) {
+            if ( (tem.exist()) && !foundFirst) {
+                firstEvtSeq = tem.summary().eventSequence();
+                foundFirst = true;
+            } else if ( (tem.exist()) && (firstEvtSeq != tem.summary().eventSequence())) {
                 printf("TEM does not match event Seq %d \n", tem.summary().eventSequence());
                 return false;
             }
