@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Jan 25 23:27:01 PST 2005
+ldfReader/src/data
+
+Modified Files:
+	GemData.cxx LatData.cxx 
+Log Message:
+init error flags
+    *
+------------------------------------------------------------
 User: heather  Tue Jan 25 23:25:41 PST 2005
 ldfReader/ldfReader/data
 
