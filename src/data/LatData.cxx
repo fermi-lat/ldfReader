@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.14 2005/01/28 23:02:45 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.15 2005/02/03 20:36:56 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -176,14 +176,14 @@ namespace ldfReader {
         return (orAll);
     }
 
-    unsigned LatData::checkErrorInEventSummary() {
+    unsigned LatData::checkTemErrorInEventSummary() {
         unsigned orAll = 0;
 
-        if(getGem().exist()) 
-            orAll |= getGem().summary().error();
+        //if(getGem().exist()) 
+            //orAll |= getGem().summary().error();
 
-        if (getAem().exist()) 
-            orAll |= getAem().summary().error();
+        //if (getAem().exist()) 
+            //orAll |= getAem().summary().error();
 
        // if ( getErr().exist()) {
        //     orAll |= getErr().summary().error();
@@ -221,6 +221,45 @@ namespace ldfReader {
             printf("Event Summary Error Flag Set, Event:  %u\n", firstEvtSeq);
             firstEvtSeq++;
             setErrorSummaryFlag();
+        }
+        return (orAll);
+    }
+
+
+    unsigned LatData::checkTrgErrorInEventSummary() {
+        unsigned orAll = 0;
+
+        if(getGem().exist()) 
+            orAll |= getGem().summary().trgParityError();
+
+        //if (getAem().exist()) 
+            //orAll |= getAem().summary().error();
+
+        unsigned int temOrAll = 0;
+        std::map<unsigned int, TowerData*>::const_iterator towerIter = m_towerMap.begin();
+        while(towerIter != m_towerMap.end())
+        {
+            TowerData* tower = (towerIter++)->second;
+            const TemData tem = tower->getTem();
+            if (tem.exist()) {
+                temOrAll |= tem.summary().trgParityError();
+                //tem.summary().print();
+                //printf("tem error %d\n", tem.summary().trgParityError());
+                orAll |= tem.summary().trgParityError();
+                //printf("orAll = %d\n", orAll);
+            }
+        }
+        if ( getOsw().exist()) {
+            orAll |= getOsw().summary().trgParityError();
+            if (temOrAll != getOsw().summary().trgParityError()) 
+                printf("OSW error summary bit does not match OR of all error bits across all TEM contributions, %d event Seq: %lu\n", getOsw().summary().trgParityError(), getOsw().summary().eventSequence());
+        }
+        if (orAll != 0) {
+            static unsigned int firstEvtSeq=0;
+            if (getOsw().exist()) firstEvtSeq = getOsw().summary().eventSequence();
+            printf("Trg Parity Error Flag Set, Event:  %u\n", firstEvtSeq);
+            firstEvtSeq++;
+            setTrgParityErrorFlag();
         }
         return (orAll);
     }
