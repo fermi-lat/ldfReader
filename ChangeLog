@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Mar 31 15:58:37 PST 2005
+ldfReader/ldfReader
+
+Modified Files:
+	LdfParser.h 
+Log Message:
+use newer, better, cheaper interface to read in event by event from a pure LDF file
+    *
+------------------------------------------------------------
 User: heather  Thu Mar 31 15:55:11 PST 2005
 ldfReader/src/test
 
