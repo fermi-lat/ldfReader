@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Jan 28 15:02:45 PST 2005
+ldfReader/ldfReader/data
+
+Modified Files:
+	EventSummaryCommon.h OswData.h 
+Log Message:
+eventsummary fix
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r5p5, operation: add
 Package: ldfReader
