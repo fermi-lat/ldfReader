@@ -25,8 +25,8 @@ namespace ldfReader {
         typedef enum {
             GOOD = 0,
             EVTSEQ = 1,
-            PACKETERROR = 2,
-            SUMMARYERROR = 4
+            PACKETERROR = 4,
+            SUMMARYERROR = 8
         } EventFlags;
 
         static LatData *instance();
