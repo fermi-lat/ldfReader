@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Oct 12 13:44:12 PDT 2004
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+create LDFROOT env var for unit test
+    *
+------------------------------------------------------------
 User: heather  Tue Oct 12 13:43:48 PDT 2004
 ldfReader/doc
 
