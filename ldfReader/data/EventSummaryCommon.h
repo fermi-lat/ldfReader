@@ -1,6 +1,6 @@
 /* @class EventSummaryCommon
 * @brief Class for accessing fields in the event summary longword.
-* $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/EventSummaryCommon.h,v 1.2 2004/07/29 22:00:50 heather Exp $
+* $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/EventSummaryCommon.h,v 1.1 2004/08/25 22:34:14 heather Exp $
 */
 
 #ifndef ldfReaderEventSummaryCommon_H
@@ -17,6 +17,8 @@ namespace ldfReader {
         EventSummaryCommon() { m_summary =0; };
         EventSummaryCommon(unsigned summary) : m_summary(summary) { };
         ~EventSummaryCommon() {}
+          
+        void clear() { m_summary = 0; }
 
         void print(const char *pfx="") const {
             printf("Summary         = 0x%08x\n", m_summary);

@@ -5,7 +5,7 @@
 #include "CalDiagnosticData.h"
 #include <vector>
 
-#include "EventSummaryCommon.h"
+//#include "EventSummaryCommon.h"
 
 namespace ldfReader {
 
@@ -23,6 +23,7 @@ namespace ldfReader {
         void clear() { 
             m_tkrVec.clear(); m_calVec.clear(); 
             m_lenInBytes = 0; 
+            //m_summary.clear();
             m_exist = false; };
 
         void addCalDiagnostic(const CalDiagnosticData &cal) { m_calVec.push_back(cal); };
@@ -34,8 +35,8 @@ namespace ldfReader {
         int getNumTkrDiagnostic() const { return m_tkrVec.size(); };
 
 
-        const EventSummaryCommon& summary() const { return m_summary; }
-        void setSummary(unsigned summary) {m_summary.setSummary(summary); };
+        //const EventSummaryCommon& summary() const { return m_summary; }
+        //void setSummary(unsigned summary) {m_summary.setSummary(summary); };
 
        void setExist() { m_exist = true; };
        bool exist() const { return m_exist; };
@@ -51,7 +52,7 @@ namespace ldfReader {
         std::vector<TkrDiagnosticData> m_tkrVec;
 
         // Store the event sequence number for this contribution
-        EventSummaryCommon m_summary;
+        //EventSummaryCommon m_summary;
         bool m_exist; 
 
         unsigned m_packetError;

@@ -3,32 +3,32 @@
 
 #include <vector>
 
-#include "EventSummaryCommon.h"
+//#include "EventSummaryCommon.h"
 
 namespace ldfReader {
 
     /** @class ErrData
       * @brief Local storage of error data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/ErrData.h,v 1.4 2004/10/01 06:22:30 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/ErrData.h,v 1.5 2004/12/22 23:12:18 heather Exp $
     */
     class ErrData {
     public:
 
         ErrData() { clear(); };
         ErrData(const ErrData& error) { 
-            m_summary = error.m_summary; 
+            //m_summary = error.m_summary; 
             m_lenInBytes = error.m_lenInBytes; 
             m_exist = error.m_exist; };
-        ErrData(const EventSummaryCommon &summary) { clear(); m_summary = summary; }
+        //ErrData(const EventSummaryCommon &summary) { clear();  }
         ~ErrData() { clear(); };
 
         void clear() { 
-            m_summary.setSummary(0); 
+            //m_summary.setSummary(0); 
             m_lenInBytes = 0; 
             m_exist = false; };
 
-        const EventSummaryCommon& summary() const { return m_summary; };
-        void setSummary(unsigned summary) { m_summary.setSummary(summary);};
+        //const EventSummaryCommon& summary() const { return m_summary; };
+        //void setSummary(unsigned summary) { m_summary.setSummary(summary);};
 
         void setExist() { m_exist = true; };
         bool exist() const { return m_exist; };
@@ -42,7 +42,7 @@ namespace ldfReader {
     private:
 
         // Store the event sequence number for this contribution
-        EventSummaryCommon m_summary;
+        //EventSummaryCommon m_summary;
         // denotes if this contribution exists for this event
         bool m_exist;
 
