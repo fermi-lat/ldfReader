@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Jul 21 17:26:27 PDT 2004
+ldfReader/src/test
+
+Modified Files:
+	test_ldfReader.cxx 
+Log Message:
+don't report missing TEMs.. just a distraction
+    *
+------------------------------------------------------------
 User: heather  Wed Jul 21 17:26:05 PDT 2004
 ldfReader/src/iterators
 
