@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v1r5p3  26-Jan-2005 hmk More bug fixes for error bits
 v1r5p2  25-Jan-2005 hmk Fix up event summary error bits
 v1r5p1  21-Jan-2005 hmk More exception handling
 v1r5p0  21-Jan-2005 hmk Fix up check on OSW error summary bit
