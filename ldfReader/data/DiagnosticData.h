@@ -32,18 +32,28 @@ namespace ldfReader {
 
         void print() const {
             if( !exist()) {
-                printf("No Diagnostic Data\n");
-                return;
+                printf("No Diagnostic Data\n");                return;
             }
             printf("Diagnostic Data:\n");
             printf("Len: %lu\n\n", m_lenInBytes);
         }
 
-        void addCalDiagnostic(const CalDiagnosticData &cal) { m_cal = cal; };
-        const CalDiagnosticData& getCalDiagnostic() const{ return m_cal; };
+	// Added 03.19.2005 by awb to get all Tkr and Cal diagnostics contributions:
+	void addCalDiagnostic(const CalDiagnosticData &cal) { m_cal.push_back(cal); };
+        const CalDiagnosticData& getCalDiagnosticByIndex(unsigned int index) const{ return m_cal[index]; };
+        int getNumCalDiagnostic() const { return m_cal.size(); };
 
-        void addTkrDiagnostic(const TkrDiagnosticData &tkr) { m_tkr = tkr; };
-        const TkrDiagnosticData& getTkrDiagnostic() const { return m_tkr; };
+        void addTkrDiagnostic(const TkrDiagnosticData &tkr) { m_tkr.push_back(tkr); };
+        const TkrDiagnosticData& getTkrDiagnosticByIndex(unsigned int index) const { return m_tkr[index]; };
+        int getNumTkrDiagnostic() const { return m_tkr.size(); };
+
+
+	// Taken out 03.19.2005 by awb:
+        //void addCalDiagnostic(const CalDiagnosticData &cal) { m_cal = cal; };
+        //const CalDiagnosticData& getCalDiagnostic() const{ return m_cal; };
+	//
+        //void addTkrDiagnostic(const TkrDiagnosticData &tkr) { m_tkr = tkr; };
+        //const TkrDiagnosticData& getTkrDiagnostic() const { return m_tkr; };
 
 
        void setExist() { m_exist = true; };
@@ -56,8 +66,14 @@ namespace ldfReader {
        unsigned packetError() const { return m_packetError; };
 
     private:
-        CalDiagnosticData m_cal;
-        TkrDiagnosticData m_tkr;
+       // Taken out 03.19.2005 by awb:
+       //CalDiagnosticData m_cal;
+       //TkrDiagnosticData m_tkr;
+
+	// Added 03.19.2005 awb to get all Tkr and Cal diagnostics contributions:
+       std::vector<CalDiagnosticData> m_cal;
+       std::vector<TkrDiagnosticData> m_tkr;
+
 
         bool m_exist; 
 
