@@ -4,6 +4,8 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v1r0p2  27-Aug-2004 jrb Little bug fix for linux compile
+v1r0p1  27-Aug-2004 jrb (for hmk) only check event seqs for newer EBF/LDF file
 v1r0    25-Aug-2004 hmk increment version
 v0r6    25-Aug-2004 hmk Store event summary for each contribution and check
                     at the end of loading each event whether the event seq is
