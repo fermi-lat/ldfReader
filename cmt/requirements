@@ -1,5 +1,5 @@
 package ldfReader
-version v1r1p2
+version v1r1p3
 
 author Heather Kelly <heather@lheapop@gsfc.nasa.gov>
 author Joanne Bogart <jrb@slac.stanford.edu>
@@ -33,7 +33,10 @@ macro_append cppflags  "" \
 
 library ldfReader *.cxx iterators/*.cxx data/*.cxx \ 
                   ${ldfReader_headers} ${ldfParser_headers} \ 
-                  ${LDF_DIR}/test/EBF_fileIn.c
+                  ${ldfExt_DIR}/test/EBF_fileIn.c
+
+# Create this environment macro for use during testing
+set LDFROOT ${ldfExt_DIR}
 
 apply_pattern package_linkopts
 apply_pattern package_stamps
