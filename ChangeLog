@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Aug 25 15:38:44 PDT 2004
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+begin storing event summary for each contribution
+    *
+------------------------------------------------------------
 User: heather  Wed Aug 25 15:37:41 PDT 2004
 ldfReader/cmt
 
