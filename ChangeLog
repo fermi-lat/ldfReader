@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Aug 25 15:37:41 PDT 2004
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+begin storing event summary for each contribution
+    *
+------------------------------------------------------------
 User: heather  Wed Aug 25 15:37:11 PDT 2004
 ldfReader/src
 
