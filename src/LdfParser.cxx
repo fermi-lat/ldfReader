@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.16 2005/03/11 23:43:50 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.17 2005/03/14 07:54:23 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -361,9 +361,9 @@ namespace ldfReader {
                 if (eventSeqNum == maxEventSeqNum) eventSeqNum = -1;
             }
 
-            ldfReader::LatData::instance()->checkTemErrorInEventSummary();
+            ldfReader::LatData::instance()->checkTemError();
             ldfReader::LatData::instance()->checkPacketError();
-            ldfReader::LatData::instance()->checkTrgErrorInEventSummary();
+            ldfReader::LatData::instance()->checkTrgParityError();
 
          } catch (LdfException& e) {
             std::cerr << "Caught LdfException: " << e.what() << std::endl;

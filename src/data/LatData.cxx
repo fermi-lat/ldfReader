@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.15 2005/02/03 20:36:56 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.16 2005/03/14 07:54:01 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -63,11 +63,9 @@ namespace ldfReader {
             delete digi;
         }
         m_acdCol.clear();
-        m_diagnostic.clear();
         m_gem.clear();
         m_osw.clear();
         m_aem.clear();
-        m_err.clear();
         m_flags = 0;
     }
 
@@ -176,7 +174,7 @@ namespace ldfReader {
         return (orAll);
     }
 
-    unsigned LatData::checkTemErrorInEventSummary() {
+    unsigned LatData::checkTemError() {
         unsigned orAll = 0;
 
         //if(getGem().exist()) 
@@ -220,20 +218,20 @@ namespace ldfReader {
             if (getOsw().exist()) firstEvtSeq = getOsw().summary().eventSequence();
             printf("Event Summary Error Flag Set, Event:  %u\n", firstEvtSeq);
             firstEvtSeq++;
-            setErrorSummaryFlag();
+            setTemErrorFlag();
         }
         return (orAll);
     }
 
 
-    unsigned LatData::checkTrgErrorInEventSummary() {
+    unsigned LatData::checkTrgParityError() {
         unsigned orAll = 0;
 
         if(getGem().exist()) 
             orAll |= getGem().summary().trgParityError();
 
-        //if (getAem().exist()) 
-            //orAll |= getAem().summary().error();
+        if (getAem().exist()) 
+            orAll |= getAem().summary().trgParityError();
 
         unsigned int temOrAll = 0;
         std::map<unsigned int, TowerData*>::const_iterator towerIter = m_towerMap.begin();
