@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Feb  1 13:54:51 PST 2005
+ldfReader/src/test
+
+Modified Files:
+	test_ldfReader.cxx 
+Log Message:
+handle exception in test program
+    *
+------------------------------------------------------------
 User: heather  Tue Feb  1 13:54:34 PST 2005
 ldfReader/src/iterators
 
