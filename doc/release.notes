@@ -1,0 +1,55 @@
+/** @file release.notes
+Package ldfReader
+@verbatim
+Coordinator:H.Kelly
+@verbatim
+
+
+v0      14-Apr-2004 hmk Initial version using the Online/LDF library
+------------------------------------------- end of ldfReader release notes  
+                                            saved for historical reasons
+        13-Feb-2004 hmk Continue cleanup - CAL
+        12-Feb-2004 hmk Start re-organization & cleanup - first up TKR
+v1r10   11-Feb-2004 hmk use TKRend to set position for diagnost data
+v1r9    05-Feb-2004 hmk fix storage of diagnostic data
+v1r8    27-Jan-2004 hmk handle the PPC time which determines event spacing
+v1r7    18-Dec-2003 hmk Handle diagnostic data using the EBF Online library interface
+v1r6p3  26-Nov-2003 hmk Now really make it work 
+v1r6p2  24-Nov-2003 hmk Handle full event summary word
+v1r6p1  20-Nov-2003 hmk Handle the layer and ends of TKR diagnostic data
+v1r6p0  13-Nov-2003 hmk Decouple the ldfReader's diagnostic words from EBF's
+v1r6    09-Nov-2003 hmk Handle trigger primitives in diagnostic data
+v1r5    31-Oct-2003 hmk Handle possible runId in the FITS primary header
+v1r4    29-Oct-2003 hmk Add exception class to EbfParser to catch problems in
+                        constructor
+v1r3    22-Sep-2003 hmk add in reading of event summary and time
+v1r2p1  07-Sep-2003 hmk ditching patterns for now - until the same pattern works
+                        on both win and linux
+v1r2    05-Sep-2003 hmk Fix CAL processing
+v1r1    18-Aug-2003 hmk Introduce ldfReader namespace
+v1r0p2  07-Aug-2003 tk  update requirements for GlastPolicy v5r2p4
+v1r0p1  06-Aug-2003 hmk Clear caldigi collection in towerdata
+v1r0p0  22-Jul-2003 hmk Fix for linux
+v1r0    18-Jul-2003 hmk First version that reads CAL data
+v0r4p4  28-Jun-2003 jrb Use ld_library_path pattern
+v0r4p3   5-Jun-2003 jrb 1. Calculate tracker (uni)plane correctly for ToT, too
+                        2. Look up and use EVTCOUNT keyword in each FITS HDU
+v0r4p2   4-Jun-2003 jrb Calculate tracker (uni)plane correctly
+v0r4p1   4-Jun-2003 jrb 1. Report end of events correctly. 2. Foolproof
+                        calculation of new buffer size
+v0r4p0  20-May-2003 jrb Add class to keep track of debug-output flag; use it
+v0r4    14-May-2003 jrb Machinery to handle both LAT and EBF data
+v0r3     9-May-2003 jrb Compatible with new version of EBF library. For now,
+                        can *only* read EM (mini-tower) data.
+v0r2p0  28-Apr-2003 jrb Bug fixes to get FITS handling to work
+v0r2    25-Apr-2003 jrb Fix test program.  Also includes first 
+                        guess at FITS-handling  
+v0r1p1  17-Apr-2003 jrb  Tracy is an author, too
+v0r1p0  17-Apr-2003 jrb & Tracy  Variety of small fixes 
+v0r1    11-Apr-2003 jrb  Just to get a better tag name
+v0r0    11-Apr-2003 jrb  fix up #includes to work properly
+head updates    09-Apr-2003 HMK update for Online/EBF v01-00-00
+v0      18-Mar-2003 HMK initial import
+@endverbatim
+
+*/

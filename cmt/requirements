@@ -1,0 +1,59 @@
+package ldfReader
+version v0
+
+author Heather Kelly <heather@lheapop@gsfc.nasa.gov>
+author Joanne Bogart <jrb@slac.stanford.edu>
+author Tracy Usher   <usher@slac.stanford.edu>
+
+use GlastPolicy v*
+
+use ldfExt  v0r*  IExternal
+use cfitsio v1r*  IExternal
+use facilities  v*
+
+
+apply_pattern package_include
+apply_pattern package_headers
+
+macro        ldfParser_headers ""  \
+    WIN32  "..\src\data\*.h ..\src\iterators\*.h"
+
+macro_append ldfReader_headers ""     \
+    WIN32  "..\ldfReader\data\*.h"
+
+
+# Define some necessary macros for compilation - not sure why I need qthis now
+macro_append cppflags  "" \
+      WIN32Debug ' /D "WIN32" /D "__i386" '\
+      WIN32      ' /D "WIN32" /D "__i386" '\
+      vsnet        ' /DWIN32 /D__i386 ' 
+
+
+
+
+library ldfReader *.cxx iterators/*.cxx data/*.cxx \ 
+                  ${ldfReader_headers} ${ldfParser_headers} \ 
+                  ${LDF_DIR}/test/EBF_fileIn.c
+
+apply_pattern package_linkopts
+apply_pattern package_stamps
+
+
+## Our shareable library is loaded along with the executable;
+## its directory needs to be added to LD_LIBRARY_PATH
+apply_pattern ld_library_path
+
+
+private
+# get flags to build shared library
+# ditching the patterns until they work on windows and linux
+##apply_pattern package_Lshlibflags
+##apply_pattern package_shlibflags
+
+macro ldfReader_shlibflags "$(libraryshr_linkopts)" \ 
+                    WIN32      "$(libraryshr_linkopts) $(use_linkopts)" 
+macro_remove use_linkopts "$(<package>_linkopts)" WIN32 "" 
+
+macro_append cpplinkflags "" WIN32 " oldnames.lib "
+
+application test_ldfReader test/*.cxx
