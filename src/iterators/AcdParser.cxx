@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.2 2004/05/11 20:39:35 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.3 2004/05/12 06:27:36 heather Exp $
 */
 
 // EBF Online Library includes
@@ -57,7 +57,7 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
   const ACDtileSide *pmt = map()->lookup(id, cable, channel);
   // A or B
   char      side = pmt->a() ? 'A' : 'B'; //map()->side(id, cable, channel) ? 'B' : 'A';
-  AcdDigi::PmtSide digiSide = pmt->a() ? AcdDigi::PmtSide::A : AcdDigi::PmtSide::B;
+  AcdDigi::PmtSide digiSide = pmt->a() ? AcdDigi::A : AcdDigi::B;
 
   //printf("%s       %2d   %4s     %c    %d   0x%03x = %4d    %d     %d\n",
   //       m_prefix, channel, map()->tileName(id, tile), side,
