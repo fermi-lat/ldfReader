@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Oct 27 14:24:15 PDT 2004
+ldfReader/ldfReader/data
+
+Modified Files:
+	AcdDigi.h 
+Log Message:
+handle veto discrim correctly
+    *
+------------------------------------------------------------
 User: heather  Wed Oct 27 14:23:15 PDT 2004
 ldfReader/doc
 
