@@ -4,7 +4,8 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
-v1r6    09-Feb-2004 hmk Check EXTNAME of HDU to make sure it is Event Data
+v1r6p0  09-Feb-2005 hmk search for Event Data HDUs in a better way
+v1r6    09-Feb-2005 hmk Check EXTNAME of HDU to make sure it is Event Data
 v1r5p8  03-Feb-2005 hmk Ditch useless information message to avoid confusion
 v1r5p7  02-Feb-2005 hmk No bad event flag for monotonically increases event
                     sequences check - waiting for prescaling/filtering flag 
