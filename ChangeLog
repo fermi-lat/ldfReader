@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Sep 21 10:46:52 PDT 2004
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+prepare for handling event contribution lengths
+    *
+------------------------------------------------------------
 User: jrb  Fri Aug 27 15:21:04 PDT 2004
 ldfReader/doc
 
