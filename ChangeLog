@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Sep 22 22:18:02 PDT 2004
+ldfReader/src/iterators
+
+Modified Files:
+	LatComponentParser.cxx 
+Log Message:
+flag contributions when they truly exist
+    *
+------------------------------------------------------------
 User: heather  Wed Sep 22 22:17:41 PDT 2004
 ldfReader/src/data
 
