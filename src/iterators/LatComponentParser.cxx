@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.12 2005/01/25 09:21:33 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.13 2005/01/26 07:27:01 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -37,7 +37,7 @@ namespace ldfReader {
     {
         const char* prefix = "  ";
         ldfReader::LatData::instance()->setSummary(event->summary());
-        ldfReader::OswData osw(ldfReader::EventSummaryCommon(contribution->summary()));
+        ldfReader::OswData osw(ldfReader::EventSummaryCommon(((EBFcontribution*)contribution)->summary()));
         osw.initPacketError(contribution->packetError());
         //ldfReader::LatData::instance()->getOsw().initLength(((EBFcontribution*)contribution)->length());
         osw.initLength(((EBFcontribution*)contribution)->length());
@@ -56,7 +56,7 @@ namespace ldfReader {
         //if (EbfDebug::getDebug())  printf("\nGEM:\n");
         ldfReader::GemData gem;
 
-        ldfReader::EventSummaryCommon summary(contribution->summary());
+        ldfReader::EventSummaryCommon summary(((EBFcontribution*)contribution)->summary());
         gem.setExist();
         gem.initPacketError(contribution->packetError());
         gem.setSummary(summary);
@@ -143,8 +143,10 @@ namespace ldfReader {
         if (!tower) {
             tower = new TowerData(towerId);
             curLatData->addTower(tower);
-            ldfReader::EventSummaryCommon summary(contribution->summary());
+            ldfReader::EventSummaryCommon summary(((EBFcontribution*)contribution)->summary());
             ldfReader::TemData tem(summary);
+            //printf("Summary in TEM in CAL\n");
+            //tem.summary().print();
             tem.setExist();
             tem.initPacketError(((EBFcontribution*)contribution)->packetError());
             tem.initLength(((EBFcontribution*)contribution)->length());
@@ -180,8 +182,10 @@ namespace ldfReader {
         }
         if (_calSrc != LATPcellHeader::source(contribution->header())) {
             // We haven't picked up this TEM's event summary yet
-            ldfReader::EventSummaryCommon summary(contribution->summary());
+            ldfReader::EventSummaryCommon summary(((EBFcontribution*)contribution)->summary());
             ldfReader::TemData tem(summary);
+            printf("Summary in TEM in TKR\n");
+            tem.summary().print();
             tem.setExist();
             tem.initPacketError(((EBFcontribution*)contribution)->packetError());
             tem.initLength(((EBFcontribution*)contribution)->length());
