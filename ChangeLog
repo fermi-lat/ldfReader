@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Jul 20 22:09:26 PDT 2004
+ldfReader/src/iterators
+
+Modified Files:
+	CalParser.cxx 
+Log Message:
+make this a debug statement
+    *
+------------------------------------------------------------
 User: heather  Mon Jun 28 16:58:05 PDT 2004
 ldfReader/src/iterators
 
