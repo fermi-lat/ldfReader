@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Jun 23 11:03:21 PDT 2004
+ldfReader/src/test
+
+Modified Files:
+	test_ldfReader.cxx 
+Log Message:
+check marker in test
+    *
+------------------------------------------------------------
 User: heather  Wed Jun 23 11:02:38 PDT 2004
 ldfReader/src/iterators
 
