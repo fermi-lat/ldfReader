@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Jan 25 01:20:26 PST 2005
+ldfReader/ldfReader/data
+
+Modified Files:
+	DiagnosticData.h ErrData.h EventSummaryCommon.h TemData.h 
+Log Message:
+still working on event summary error bits
+    *
+------------------------------------------------------------
 User: heather  Tue Jan 25 01:20:14 PST 2005
 ldfReader/doc
 
