@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Mar 15 11:52:22 PST 2005
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+move diagnostic & error into tem data structure
+    *
+------------------------------------------------------------
 User: heather  Tue Mar 15 11:52:07 PST 2005
 ldfReader/doc
 
