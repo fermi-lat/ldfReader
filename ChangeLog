@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Jan 14 11:55:41 PST 2005
+ldfReader/src/iterators
+
+Modified Files:
+	LatContributionParser.cxx LatContributionParser.h 
+Log Message:
+ignore UDF contributions for now
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r3em0, operation: add
 Package: ldfReader
