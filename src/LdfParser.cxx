@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.11 2005/01/31 20:18:23 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.12 2005/02/01 19:08:50 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -170,6 +170,7 @@ namespace ldfReader {
     }
 
     long LdfParser::getRow() {
+       try {
         int status = 0;
         //  get next row length and starting address
         long nbytes;
@@ -214,6 +215,13 @@ namespace ldfReader {
         // This will do swapping if needed on event data.
 
         return nbytes;
+        } catch( LdfException& e) {
+            std::cerr << "Caught LdfException: " << e.what() << std::endl;
+            throw;
+        } catch(...) {
+            std::cerr << "Unknown exception in LdfParser::getRow" << std::endl;
+            throw;
+        }
     }
 
 
@@ -320,11 +328,15 @@ namespace ldfReader {
 
                 // Now check to see that the event sequences are monotonically increasing
                 if (ldfReader::LatData::instance()->summaryData().eventSequence() < eventSeqNum) {
-                    printf("Event Seq # is not monotonically increasing ");
+                    printf("WARNING Event Seq # is not monotonically increasing ");
                     printf("Last EventSeqNum %lu, current %lu\n", eventSeqNum,
                         ldfReader::LatData::instance()->summaryData().eventSequence());
-                    printf("Setting Bad Event Flag\n");
-                    ldfReader::LatData::instance()->setBadEventSeqFlag();
+                    eventSeqNum = ldfReader::LatData::instance()->summaryData().eventSequence();
+                    // Feb 2, 2005 HMK
+                    // Don't set bad event flag..until we have a way to tell
+                    // if prescaling or filtering is on..
+                    //printf("Setting Bad Event Flag\n");
+                    //ldfReader::LatData::instance()->setBadEventSeqFlag();
                     return 0;
                 } else {
                     eventSeqNum = ldfReader::LatData::instance()->summaryData().eventSequence();
