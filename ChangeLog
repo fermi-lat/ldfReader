@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Nov 24 13:44:41 PST 2004
+ldfReader/ldfReader/data
+
+Modified Files:
+	TkrDiagnosticData.h CalDiagnosticData.h 
+Log Message:
+store tower and layer/gtcc for CAL/TKR diagnostic
+    *
+------------------------------------------------------------
 User: heather  Wed Nov 24 13:43:40 PST 2004
 ldfReader/doc
 
