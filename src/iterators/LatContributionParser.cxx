@@ -4,7 +4,7 @@
 /** @file LatContributionParser.cxx
 @brief Implementation of the LatContributionParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.20 2004/02/14 05:14:08 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatContributionParser.cxx,v 1.1.1.1 2004/04/15 20:02:23 heather Exp $
 */
 
 //#include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -19,5 +19,10 @@ namespace ldfReader {
         return m_eep.status();
     }
 
+    int LatContributionParser::UDF(LATcontribution* event, LATcontribution* end)   { 
+        printf ("WARNING:  Ignoring UDF contributions - any questions, see Eduardo\n");
+        return 0; 
+
+    }
 }
 #endif
