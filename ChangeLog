@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: heather  Wed Sep 22 22:16:57 PDT 2004
+ldfReader/ldfReader/data
+
+Modified Files:
+	AemData.h DiagnosticData.h ErrData.h GemData.h OswData.h 
+	TemData.h 
+Log Message:
+flag contributions when they actually exist in the event
+    *
+------------------------------------------------------------
 User: heather  Tue Sep 21 10:59:02 PDT 2004
 ldfReader/src/test
 
