@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Aug 25 15:37:11 PDT 2004
+ldfReader/src
+
+Modified Files:
+	LdfParser.cxx 
+Log Message:
+begin storing event summary for each contribution
+    *
+------------------------------------------------------------
 User: heather  Wed Aug 25 15:36:25 PDT 2004
 ldfReader/src/iterators
 
