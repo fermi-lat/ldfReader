@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.1 2004/05/12 06:26:07 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.2 2004/08/25 22:37:11 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -250,9 +250,6 @@ namespace ldfReader {
             // An error occured
             return -1;
         }
-
-        printf("LDF Evt Seq %d\n", ldfReader::LatData::instance()->summaryData().eventSequence());
-        printf("static evt seq %d\n", eventSeqNum);
 
         if (!ldfReader::LatData::instance()->eventSeqConsistent()) {
             printf("Event Sequence numbers are not consistent within all contributions\n");
