@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.19 2005/03/31 07:38:52 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.20 2005/03/31 23:55:05 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -292,9 +292,12 @@ const unsigned LdfParser::BufferSize = 64*1024;
             //m_datagram = m_datagram->next();
             char buffer[BufferSize];
             unsigned size = from_file(m_ebf, buffer);
-            if (size <= 0) return -1;
+            if (size <= 0) {
+              return -1;
+            }
             m_start = (LATdatagram*)buffer;
             m_end = (LATdatagram*)(&buffer[size]);
+            m_datagram = m_start;
           
             return 0;
         }
