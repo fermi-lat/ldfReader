@@ -5,7 +5,7 @@
 /** @file test_ldfReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.7 2004/07/29 22:01:18 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.8 2004/09/21 17:59:02 heather Exp $
 */
 
 #include <iostream>
@@ -18,7 +18,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.
 
 int main(int argn, char** argc) {
     using namespace ldfReader;
-    std::string filename = "$(LDF_DIR)/test/muon-5.arch";
+    std::string filename = "$(LDFROOT)/test/muon-5.arch";
 
     if( argn>1 ) filename = argc[1];
 
