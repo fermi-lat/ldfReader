@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Nov  1 11:02:45 PST 2004
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+pick up first event seq from any contribution not just GEM
+    *
+------------------------------------------------------------
 User: heather  Mon Nov  1 11:02:15 PST 2004
 ldfReader/doc
 
