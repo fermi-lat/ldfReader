@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.12 2005/01/26 07:27:00 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.13 2005/01/27 21:58:08 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -212,7 +212,7 @@ namespace ldfReader {
         }
         if ( getOsw().exist()) {
             orAll |= getOsw().summary().error();
-            printf("OSW: error: %u\n", getOsw().summary().error());
+            printf("OSW error: %d\n", getOsw().summary().error());
             if (temOrAll != getOsw().summary().error()) 
                 printf("OSW error summary bit does not match OR of all error bits across all TEM contributions, %d event Seq: %lu\n", getOsw().summary().error(), getOsw().summary().eventSequence());
         }

@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.13 2005/01/26 07:27:01 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.14 2005/01/27 21:58:08 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -41,13 +41,14 @@ namespace ldfReader {
         osw.initPacketError(contribution->packetError());
         //ldfReader::LatData::instance()->getOsw().initLength(((EBFcontribution*)contribution)->length());
         osw.initLength(((EBFcontribution*)contribution)->length());
-        ldfReader::LatData::instance()->setOsw(osw);
+
         // OSW contribution only exists in later versions starting in Feb 2004
         if (ldfReader::LatData::instance()->getFormatIdentity() >= ID_WITH_OSW) {
             osw.setExist(); 
             OswParser oswParse(event, contribution);
             oswParse.iterate();
         }
+        ldfReader::LatData::instance()->setOsw(osw);
         return 0;
     }
 
@@ -221,8 +222,7 @@ int LatComponentParser::error(EBFevent* event, TEMcontribution* contribution) {
     ldfReader::ErrData err;
     err.initLength(((EBFcontribution*)contribution)->length());    
     //err.initPacketError(((EBFcontribution*)contribution)->packetError());
-    ldfReader::LatData::instance()->setErr(err);
-    if ( EventSummary::error(contribution->summary())) {
+    if ( EventSummary::error(((EBFcontribution*)contribution)->summary())) {
         err.setExist();
         unsigned offset;
         if (0 != diagnosticEnd())
@@ -233,6 +233,7 @@ int LatComponentParser::error(EBFevent* event, TEMcontribution* contribution) {
         errParse.iterate();
         errorEnd(offset+errParse.size());
     }
+    ldfReader::LatData::instance()->setErr(err);
     return 0;
 }
 
