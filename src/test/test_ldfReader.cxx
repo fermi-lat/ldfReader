@@ -5,7 +5,7 @@
 /** @file test_ldfReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.10 2004/10/27 21:24:41 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.11 2005/01/27 21:58:08 heather Exp $
 */
 
 #include <iostream>
@@ -17,6 +17,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.
 
 
 int main(int argn, char** argc) {
+  try {
     using namespace ldfReader;
     std::string filename = "$(LDFROOT)/test/muon-5.arch";
 
@@ -167,6 +168,10 @@ int main(int argn, char** argc) {
 
     std::cout << "Test completed successfully" << std::endl;
     return 0;
+  } catch(...) {
+    printf("Caught exception - exiting\n"); 
+    return(-1);
+  }
 }
 
 #endif
