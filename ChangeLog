@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Jan  4 15:30:24 PST 2005
+ldfReader/ldfReader/data
+
+Modified Files:
+	LatData.h 
+Log Message:
+fix up use of && versus &
+    *
+------------------------------------------------------------
 User: heather  Wed Dec 22 15:50:35 PST 2004
 ldfReader/ldfReader/data
 
