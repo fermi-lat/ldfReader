@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: heather  Thu Jul 29 15:00:51 PDT 2004
+ldfReader/ldfReader/data
+
+Modified Files:
+	LatData.h EventSummaryData.h 
+Added Files:
+	GemData.h 
+Log Message:
+handle GEM and store EBF Format Id
+    *
+------------------------------------------------------------
 User: heather  Thu Jul 29 14:59:39 PDT 2004
 ldfReader/doc
 
