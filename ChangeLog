@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Feb  2 13:58:55 PST 2005
+ldfReader/src
+
+Modified Files:
+	LdfParser.cxx 
+Log Message:
+no bad event flagging for monotonically increasing event sequence check
+    *
+------------------------------------------------------------
 User: heather  Wed Feb  2 13:58:41 PST 2005
 ldfReader/doc
 
