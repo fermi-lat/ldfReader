@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: heather  Fri Jan 14 11:32:58 PST 2005
+ldfReader/src/iterators
+
+Modified Files:
+      Tag: EngineeringModel-v3r0407p1
+	LatContributionParser.cxx LatContributionParser.h 
+Log Message:
+Ignore all UDF until further notice
+    *
+------------------------------------------------------------
 TAG
 Tag name: EngineeringModel-v3r0407p1, operation: add
 Package: ldfReader
