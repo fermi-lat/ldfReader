@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Sun Mar 13 23:53:42 PST 2005
+ldfReader/ldfReader/data
+
+Modified Files:
+	LatData.h 
+Log Message:
+really skip packet error contributions
+    *
+------------------------------------------------------------
 User: heather  Sun Mar 13 23:53:22 PST 2005
 ldfReader/cmt
 
