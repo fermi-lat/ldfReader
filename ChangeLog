@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Jul 29 15:02:40 PDT 2004
+ldfReader/src/iterators
+
+Modified Files:
+	EbfEventParser.cxx LatComponentParser.cxx 
+Log Message:
+handle GEM and store EBF Format Id
+    *
+------------------------------------------------------------
 User: heather  Thu Jul 29 15:02:11 PDT 2004
 ldfReader/src/iterators
 
