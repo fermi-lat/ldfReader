@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Jul 29 14:59:39 PDT 2004
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+handle GEM and fix up time handling for backward compatibility - store EBF Format Identity
+    *
+------------------------------------------------------------
 User: heather  Thu Jul 29 14:58:51 PDT 2004
 ldfReader/cmt
 
