@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Feb  3 12:36:56 PST 2005
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+ditch useless message
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r5p7, operation: add
 Package: ldfReader
