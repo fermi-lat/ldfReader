@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: heather  Tue Sep 21 10:57:19 PDT 2004
+ldfReader/ldfReader/data
+
+Modified Files:
+	AemData.h DiagnosticData.h ErrData.h GemData.h LatData.h 
+	OswData.h TemData.h TowerData.h 
+Log Message:
+handle error contribution lengths
+    *
+------------------------------------------------------------
 User: heather  Tue Sep 21 10:47:18 PDT 2004
 ldfReader/cmt
 
