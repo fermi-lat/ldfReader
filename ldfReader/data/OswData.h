@@ -9,7 +9,7 @@ namespace ldfReader {
 
     /** @class OswData
       * @brief Local storage of OSW data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/OswData.h,v 1.7 2005/01/27 21:57:29 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/OswData.h,v 1.8 2005/01/28 23:02:44 heather Exp $
     */
     class OswData {
     public:
@@ -19,7 +19,9 @@ namespace ldfReader {
             clear();
             m_summary = osw.m_summary; 
             m_lenInBytes = osw.m_lenInBytes; 
+            m_evtSequence = osw.m_evtSequence;
             m_exist = osw.m_exist; };
+ 
         OswData(const EventSummaryCommon& summary) { clear(); m_summary = summary; };
         ~OswData() { clear(); };
 
@@ -27,6 +29,7 @@ namespace ldfReader {
             m_summary.setSummary(0); 
             m_lenInBytes = 0; 
             m_packetError = 0;
+            m_evtSequence = 0;
             m_exist = false;};
 
         void print() const {
@@ -36,6 +39,7 @@ namespace ldfReader {
             }
             printf("OSW: \n");
             m_summary.print();
+            printf("EvtSequence %u\n", m_evtSequence);
             printf("Len: %lu\n\n", m_lenInBytes);
         }
 
@@ -51,6 +55,8 @@ namespace ldfReader {
        void initPacketError(unsigned packetError) { m_packetError=packetError; };
        unsigned packetError() const {  return m_packetError; };
 
+       void setEvtSequence(unsigned evtSequence) { m_evtSequence = evtSequence; };
+       unsigned evtSequence() const { return m_evtSequence; };
 
     private:
 
@@ -61,6 +67,8 @@ namespace ldfReader {
         unsigned m_packetError;
         unsigned long m_lenInBytes;
 
+        // New as of v05-06-01 32bit event sequence number
+        unsigned int m_evtSequence;
     };
 } // end namespace
 #endif
