@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Dec 22 15:11:36 PST 2004
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+handle error bits
+    *
+------------------------------------------------------------
 User: heather  Wed Dec 22 15:11:30 PST 2004
 ldfReader/doc
 
