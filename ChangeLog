@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Mar 30 23:38:52 PST 2005
+ldfReader/src
+
+Modified Files:
+	LdfParser.cxx 
+Log Message:
+retrieve runId completely generically
+    *
+------------------------------------------------------------
 User: heather  Wed Mar 30 23:38:33 PST 2005
 ldfReader/doc
 
