@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v0r4    21-Jul-2004 hmk Store channel and more bit in case they are useful later
 v0r3    22-Jun-2004 hmk more work on ACD data  - adding parity error
         also fix up handling of EventSummary - pick up OSW contribution
 v0r1    20-Apr-2004 hmk Update for Acd data and LDF v05-00-01

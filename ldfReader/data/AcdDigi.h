@@ -6,7 +6,7 @@
 namespace ldfReader {
     /** @class AcdDigi
       * @brief Local storage of CAL log data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.2 2004/06/22 21:00:05 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.3 2004/06/22 21:16:51 heather Exp $
     */
     class AcdDigi {
     public:
@@ -25,30 +25,42 @@ namespace ldfReader {
         class AcdPmt {
         public:
             AcdPmt() {};
-            AcdPmt(unsigned int pha, int r, PmtSide s, ParityError err = NOERROR) {
+            AcdPmt(unsigned int pha, int r, PmtSide s, short c, short m, ParityError err = NOERROR) {
                 m_pha = pha;
                 m_range = r;
                 m_side = s;
+                m_channel = c;
+                m_more = m;
                 m_error = err;
             };
 
             ~AcdPmt() {};
 
-            void print() const {
+            void print(bool header=true) const {
                 char side = m_side ? 'A' : 'B';
-                printf("PHA, range, side, parity error: %d, %d, %c, %d\n", m_pha,  m_range, side, m_error);
+                if (header) {
+                    printf("Channel\tPHA\trange\tside\tparity\tmore\n");
+                    printf("\t\t\t\terror\n");
+                }
+                printf("%d\t%d\t%d\t%c\t%d\t%d\n", m_channel, m_pha,  m_range, side, m_error, m_more);
             };
 
             unsigned int getPha() const { return m_pha; };
             int getRange() const { return m_range; };
             const PmtSide getSide() const { return m_side; };
             ParityError getParityError() const { return m_error; };
+            short getChannel() const { return m_channel; };
+            short getMore() const { return m_more; };
+
+            bool operator < (const AcdPmt& a) const{ return m_channel < a.m_channel;}
 
         private:
             unsigned int m_pha;
             int m_range;
             PmtSide m_side;
             ParityError m_error;
+            short m_channel;
+            short m_more;
         };
 
 
@@ -71,6 +83,7 @@ namespace ldfReader {
         int getTileId() const { return m_tileId; };
 
         const std::vector<AcdPmt> getReadout() const { return m_readout; };
+
 
     private:
 
