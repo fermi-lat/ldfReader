@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Feb  2 13:58:36 PST 2005
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+no bad event flagging for monotonically increasing event sequence check
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r5p6, operation: add
 Package: ldfReader
