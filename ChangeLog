@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: heather  Thu Jul 29 15:02:11 PDT 2004
+ldfReader/src/iterators
+
+Modified Files:
+	LatComponentParser.h 
+Added Files:
+	OswParser.h 
+Log Message:
+handle GEM and store EBF Format Id
+    *
+------------------------------------------------------------
 User: heather  Thu Jul 29 15:01:34 PDT 2004
 ldfReader/src/data
 
