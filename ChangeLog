@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Jul 21 17:25:41 PDT 2004
+ldfReader/src/data
+
+Modified Files:
+	AcdDigi.cxx 
+Log Message:
+optional header printing
+    *
+------------------------------------------------------------
 User: heather  Wed Jul 21 17:24:58 PDT 2004
 ldfReader/ldfReader/data
 
