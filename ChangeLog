@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Jan 20 12:49:35 PST 2005
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+fix up OSW error bit summary checking
+    *
+------------------------------------------------------------
 User: heather  Thu Jan 20 12:49:09 PST 2005
 ldfReader/doc
 
