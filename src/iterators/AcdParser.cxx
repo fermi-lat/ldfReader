@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.1 2004/04/21 22:18:54 heather Exp $
 */
 
 // EBF Online Library includes
@@ -54,25 +54,25 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
 {
   LATtypeId id   = event()->identity();
   // Tile number in [0,107]
-  unsigned  tile = map()->tile(id, cable, channel);
+  const ACDtileSide *pmt = map()->lookup(id, cable, channel);
   // A or B
-  char      side = map()->side(id, cable, channel) ? 'B' : 'A';
-  AcdDigi::PmtSide digiSide = map()->side(id, cable, channel) ? AcdDigi::PmtSide::B : AcdDigi::PmtSide::A;
+  char      side = pmt->a() ? 'A' : 'B'; //map()->side(id, cable, channel) ? 'B' : 'A';
+  AcdDigi::PmtSide digiSide = pmt->a() ? AcdDigi::PmtSide::A : AcdDigi::PmtSide::B;
 
   //printf("%s       %2d   %4s     %c    %d   0x%03x = %4d    %d     %d\n",
   //       m_prefix, channel, map()->tileName(id, tile), side,
   //       p.ADCrange(), p.ADCvalue(), p.ADCvalue(), p.parityError(), p.more());
   char *pEnd;
-  unsigned int tileNum = strtol(map()->tileName(id,tile), &pEnd, 0);
+  unsigned int tileNum = strtol(pmt->name(), &pEnd, 0);
 
   // Retrieve the tower or create a new TowerData object if necessary
   ldfReader::LatData* curLatData = ldfReader::LatData::instance();
-  AcdDigi* acd = curLatData->getAcd(map()->tileName(id,tile));
+  AcdDigi* acd = curLatData->getAcd(pmt->name());
   if (!acd) {
-      AcdDigi *digi = new AcdDigi(map()->tileName(id,tile), tileNum);
+      AcdDigi *digi = new AcdDigi(pmt->name(), tileNum);
       curLatData->addAcd(digi);
       // Now retrieve the pointer to the newly created AcdDigi
-      acd = curLatData->getAcd(map()->tileName(id,tile));
+      acd = curLatData->getAcd(pmt->name());
   } 
   acd->addPmt(ldfReader::AcdDigi::AcdPmt(p.ADCvalue(), p.ADCrange(), digiSide));
 
