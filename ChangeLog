@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Dec 22 15:50:35 PST 2004
+ldfReader/ldfReader/data
+
+Modified Files:
+	LatData.h 
+Log Message:
+finish off handling error bits
+    *
+------------------------------------------------------------
 User: heather  Wed Dec 22 15:12:58 PST 2004
 ldfReader/src/iterators
 
