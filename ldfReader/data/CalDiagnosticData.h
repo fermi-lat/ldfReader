@@ -11,18 +11,25 @@ namespace ldfReader {
     class CalDiagnosticData
     {
     public:
-        CalDiagnosticData(unsigned datum) 
-            : m_datum(datum) {}
+        CalDiagnosticData(unsigned datum, unsigned tower, unsigned layer) 
+            : m_datum(datum),m_tower(tower),m_layer(layer) {}
 
             CalDiagnosticData()  {}
             ~CalDiagnosticData() {}
 
-            void init(unsigned data) { m_datum = data; };
+            void init(unsigned data, unsigned tower,unsigned layer) { 
+                m_datum = data; 
+                m_tower = tower; 
+                m_layer = layer; };
 
             unsigned dataWord() const { return m_datum; };
+            unsigned tower() const { return m_tower; };
+            unsigned layer() const { return m_layer; };
 
     private:
         unsigned m_datum;
+        unsigned m_tower;
+        unsigned m_layer;
     };
 } // end namespace
 #endif
