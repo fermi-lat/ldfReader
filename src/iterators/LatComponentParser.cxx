@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.16 2005/01/31 20:18:31 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.17 2005/02/01 21:54:34 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -72,9 +72,13 @@ namespace ldfReader {
             contribution->calLEvector(), contribution->calHEvector(), 
             contribution->cnoVector(), contribution->conditionSummary(),
             tileList);
-        gem.initSummary(contribution->liveTime(), contribution->prescaled(),
-            contribution->discarded(), contribution->sent(), 
-            contribution->triggerTime(), time, contribution->deltaEventTime());
+        
+            GemDataCondArrivalTime condArrTime;
+            condArrTime.init(contribution->condArrTime().datum());
+            gem.initSummary(contribution->liveTime(), contribution->prescaled(),
+            contribution->discarded(), condArrTime,
+            contribution->triggerTime(), time, contribution->deltaEventTime(), contribution->deltaWindowOpenTime());
+        
 
         ldfReader::LatData::instance()->setGem(gem);
         return 0;
