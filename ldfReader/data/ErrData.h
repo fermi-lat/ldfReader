@@ -9,7 +9,7 @@ namespace ldfReader {
 
     /** @class ErrData
       * @brief Local storage of error data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/ErrData.h,v 1.2 2004/09/21 17:57:19 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/ErrData.h,v 1.3 2004/09/23 05:16:56 heather Exp $
     */
     class ErrData {
     public:
@@ -19,7 +19,7 @@ namespace ldfReader {
             m_summary = error.m_summary; 
             m_lenInBytes = error.m_lenInBytes; 
             m_exist = error.m_exist; };
-        ErrData(const EventSummaryCommon &summary) { m_summary = summary; }
+        ErrData(const EventSummaryCommon &summary) { clear(); m_summary = summary; }
         ~ErrData() { clear(); };
 
         void clear() { 

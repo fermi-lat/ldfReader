@@ -9,7 +9,7 @@ namespace ldfReader {
 
     /** @class AemData
       * @brief Local storage of AEM data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AemData.h,v 1.2 2004/09/21 17:57:19 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AemData.h,v 1.3 2004/09/23 05:16:56 heather Exp $
     */
     class AemData {
     public:
@@ -19,7 +19,7 @@ namespace ldfReader {
            m_summary = aem.m_summary; 
            m_lenInBytes = aem.m_lenInBytes; 
            m_exist = aem.m_exist; };
-        AemData(const EventSummaryCommon &summary) { m_summary = summary; };
+        AemData(const EventSummaryCommon &summary) { clear(); m_summary = summary; };
         ~AemData() { clear(); };
 
         void clear() { 
