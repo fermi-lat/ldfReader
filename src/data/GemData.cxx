@@ -4,7 +4,7 @@
 /** @file GemData.cxx
 @brief Implementation of the GemData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/GemData.cxx,v 1.2 2004/09/21 17:59:01 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/GemData.cxx,v 1.3 2004/09/23 05:17:40 heather Exp $
 */
 
 
@@ -13,6 +13,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/GemData.cxx,v 1.2 2004/
 namespace ldfReader {
 
     GemData::GemData(const GemData& gem) {
+        clear();
         m_tkrVector = gem.m_tkrVector;
         m_roiVector = gem.m_roiVector;
         m_cal_LE_Vector = gem.m_cal_LE_Vector;
@@ -73,6 +74,7 @@ namespace ldfReader {
         m_deltaEventTime = 0;
         m_exist = false;
         m_lenInBytes = 0;
+        m_packetError=0;
     }
 
    void GemData::print() const {

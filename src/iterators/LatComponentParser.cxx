@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.11 2004/12/22 23:12:58 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.12 2005/01/25 09:21:33 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -146,7 +146,7 @@ namespace ldfReader {
             ldfReader::EventSummaryCommon summary(contribution->summary());
             ldfReader::TemData tem(summary);
             tem.setExist();
-            tem.initPacketError(contribution->packetError());
+            tem.initPacketError(((EBFcontribution*)contribution)->packetError());
             tem.initLength(((EBFcontribution*)contribution)->length());
             tower->setTem(tem);
         }
@@ -183,7 +183,7 @@ namespace ldfReader {
             ldfReader::EventSummaryCommon summary(contribution->summary());
             ldfReader::TemData tem(summary);
             tem.setExist();
-            tem.initPacketError(contribution->packetError());
+            tem.initPacketError(((EBFcontribution*)contribution)->packetError());
             tem.initLength(((EBFcontribution*)contribution)->length());
             tower->setTem(tem);
         }
@@ -199,7 +199,7 @@ namespace ldfReader {
     int LatComponentParser::diagnostic (EBFevent* event, TEMcontribution* contribution) {
        
         //ldfReader::LatData::instance()->diagnostic()->setSummary(contribution->summary());
-        ldfReader::LatData::instance()->diagnostic()->initPacketError(contribution->packetError());
+        //ldfReader::LatData::instance()->diagnostic()->initPacketError(contribution->packetError());
         ldfReader::LatData::instance()->diagnostic()->initLength(((EBFcontribution*)contribution)->length());
         if ( EventSummary::diagnostic(contribution->summary())) {
             //   Process the trigger primitives in the diagnostic data
@@ -216,7 +216,7 @@ namespace ldfReader {
 int LatComponentParser::error(EBFevent* event, TEMcontribution* contribution) {
     ldfReader::ErrData err;
     err.initLength(((EBFcontribution*)contribution)->length());    
-    err.initPacketError(((EBFcontribution*)contribution)->packetError());
+    //err.initPacketError(((EBFcontribution*)contribution)->packetError());
     ldfReader::LatData::instance()->setErr(err);
     if ( EventSummary::error(contribution->summary())) {
         err.setExist();

@@ -9,13 +9,14 @@ namespace ldfReader {
 
     /** @class TemData
       * @brief Local storage of TEM data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TemData.h,v 1.5 2004/12/22 23:12:18 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TemData.h,v 1.6 2005/01/25 09:20:26 heather Exp $
     */
     class TemData {
     public:
 
         TemData() { clear(); };
         TemData(const TemData& tem) { 
+            clear();
             m_summary = tem.m_summary; 
             m_lenInBytes = tem.m_lenInBytes; 
             m_exist = tem.m_exist; };
@@ -25,7 +26,9 @@ namespace ldfReader {
         void clear() { 
             m_summary.setSummary(0); 
             m_lenInBytes = 0; 
-            m_exist = false; };
+            m_exist = false; 
+            m_packetError = 0;
+        };
 
         void print() const { 
              printf("TemData:\n");
