@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Feb  9 09:13:49 PST 2005
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+check EXTNAME of HDUs
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r5p8, operation: add
 Package: ldfReader
