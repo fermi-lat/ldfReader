@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Jan 31 12:18:31 PST 2005
+ldfReader/src/iterators
+
+Modified Files:
+	LatComponentParser.cxx 
+Log Message:
+fix up runId handling
+    *
+------------------------------------------------------------
 User: heather  Mon Jan 31 12:18:23 PST 2005
 ldfReader/src
 
