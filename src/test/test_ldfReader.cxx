@@ -5,7 +5,7 @@
 /** @file test_ldfReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.3 2004/05/13 21:50:43 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.4 2004/05/13 22:21:55 heather Exp $
 */
 
 #include <iostream>
@@ -44,7 +44,8 @@ int main(int argn, char** argc) {
         // Event Summary
         EventSummaryData summary = myLatData->summaryData();
         printf("event summary:\n");
-        printf("summary: %d time:  sec: %d, nanosec: %d \n", summary.summary(), summary.timeSec(), summary.timeNanoSec());
+        printf("summary: %u time:  sec: %d, nanosec: %d \n", summary.summary(), summary.timeSec(), summary.timeNanoSec());
+        printf("summary contd: marker: %d\n", EventSummary::marker(summary.summary()));
 
         // Check the ACD data
         printf("ACD Data\n");
