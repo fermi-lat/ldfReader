@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu May 13 15:21:55 PDT 2004
+ldfReader/src/test
+
+Modified Files:
+	test_ldfReader.cxx 
+Log Message:
+fix warning
+    *
+------------------------------------------------------------
 User: heather  Thu May 13 15:21:39 PDT 2004
 ldfReader/src/iterators
 
