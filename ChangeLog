@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Sep 24 08:30:35 PDT 2004
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+patch conversion of tile ids
+    *
+------------------------------------------------------------
 User: heather  Fri Sep 24 08:30:07 PDT 2004
 ldfReader/cmt
 
