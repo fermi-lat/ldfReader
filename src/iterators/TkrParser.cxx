@@ -4,7 +4,7 @@
 /** @file TkrParser.cxx
 @brief Implementation of the TkrParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.1.1.1 2004/04/15 20:02:23 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.2 2004/05/12 06:27:36 heather Exp $
 */
 #include <stdio.h> // included for TKRcontributionIterator.h
 // Online EBF library includes
@@ -92,7 +92,7 @@ namespace ldfReader {
         unsigned       array[8];              // 8 longwords of space
         unsigned*      accepts = m_contribution->acceptsMask(m_event, array);
 
-        printf("%s           GTCC   odd even  GTCC\n", m_prefix);
+        if (EbfDebug::getDebug()) printf("%s           GTCC   odd even  GTCC\n", m_prefix);
         unsigned i;
 
         if (EbfDebug::getDebug()) {
