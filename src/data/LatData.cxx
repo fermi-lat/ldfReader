@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.10 2005/01/20 20:49:35 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.11 2005/01/25 09:21:33 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -140,30 +140,39 @@ namespace ldfReader {
 
         unsigned orAll = 0;
 
-        if(getGem().exist()) 
+        if(getGem().exist()) {
             orAll |= getGem().packetError();
+        }
 
-        if (getAem().exist()) 
+        if (getAem().exist()) {
             orAll |= getAem().packetError();
+         }
 
-        if ( getErr().exist()) 
-            orAll |= getErr().packetError();
+        //if ( getErr().exist()) 
+        //    orAll |= getErr().packetError();
 
-        if ( getOsw().exist()) 
+        if ( getOsw().exist()) {
             orAll |= getOsw().packetError();
+         }
 
-        if (diagnostic()->exist()) 
-            orAll |= diagnostic()->packetError();
+        //if (diagnostic()->exist()) 
+        //    orAll |= diagnostic()->packetError();
 
         std::map<unsigned int, TowerData*>::const_iterator towerIter = m_towerMap.begin();
         while(towerIter != m_towerMap.end())
         {
             TowerData* tower = (towerIter++)->second;
             const TemData tem = tower->getTem();
-            if (tem.exist())
+            if (tem.exist()){
                 orAll |= tem.packetError();
+            }
         }
-        if (orAll != 0) setPacketErrorFlag();
+        if (orAll != 0) {
+            unsigned int firstEvtSeq;
+            if (getOsw().exist()) firstEvtSeq = getOsw().summary().eventSequence();
+            printf("Setting Packet Error Flag, Event: %u\n", firstEvtSeq);
+            setPacketErrorFlag();
+        }
         return (orAll);
     }
 
@@ -200,10 +209,16 @@ namespace ldfReader {
         }
         if ( getOsw().exist()) {
             orAll |= getOsw().summary().error();
+            printf("OSW: error: %u\n", getOsw().summary().error());
             if (temOrAll != getOsw().summary().error()) 
                 printf("OSW error summary bit does not match OR of all error bits across all TEM contributions, %d event Seq: %d\n", getOsw().summary().error(), getOsw().summary().eventSequence());
         }
-        if (orAll != 0) setErrorSummaryFlag();
+        if (orAll != 0) {
+            unsigned int firstEvtSeq;
+            if (getOsw().exist()) firstEvtSeq = getOsw().summary().eventSequence();
+            printf("Event Summary Error Flag Set, Event:  %u\n", firstEvtSeq);
+            setErrorSummaryFlag();
+        }
         return (orAll);
     }
 

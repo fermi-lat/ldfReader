@@ -9,13 +9,14 @@ namespace ldfReader {
 
     /** @class AemData
       * @brief Local storage of AEM data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AemData.h,v 1.4 2004/10/01 06:22:30 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AemData.h,v 1.5 2004/12/22 23:12:18 heather Exp $
     */
     class AemData {
     public:
 
         AemData() { clear(); };
         AemData(const AemData& aem) { 
+           clear();
            m_summary = aem.m_summary; 
            m_lenInBytes = aem.m_lenInBytes; 
            m_exist = aem.m_exist; };
@@ -25,7 +26,8 @@ namespace ldfReader {
         void clear() { 
             m_summary.setSummary(0); 
             m_lenInBytes = 0; 
-            m_exist = false;};
+            m_exist = false;
+            m_packetError=0; };
 
         const EventSummaryCommon& summary() const { return m_summary; };
         void initSummary(unsigned summary) { m_summary.setSummary(summary);};
