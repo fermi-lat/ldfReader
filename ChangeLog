@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: heather  Wed Aug  4 14:44:20 PDT 2004
+ldfReader/src/iterators
+
+Modified Files:
+	EbfDatagramParser.h LatComponentParser.cxx TkrParser.cxx 
+Added Files:
+	ErrParser.h 
+Log Message:
+mods to adhere to latest LDFdump in Online/LDF v05-01-01
+    *
+------------------------------------------------------------
 User: heather  Wed Aug  4 14:41:18 PDT 2004
 ldfReader/doc
 
