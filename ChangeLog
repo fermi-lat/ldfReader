@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Apr  1 14:10:51 PST 2005
+ldfReader/src
+
+Modified Files:
+	LdfParser.cxx 
+Log Message:
+patch to LdfParser to keep old member variable set properly to allow old check for EOF to work
+    *
+------------------------------------------------------------
 User: heather  Fri Apr  1 14:06:09 PST 2005
 ldfReader/cmt
 
