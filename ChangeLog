@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Sep 24 08:30:07 PDT 2004
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+patch conversion of tile ids
+    *
+------------------------------------------------------------
 User: heather  Wed Sep 22 22:18:02 PDT 2004
 ldfReader/src/iterators
 
