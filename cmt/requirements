@@ -1,5 +1,5 @@
 package ldfReader
-version v1r8
+version v1r9
 
 author Heather Kelly <heather@lheapop@gsfc.nasa.gov>
 author Joanne Bogart <jrb@slac.stanford.edu>
@@ -10,6 +10,7 @@ use GlastPolicy v*
 use ldfExt  v0r*  IExternal
 use cfitsio v1r*  IExternal
 use facilities  v*
+use enums v*
 
 
 apply_pattern package_include

@@ -4,6 +4,8 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v1r9    15-Mar-2005 hmk move diagnostic and err ito tem data structure
+                        more natural and allows us to store length per tem
 v1r8    13-Mar-2005 hmk skip contributions with packet errors
                     check trgParityError across contributions
 v1r7p0  11-Mar-2005 hmk Only provide monotonically increasing warning once
