@@ -4,6 +4,8 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v0r5    29-Jul-2004 hmk Handle GEM, store EBF Format Identity, and fix up time
+        stamp handling to look at EBF format Id
 v0r4    21-Jul-2004 hmk Store channel and more bit in case they are useful later
 v0r3    22-Jun-2004 hmk more work on ACD data  - adding parity error
         also fix up handling of EventSummary - pick up OSW contribution
