@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Mar 15 11:52:07 PST 2005
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+move diagnostic & error into tem data structure
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r8, operation: add
 Package: ldfReader
