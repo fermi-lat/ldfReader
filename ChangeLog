@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Jan 20 12:49:04 PST 2005
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+fix up OSW error bit summary checking
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r5, operation: add
 Package: ldfReader
