@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Apr  1 14:06:01 PST 2005
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+patch to LdfParser to keep old member variable set properly to allow old check for EOF to work
+    *
+------------------------------------------------------------
 TAG
 Tag name: v2r0, operation: add
 Package: ldfReader
