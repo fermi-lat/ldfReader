@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Aug 26 13:06:29 PDT 2004
+ldfReader/src
+
+Modified Files:
+	LdfParser.cxx 
+Log Message:
+Remove debug statements
+    *
+------------------------------------------------------------
 User: heather  Wed Aug 25 15:41:30 PDT 2004
 ldfReader/doc
 
