@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Jan 25 10:02:07 PST 2005
+ldfReader/src
+
+Modified Files:
+	LdfParser.cxx 
+Log Message:
+provide more info for setting bad event flag
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r5p2, operation: add
 Package: ldfReader
