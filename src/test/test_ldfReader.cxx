@@ -5,7 +5,7 @@
 /** @file test_ldfReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.4 2004/05/13 22:21:55 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.5 2004/06/23 18:03:21 heather Exp $
 */
 
 #include <iostream>
@@ -60,7 +60,7 @@ int main(int argn, char** argc) {
         for (iTower = 0; iTower < 16; iTower++) {
             TowerData *tem = myLatData->getTower(iTower);
             if (!tem) {
-                printf("Tem does not exist\n");
+                //printf("Tem does not exist\n");
             } else {
                 printf("TEM:  %d\n", tem->getTowerId());
                 unsigned int i;
