@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: heather  Tue May 11 23:20:32 PDT 2004
+ldfReader/ldfReader
+
+Added Files:
+	LdfParser.h LdfException.h 
+Removed Files:
+	EbfException.h EbfParser.h 
+Log Message:
+rename for LDF
+    *
+------------------------------------------------------------
 User: heather  Tue May 11 13:39:35 PDT 2004
 ldfReader/src/iterators
 
