@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: jrb  Fri Aug 27 15:16:39 PDT 2004
+ldfReader/src
+
+Modified Files:
+	LdfParser.cxx 
+Log Message:
+Little fix for Linux compile
+
+    *
+------------------------------------------------------------
 User: heather  Fri Aug 27 08:02:25 PDT 2004
 ldfReader/src
 
