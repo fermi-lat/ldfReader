@@ -4,6 +4,8 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v2r0    31-Mar-2005 hmk change reading of pure LDF files to use new interface
+                    rather than the old EBF_file
 v1r11   30-Mar-2005 hmk retrieve run id completely generically
 v1r10p0 16-Mar-2005 hmk fix typo in GemData.h
 v1r10   15-Mar-2005 hmk pick up missed method from LDF v05-05-00

@@ -5,7 +5,7 @@
 /** @file test_ldfReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.12 2005/02/01 21:54:51 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.13 2005/03/15 20:15:55 heather Exp $
 */
 
 #include <iostream>
@@ -159,7 +159,7 @@ int main(int argn, char** argc) {
         }
 
         // Move the event pointer to the next event in the EBF file
-        ebfP->nextEvent();
+        status = ebfP->nextEvent();
 
     } while (status >= 0);
 
