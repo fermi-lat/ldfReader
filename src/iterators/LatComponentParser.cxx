@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.1.1.1 2004/04/15 20:02:23 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.2 2004/04/21 22:18:54 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -182,7 +182,7 @@ namespace ldfReader {
         return 0;
     }
 
-    LatComponentParser::commonComponentData(EBFcontribution *contribution) {
+int LatComponentParser::commonComponentData(EBFcontribution *contribution) {
         int len = contribution->length();
         // printed in hex
         int error = contribution->packetError();
