@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.6 2004/12/22 23:12:58 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.7 2005/01/21 05:35:50 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -293,6 +293,9 @@ namespace ldfReader {
 
                 // Now check to see that the event sequences are monotonically increasing
                 if (ldfReader::LatData::instance()->summaryData().eventSequence() < eventSeqNum) {
+                    printf("Event Seq # is not monotonically increasing ");
+                    printf("Last EventSeqNum %d, current %d\n", eventSeqNum,
+                        ldfReader::LatData::instance()->summaryData().eventSequence());
                     printf("Setting Bad Event Flag\n");
                     ldfReader::LatData::instance()->setBadEventSeqFlag();
                     return 0;
