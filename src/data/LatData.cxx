@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.3 2004/07/29 22:01:33 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.4 2004/08/25 22:35:47 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -16,7 +16,6 @@ namespace ldfReader {
 
     LatData::LatData() {
         clearTowers(); 
-        m_diagnostic.clear();
     }
 
     LatData* LatData::instance() {
@@ -66,11 +65,16 @@ namespace ldfReader {
         m_acdCol.clear();
         m_diagnostic.clear();
         m_gem.clear();
+        m_osw.clear();
+        m_aem.clear();
+        m_err.clear();
         m_flags = 0;
     }
 
 
     bool LatData::eventSeqConsistent() const {
+    //Purpose and Method:  Checks that the event sequence number is consistent
+    // accross all contributions.  If not false is returned... 
 
         unsigned long firstEvtSeq = getOsw().summary().eventSequence();
         if (firstEvtSeq != getAem().summary().eventSequence()) return false;

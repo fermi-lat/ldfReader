@@ -4,7 +4,7 @@
 /** @file TowerData.cxx
 @brief Implementation of the TowerData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/TowerData.cxx,v 1.3 2004/02/14 05:12:22 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/TowerData.cxx,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
 */
 
 
@@ -45,6 +45,10 @@ namespace ldfReader {
         }
 
         m_calDigiCol.clear();
+    }
+
+    void TowerData::print() const {
+        m_tem.print();
     }
 
 } // end namespace
