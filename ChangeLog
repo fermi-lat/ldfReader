@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Jan 25 23:25:41 PST 2005
+ldfReader/ldfReader/data
+
+Modified Files:
+	AemData.h OswData.h TemData.h 
+Log Message:
+init error flags
+    *
+------------------------------------------------------------
 User: heather  Tue Jan 25 23:20:45 PST 2005
 ldfReader/doc
 
