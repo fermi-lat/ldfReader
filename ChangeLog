@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Jan 25 01:19:47 PST 2005
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+still working on event summary error bits
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r5p1, operation: add
 Package: ldfReader
