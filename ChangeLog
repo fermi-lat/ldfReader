@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: heather  Wed Aug 25 15:35:07 PDT 2004
+ldfReader/ldfReader/data
+
+Modified Files:
+	DiagnosticData.h EventSummaryData.h GemData.h LatData.h 
+	TowerData.h 
+Log Message:
+begin storing event summary for each contribution
+    *
+------------------------------------------------------------
 User: heather  Wed Aug 25 15:34:14 PDT 2004
 ldfReader/ldfReader/data
 
