@@ -26,7 +26,8 @@ namespace ldfReader {
             GOOD = 0,
             EVTSEQ = 1,
             PACKETERROR = 4,
-            SUMMARYERROR = 8
+            SUMMARYERROR = 8,
+            TRGPARITYERROR=16
         } EventFlags;
 
         static LatData *instance();
@@ -92,12 +93,15 @@ namespace ldfReader {
         bool goodEvent() const { return (m_flags == GOOD); };
         void setPacketErrorFlag() { m_flags |= PACKETERROR; };
         void setErrorSummaryFlag() { m_flags |= SUMMARYERROR; };
+        void setTrgParityErrorFlag() { m_flags |= TRGPARITYERROR; };
 
-        unsigned checkErrorInEventSummary();
+        unsigned checkTemErrorInEventSummary();
         unsigned checkPacketError();
+        unsigned checkTrgErrorInEventSummary();
 
         unsigned packetError() const { return (m_flags & PACKETERROR); };
         unsigned errorEventSummary() const { return (m_flags & SUMMARYERROR); }
+        unsigned trgParityError() const { return (m_flags & TRGPARITYERROR); }
 
     private:
 

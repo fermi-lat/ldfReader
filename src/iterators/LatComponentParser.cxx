@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.17 2005/02/01 21:54:34 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.18 2005/02/22 05:47:18 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -25,9 +25,15 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser
 
 namespace ldfReader {
 
-    int LatComponentParser::UDFcomponent(EBFevent*, EBFcontribution* )
+    int LatComponentParser::UDFcomponent(EBFevent* event, EBFcontribution* contribution)
     {
-        fprintf (stderr, "\nUndefined EBF component\n");
+        // skip this guy if there was a packet error
+        if (contribution->packetError()) {
+            printf("Packet Error in UDF - skipping\n");
+            return 0;
+        }
+
+        //fprintf (stderr, "\nUndefined EBF component\n");
         //((MyEBFcontribution*)contribution)->dump("  ");
         return 0;
     }
@@ -35,10 +41,17 @@ namespace ldfReader {
     int LatComponentParser::OSWcomponent(EBFevent*        event,
         OSWcontribution* contribution)
     {
+        // If there was a packet error - skip this contribution
+        if (contribution->packetError()) {
+            printf("Packet Error in OSW - skipping\n");
+            return 0; 
+        }
+
         const char* prefix = "  ";
         ldfReader::LatData::instance()->setSummary(event->summary());
         ldfReader::OswData osw(ldfReader::EventSummaryCommon(((EBFcontribution*)contribution)->summary()));
         osw.initPacketError(contribution->packetError());
+
         //ldfReader::LatData::instance()->getOsw().initLength(((EBFcontribution*)contribution)->length());
         osw.initLength(((EBFcontribution*)contribution)->length());
 
@@ -54,12 +67,19 @@ namespace ldfReader {
 
     int LatComponentParser::GEMcomponent(EBFevent *event, GEMcontribution *contribution) {
         
+        // If there was a packet error - skip this contribution
+        if (contribution->packetError())  {
+            printf("Packet Error in GEM - skipping\n");
+            return 0; 
+        }
+
         //if (EbfDebug::getDebug())  printf("\nGEM:\n");
         ldfReader::GemData gem;
 
         ldfReader::EventSummaryCommon summary(((EBFcontribution*)contribution)->summary());
         gem.setExist();
         gem.initPacketError(contribution->packetError());
+     
         gem.setSummary(summary);
         gem.initLength(((EBFcontribution*)contribution)->length());
 
@@ -116,10 +136,17 @@ namespace ldfReader {
     {
         using namespace ldfReader;
 
+        // Skip contribution if there was a packet error
+        if (contribution->packetError()) {
+           printf("Packet Error in ACD - skipping\n");
+           return 0;
+        }
+
         ldfReader::AemData summary(contribution->summary());
         summary.setExist();
         summary.initPacketError(contribution->packetError());
         ldfReader::LatData::instance()->setAem(summary);
+ 
         ldfReader::LatData::instance()->getAem().initLength(((EBFcontribution*)contribution)->length());
 
 //        _acdSrc = LATPcellHeader::source(contribution->header());
@@ -137,6 +164,12 @@ namespace ldfReader {
         // Purpose and Method:
 
         using namespace ldfReader;
+
+        // Skip this contribution if there was a packet error
+        if ( (EBFcontribution*)contribution->packetError()) {
+            printf("Packet Error in TEM - found in CAL processing - skipping\n");
+            return 0;
+        }
 
         // Use this to determine if we've already picked up the TEM summary
         _calSrc = LATPcellHeader::source(contribution->header());
@@ -178,6 +211,12 @@ namespace ldfReader {
 
         using namespace ldfReader;
 
+        // Skip this contribution if there was a packet error
+        if ( (EBFcontribution*)contribution->packetError()) {
+            printf("Packet Error in TEM - found in TKR processing - skipping\n");
+            return 0;
+         }
+
         // Retrieve the tower object we wish to update with this TKR data
         unsigned int towerId = LATPcellHeader::source(contribution->header());
         LatData* curLatData = LatData::instance();
@@ -209,6 +248,13 @@ namespace ldfReader {
 
     int LatComponentParser::diagnostic (EBFevent* event, TEMcontribution* contribution) {
        
+        // Skip this contribution if there was a packet error
+        if ( (EBFcontribution*)contribution->packetError()) {
+            printf("Packet Error found in TEM - during Diagnostic processing - skipping\n");
+            return 0;
+        }
+
+
         //ldfReader::LatData::instance()->diagnostic()->setSummary(contribution->summary());
         //ldfReader::LatData::instance()->diagnostic()->initPacketError(contribution->packetError());
         if ( EventSummary::diagnostic(contribution->summary())) {
@@ -225,6 +271,13 @@ namespace ldfReader {
     }
 
 int LatComponentParser::error(EBFevent* event, TEMcontribution* contribution) {
+
+    // Skip this contribution if there was a packet error
+    if ( (EBFcontribution*)contribution->packetError()) {
+       printf("Packet Error found in TEM - during error processing - skipping\n");
+       return 0;
+    }
+
     ldfReader::ErrData err;
     err.initLength(((EBFcontribution*)contribution)->length());    
     //err.initPacketError(((EBFcontribution*)contribution)->packetError());
@@ -247,6 +300,10 @@ int LatComponentParser::error(EBFevent* event, TEMcontribution* contribution) {
 int LatComponentParser::cleanup (EBFevent*        /*event*/,
         TEMcontribution* contribution)
 {
+    // Skip this contribution if there was a packet error
+    if ( (EBFcontribution*)contribution->packetError()) return 0;
+
+
         // determine whether the remainder of the contribution is
         // a: less than one cell away
         // b: all zeroes
