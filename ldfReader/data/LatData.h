@@ -5,11 +5,11 @@
 #include "AcdDigi.h"
 #include "GemData.h"
 #include "EventSummaryData.h"
-#include "DiagnosticData.h"
 #include "OswData.h"
 #include "AemData.h"
-#include "ErrData.h"
 #include <map>
+
+#include "enums/EventFlags.h"
 
 /** @class LatData
 @brief Singleton class to provide global access to LAT data for one event
@@ -21,14 +21,6 @@ namespace ldfReader {
 
     class LatData {
     public:
-
-        typedef enum {
-            GOOD = 0,
-            EVTSEQ = 1,
-            PACKETERROR = 4,
-            SUMMARYERROR = 8,
-            TRGPARITYERROR=16
-        } EventFlags;
 
         static LatData *instance();
         ~LatData() { clearTowers(); };
@@ -58,15 +50,8 @@ namespace ldfReader {
         AemData& getAem() { return m_aem; };
         const AemData& getAem() const { return m_aem; };
 
-        void setErr(const ErrData& err) { m_err = err; };
-        ErrData& getErr() { return m_err; };
-        const ErrData& getErr() const { return m_err; };
-
         void setFormatIdentity(unsigned id) { m_formatIdentity = id; };
         unsigned getFormatIdentity() const { return m_formatIdentity; };
-
-        const DiagnosticData* diagnostic() const { return &m_diagnostic; };
-        DiagnosticData* diagnostic() { return &m_diagnostic; };
 
         const TowerData* getTower(unsigned int id) const;
         TowerData* getTower(unsigned int id);
@@ -87,27 +72,26 @@ namespace ldfReader {
         /// badEvent
         bool eventSeqConsistent() const;
 
-        void setBadEventSeqFlag() { m_flags |= EVTSEQ; };
+        void setBadEventSeqFlag() { m_flags |= enums::EVTSEQ; };
         unsigned int getEventFlags() const { return m_flags; };
-        bool badEventSequence() const { return (m_flags & EVTSEQ); };
-        bool goodEvent() const { return (m_flags == GOOD); };
-        void setPacketErrorFlag() { m_flags |= PACKETERROR; };
-        void setErrorSummaryFlag() { m_flags |= SUMMARYERROR; };
-        void setTrgParityErrorFlag() { m_flags |= TRGPARITYERROR; };
+        bool badEventSequence() const { return (m_flags & enums::EVTSEQ); };
+        bool goodEvent() const { return (m_flags == enums::GOOD); };
+        void setPacketErrorFlag() { m_flags |= enums::PACKETERROR; };
+        void setTemErrorFlag() { m_flags |= enums::SUMMARYERROR; };
+        void setTrgParityErrorFlag() { m_flags |= enums::TRGPARITYERROR; };
 
-        unsigned checkTemErrorInEventSummary();
+        unsigned checkTemError();
         unsigned checkPacketError();
-        unsigned checkTrgErrorInEventSummary();
+        unsigned checkTrgParityError();
 
-        unsigned packetError() const { return (m_flags & PACKETERROR); };
-        unsigned errorEventSummary() const { return (m_flags & SUMMARYERROR); }
-        unsigned trgParityError() const { return (m_flags & TRGPARITYERROR); }
+        unsigned packetError() const { return (m_flags & enums::PACKETERROR); };
+        unsigned errorEventSummary() const { return (m_flags & enums::SUMMARYERROR); }
+        unsigned trgParityError() const { return (m_flags & enums::TRGPARITYERROR); }
 
     private:
 
         static LatData *m_instance;
         EventSummaryData m_summaryData;
-        DiagnosticData m_diagnostic;
         unsigned int m_runId;
         std::map<unsigned int, TowerData*> m_towerMap;
         std::map<const char*, AcdDigi*> m_acdCol;
@@ -118,7 +102,6 @@ namespace ldfReader {
         unsigned m_formatIdentity;
         OswData m_osw;
         AemData m_aem;
-        ErrData m_err;
 
         unsigned int m_flags;
     };
