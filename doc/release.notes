@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v1r10p0 16-Mar-2005 hmk fix typo in GemData.h
 v1r10   15-Mar-2005 hmk pick up missed method from LDF v05-05-00
 v1r9    15-Mar-2005 hmk move diagnostic and err ito tem data structure
                         more natural and allows us to store length per tem
