@@ -4,7 +4,7 @@
 /** @file CalParser.cxx
 @brief Implementation of the CalParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.7 2004/02/14 05:14:08 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
 */
 
 // EBF Online Library includes
@@ -18,7 +18,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.
 // ldfReader includes
 #include "CalParser.h"
 #include "ldfReader/data/LatData.h"
-#include "ldfReader/EbfException.h"
+#include "ldfReader/LdfException.h"
 #include "../EbfDebug.h"
 
 namespace {

@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.1 2004/04/21 22:18:54 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.2 2004/05/11 20:39:35 heather Exp $
 */
 
 // EBF Online Library includes
@@ -15,7 +15,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.
 // ldfReader includes
 #include "AcdParser.h"
 #include "ldfReader/data/LatData.h"
-#include "ldfReader/EbfException.h"
+#include "ldfReader/LdfException.h"
 #include "../EbfDebug.h"
 
 namespace {
