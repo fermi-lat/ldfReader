@@ -12,7 +12,7 @@
 /** @class TowerData
 @brief Local storage of tower data for one event
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TowerData.h,v 1.3 2004/09/21 17:57:19 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TowerData.h,v 1.4 2004/09/30 20:46:19 heather Exp $
 */
 
 namespace ldfReader {
@@ -20,8 +20,8 @@ namespace ldfReader {
     class TowerData {
     public:
 
-        TowerData() { m_tkrMap.clear(); };
-        TowerData(unsigned short id) { m_tkrMap.clear(); m_calDigiCol.clear(); m_towerId = id; };
+        TowerData() { m_tkrMap.clear(); m_tem.clear(); m_calDigiCol.clear(); };
+        TowerData(unsigned short id) { m_tkrMap.clear(); m_calDigiCol.clear(); m_towerId = id; m_tem.clear(); };
         ~TowerData() { clear(); };
 
         void clear();

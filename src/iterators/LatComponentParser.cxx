@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.8 2004/09/21 17:58:27 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.9 2004/09/23 05:18:01 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -37,14 +37,15 @@ namespace ldfReader {
     {
         const char* prefix = "  ";
         ldfReader::LatData::instance()->setSummary(event->summary());
-        ldfReader::OswData summary(ldfReader::EventSummaryCommon(contribution->summary()));
-        summary.setExist(); 
-        ldfReader::LatData::instance()->getOsw().initLength(((EBFcontribution*)contribution)->length());
-        ldfReader::LatData::instance()->setOsw(summary);
+        ldfReader::OswData osw(ldfReader::EventSummaryCommon(contribution->summary()));
+        osw.setExist(); 
+        //ldfReader::LatData::instance()->getOsw().initLength(((EBFcontribution*)contribution)->length());
+        osw.initLength(((EBFcontribution*)contribution)->length());
+        ldfReader::LatData::instance()->setOsw(osw);
         // OSW contribution only exists in later versions starting in Feb 2004
         if (ldfReader::LatData::instance()->getFormatIdentity() >= ID_WITH_OSW) {
-            OswParser osw(event, contribution);
-            osw.iterate();
+            OswParser oswParse(event, contribution);
+            oswParse.iterate();
         }
         return 0;
     }

@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v1r1p2  04-Oct-2004 hmk clean up osw length
 v1r1p1  30-Sep-2004 hmk move TowerData::print to header..this will come back
                     and bite me later
 v1r1p0  24-Sep-2004 hmk patch tile id conversion from string
