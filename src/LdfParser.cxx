@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.9 2005/01/26 22:57:46 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.10 2005/01/27 21:58:08 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -60,6 +60,7 @@ namespace ldfReader {
 
                 // Get the RunId from the Primary Header
                 char* comment=0;
+                bool gotIt = false;
                 char runId[15];
                 fits_read_keyword(ffile, "KEY_0001", runId, comment, &status);
                 if (status == 0) {
@@ -67,10 +68,35 @@ namespace ldfReader {
                     std::string tempStr("'RunId   '");
                     if (runIdStr == tempStr) {
                         fits_read_key(ffile, TULONG, "VAL_0001", &m_runId, comment, &status);
-                        if (status != 0) m_runId = 0;
+                        if (status != 0) { 
+                            printf("Failed to retrieve RunId, setting to zero\n");
+                            m_runId = 0;
+                        } else
+                            gotIt = true;
                     }
-                } else 
+                }  
+                if ( (status != 0) || (gotIt == false)) { // Try KEY_0002 instead
                     status = 0;
+                    fits_read_keyword(ffile, "KEY_0002", runId, comment, &status);
+                    if (status != 0) {
+                        printf("Failed to retrieve RunId, setting to zero\n");
+                        m_runId = 0;
+                    } else {
+                        std::string runIdStr(runId);
+                        std::string tempStr("'RunId   '");
+                        if (runIdStr == tempStr) {
+                            fits_read_key(ffile, TULONG, "VAL_0002", &m_runId, comment, &status);
+                            if (status != 0) {
+                                printf("Failed to retrieve RunId, setting to zero\n");      
+                                m_runId = 0;
+                            } else
+                                gotIt = true;
+                        }
+                    }
+                    status = 0;
+                }    
+
+                printf("RunId = %lu\n", m_runId);
 
                 // Go to 2nd HDU
                 m_currentHdu = 2;

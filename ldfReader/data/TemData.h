@@ -9,7 +9,7 @@ namespace ldfReader {
 
     /** @class TemData
       * @brief Local storage of TEM data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TemData.h,v 1.7 2005/01/26 07:25:41 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TemData.h,v 1.8 2005/01/27 21:57:29 heather Exp $
     */
     class TemData {
     public:
@@ -19,6 +19,8 @@ namespace ldfReader {
             clear();
             m_summary = tem.m_summary; 
             m_lenInBytes = tem.m_lenInBytes; 
+            m_calEnd = tem.m_calEnd;
+            m_tkrEnd = tem.m_tkrEnd;
             m_exist = tem.m_exist; };
         TemData(const EventSummaryCommon& summary) {clear(); m_summary = summary; };
         ~TemData() { clear(); };
@@ -28,6 +30,8 @@ namespace ldfReader {
             m_lenInBytes = 0; 
             m_exist = false; 
             m_packetError = 0;
+            m_calEnd = 0;
+            m_tkrEnd = 0;
         };
 
         void print() const { 
@@ -53,6 +57,12 @@ namespace ldfReader {
         void initPacketError(unsigned packetError) { m_packetError=packetError; };
         unsigned packetError() const { return m_packetError; };
 
+        void calEnd(unsigned long i) { m_calEnd = i; };
+        void tkrEnd(unsigned long i) { m_tkrEnd = i; }; 
+ 
+        unsigned long calEnd() const { return m_calEnd; };
+        unsigned long tkrEnd() const { return m_tkrEnd; };
+
     private:
 
         // Store the event sequence number for this contribution
@@ -63,6 +73,8 @@ namespace ldfReader {
         unsigned m_packetError;
 
         unsigned long m_lenInBytes;
+
+        unsigned long m_calEnd, m_tkrEnd;
 
     };
 } // end namespace
