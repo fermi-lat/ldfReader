@@ -2,6 +2,7 @@
 #define ldfReader_LATDATA_H
 
 #include "TowerData.h"
+#include "AcdDigi.h"
 #include "EventSummaryData.h"
 #include "DiagnosticData.h"
 #include <map>
@@ -43,6 +44,11 @@ namespace ldfReader {
 
         void addTower(TowerData *tower) { m_towerMap[tower->getTowerId()] = tower; };
 
+        const std::map<const char*, AcdDigi*>& getAcdCol() const { return m_acdCol; };
+        void addAcd(AcdDigi *acd) { m_acdCol[acd->getTileName()] = acd; };
+        const AcdDigi* getAcd(const char *name) const;
+        AcdDigi* getAcd(const char *name);
+
         void clearTowers();
 
     private:
@@ -52,6 +58,7 @@ namespace ldfReader {
         DiagnosticData m_diagnostic;
         unsigned int m_runId;
         std::map<unsigned int, TowerData*> m_towerMap;
+        std::map<const char*, AcdDigi*> m_acdCol;
 
     };
 }
