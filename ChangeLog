@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Nov 24 13:43:33 PST 2004
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+store tower and layer/gtcc for CAL/TKR diagnostic
+    *
+------------------------------------------------------------
 User: heather  Mon Nov  1 11:02:45 PST 2004
 ldfReader/src/data
 
