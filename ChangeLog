@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Sep 21 10:47:18 PDT 2004
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+prepare to handle event contribution lengths
+    *
+------------------------------------------------------------
 User: heather  Tue Sep 21 10:46:52 PDT 2004
 ldfReader/doc
 
