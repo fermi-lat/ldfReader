@@ -44,15 +44,19 @@ namespace ldfReader {
         unsigned int runId() const { return m_runId; };
 
         void setGem(const GemData& gem) { m_gem = gem; };
+        GemData& getGem() { return m_gem; };
         const GemData& getGem() const { return m_gem; };
 
         void setOsw(const OswData& osw) { m_osw = osw; };
+        OswData& getOsw() { return m_osw; };
         const OswData& getOsw() const { return m_osw; };
 
         void setAem(const AemData& aem) { m_aem = aem; };
+        AemData& getAem() { return m_aem; };
         const AemData& getAem() const { return m_aem; };
 
         void setErr(const ErrData& err) { m_err = err; };
+        ErrData& getErr() { return m_err; };
         const ErrData& getErr() const { return m_err; };
 
         void setFormatIdentity(unsigned id) { m_formatIdentity = id; };
