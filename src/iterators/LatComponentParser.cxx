@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.2 2004/04/21 22:18:54 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.3 2004/06/21 16:41:44 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -34,6 +34,7 @@ namespace ldfReader {
         OSWcontribution* contribution)
     {
         const char* prefix = "  ";
+        ldfReader::LatData::instance()->setSummary(event->summary());
         printf("\nOSW:\n");
         //((MyEBFcontribution*)contribution)->dump(event, prefix);
         //printf("%sOSW:\n", prefix);
