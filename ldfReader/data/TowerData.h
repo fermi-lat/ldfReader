@@ -12,7 +12,7 @@
 /** @class TowerData
 @brief Local storage of tower data for one event
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TowerData.h,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TowerData.h,v 1.2 2004/08/25 22:35:07 heather Exp $
 */
 
 namespace ldfReader {
@@ -25,6 +25,8 @@ namespace ldfReader {
         ~TowerData() { clear(); };
 
         void clear();
+
+        void print() const;
 
         unsigned short getTowerId() const { return m_towerId; };
 
@@ -41,6 +43,7 @@ namespace ldfReader {
         CalDigi* getCalDigi(unsigned int layer, unsigned int col);
 
         void setTem(const TemData &tem) { m_tem = tem; };
+        TemData& getTem() { return m_tem; };
         const TemData& getTem() const { return m_tem; };
 
     private:

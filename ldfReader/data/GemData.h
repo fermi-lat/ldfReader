@@ -116,7 +116,7 @@ private:
 
     /** @class GemData
       * @brief Local storage of GEM data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/GemData.h,v 1.1 2004/07/29 22:00:50 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/GemData.h,v 1.2 2004/08/25 22:35:07 heather Exp $
     */
     class GemData {
     public:
@@ -158,6 +158,9 @@ private:
         const EventSummaryCommon& summary() const { return m_summary; };
         void setSummary(const EventSummaryCommon &summary) { m_summary = summary; };
 
+        void initLength(unsigned long length) { m_lenInBytes = length; };
+        unsigned long lenInBytes() const { return m_lenInBytes; };
+
     private:
 
         unsigned short m_tkrVector;
@@ -178,6 +181,7 @@ private:
         // Store the event sequence number for this contribution
         EventSummaryCommon m_summary;
 
+        unsigned long m_lenInBytes;
     };
 } // end namespace
 #endif
