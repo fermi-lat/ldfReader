@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.13 2005/02/02 21:58:55 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.14 2005/02/09 17:14:27 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -240,28 +240,28 @@ namespace ldfReader {
                     m_datagram = 0;
                     return -1;
                 }
-                // Otherwise move on to next HDU
-                m_currentHdu++;
-                fits_movrel_hdu(ffile, 1, &hduType, &status);   // ffmrhed
-                if (status != 0) {
-                    m_datagram = 0;
-
-                    // complain
-                   return -1; 
-                }
-                else if (hduType != BINARY_TBL) {
-                    m_datagram = 0;
-
-                    // complain
-                    return -1;
-                } else { // check that this HDU is event data
-                    char name[50];
-                    fits_read_key_str(ffile, "EXTNAME", name, 0, &status);
-                    if (strcmp("Event Data", name) != 0) {
-                        printf("Current HDU is not Event Data - must have reached the end of event data\n");
+                bool DONE = false;
+                while ( (m_currentHdu < m_maxHdu) && (!DONE) ) {
+                    // Otherwise move on to next HDU
+                    m_currentHdu++;
+                    fits_movrel_hdu(ffile, 1, &hduType, &status);   // ffmrhed
+                    if (status != 0) {
                         m_datagram = 0;
-                        return -1;
+
+                        // complain
+                       return -1; 
+                    } else { // check that this HDU is event data
+                        char name[50];
+                        fits_read_key_str(ffile, "EXTNAME", name, 0, &status);
+                        if (strcmp("Event Data", name) == 0) {
+                           DONE = true;
+                        }
                     }
+                }
+                if (!DONE) {
+                    printf("No more Event Data HDUs found\n");
+                    m_datagram = 0;
+                    return -1;
                 }
 
                 fits_get_num_rows(ffile, &m_maxRow, &status);  // ffgnrw
