@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.18 2005/02/22 05:47:18 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.19 2005/03/14 07:54:14 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -248,6 +248,9 @@ namespace ldfReader {
 
     int LatComponentParser::diagnostic (EBFevent* event, TEMcontribution* contribution) {
        
+        // Size of the Diagnostic Contribution
+        const int diagSize = 48;
+
         // Skip this contribution if there was a packet error
         if ( (EBFcontribution*)contribution->packetError()) {
             printf("Packet Error found in TEM - during Diagnostic processing - skipping\n");
@@ -259,13 +262,25 @@ namespace ldfReader {
         //ldfReader::LatData::instance()->diagnostic()->initPacketError(contribution->packetError());
         if ( EventSummary::diagnostic(contribution->summary())) {
             //   Process the trigger primitives in the diagnostic data
-            ldfReader::LatData::instance()->diagnostic()->setExist();
-            DiagnosticParser iter(event,contribution,TKRend(),ldfReader::LatData::instance()->diagnostic());
+       
+            unsigned int towerId = LATPcellHeader::source(contribution->header());
+            LatData* curLatData = LatData::instance();
+            TowerData* tower = curLatData->getTower(towerId);
+            if (!tower) {
+                tower = new TowerData(towerId);
+                curLatData->addTower(tower);
+            }
+            tower->getTem().getDiagnostic()->setExist();
+            DiagnosticParser iter(event,contribution,TKRend(),tower->getTem().getDiagnostic());
             iter.iterateCAL();
             iter.iterateTKR();
 
             diagnosticEnd(TKRend()+iter.size());  // Reset the end of the diagnostic data
-            ldfReader::LatData::instance()->diagnostic()->initLength(iter.size());
+            tower->getTem().getDiagnostic()->initLength(iter.size());
+
+            if (iter.size() != diagSize) 
+                printf("WARNING - Diagnostic data size is not %d, it is %d\n",
+                       diagSize, iter.size());
         }
         return 0;
     }
@@ -282,7 +297,17 @@ int LatComponentParser::error(EBFevent* event, TEMcontribution* contribution) {
     err.initLength(((EBFcontribution*)contribution)->length());    
     //err.initPacketError(((EBFcontribution*)contribution)->packetError());
     if ( EventSummary::error(((EBFcontribution*)contribution)->summary())) {
-        err.setExist();
+
+        unsigned int towerId = LATPcellHeader::source(contribution->header());
+        LatData* curLatData = LatData::instance();
+        TowerData* tower = curLatData->getTower(towerId);
+        if (!tower) {
+            tower = new TowerData(towerId);
+            curLatData->addTower(tower);
+        }
+
+
+        tower->getTem().getErr()->setExist();
         unsigned offset;
         if (0 != diagnosticEnd())
             offset=diagnosticEnd();
@@ -291,9 +316,8 @@ int LatComponentParser::error(EBFevent* event, TEMcontribution* contribution) {
         ErrParser errParse(event,contribution,offset);
         errParse.iterate();
         errorEnd(offset+errParse.size());
-        err.initLength(errParse.size());    
+        tower->getTem().getErr()->initLength(errParse.size());    
     }
-    ldfReader::LatData::instance()->setErr(err);
     return 0;
 }
 

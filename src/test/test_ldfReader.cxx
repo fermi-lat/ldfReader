@@ -5,7 +5,7 @@
 /** @file test_ldfReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.11 2005/01/27 21:58:08 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.12 2005/02/01 21:54:51 heather Exp $
 */
 
 #include <iostream>
@@ -21,7 +21,11 @@ int main(int argn, char** argc) {
     using namespace ldfReader;
     std::string filename = "$(LDFROOT)/test/muon-5.arch";
 
+    bool fitsWrap = false;
+
     if( argn>1 ) filename = argc[1];
+    if (argn>2 ) fitsWrap = (atoi(argc[2])==1) ? true : false;
+    
 
     if (facilities::Util::expandEnvVar(&filename) < 0) {
         std::cout << "Failed to expand env variable in filename" << std::endl;
@@ -30,7 +34,7 @@ int main(int argn, char** argc) {
 
     EbfDebug::setDebug(true);
 
-    LdfParser *ebfP = new LdfParser(filename);
+    LdfParser *ebfP = new LdfParser(filename, fitsWrap);
 
     int status = 0;
     do {
@@ -56,9 +60,6 @@ int main(int argn, char** argc) {
         // Check GEM data
         GemData gem = myLatData->getGem();
         gem.print();
-
-        myLatData->diagnostic()->print();
-        myLatData->getErr().print();
 
         AemData aem = myLatData->getAem(); 
         aem.print();
