@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.7 2004/08/25 22:36:25 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.8 2004/09/21 17:58:27 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -37,7 +37,8 @@ namespace ldfReader {
     {
         const char* prefix = "  ";
         ldfReader::LatData::instance()->setSummary(event->summary());
-        const ldfReader::OswData summary(ldfReader::EventSummaryCommon(contribution->summary()));
+        ldfReader::OswData summary(ldfReader::EventSummaryCommon(contribution->summary()));
+        summary.setExist(); 
         ldfReader::LatData::instance()->getOsw().initLength(((EBFcontribution*)contribution)->length());
         ldfReader::LatData::instance()->setOsw(summary);
         // OSW contribution only exists in later versions starting in Feb 2004
@@ -54,6 +55,7 @@ namespace ldfReader {
         ldfReader::GemData gem;
 
         ldfReader::EventSummaryCommon summary(contribution->summary());
+        gem.setExist();
         gem.setSummary(summary);
         gem.initLength(((EBFcontribution*)contribution)->length());
 
@@ -107,6 +109,7 @@ namespace ldfReader {
         using namespace ldfReader;
 
         ldfReader::AemData summary(contribution->summary());
+        summary.setExist();
         ldfReader::LatData::instance()->setAem(summary);
         ldfReader::LatData::instance()->getAem().initLength(((EBFcontribution*)contribution)->length());
 
@@ -136,10 +139,12 @@ namespace ldfReader {
         if (!tower) {
             tower = new TowerData(towerId);
             curLatData->addTower(tower);
+            ldfReader::EventSummaryCommon summary(contribution->summary());
+            ldfReader::TemData tem(summary);
+            tem.setExist();
+            tem.initLength(((EBFcontribution*)contribution)->length());
+            tower->setTem(tem);
         }
-        ldfReader::EventSummaryCommon summary(contribution->summary());
-        tower->setTem(summary);
-        tower->getTem().initLength(((EBFcontribution*)contribution)->length());
 
        // if (EbfDebug::getDebug() ) printf("\nTEM %2d:\n", dumpLATPcellHeader(_calSrc));
 
@@ -171,8 +176,10 @@ namespace ldfReader {
         if (_calSrc != LATPcellHeader::source(contribution->header())) {
             // We haven't picked up this TEM's event summary yet
             ldfReader::EventSummaryCommon summary(contribution->summary());
-            tower->setTem(summary);
-            tower->getTem().initLength(((EBFcontribution*)contribution)->length());
+            ldfReader::TemData tem(summary);
+            tem.setExist();
+            tem.initLength(((EBFcontribution*)contribution)->length());
+            tower->setTem(tem);
         }
         
         // Actually do the parsing
@@ -186,6 +193,7 @@ namespace ldfReader {
     int LatComponentParser::diagnostic (EBFevent* event, TEMcontribution* contribution) {
        
         ldfReader::LatData::instance()->diagnostic()->setSummary(contribution->summary());
+        ldfReader::LatData::instance()->diagnostic()->setExist();
         ldfReader::LatData::instance()->diagnostic()->initLength(((EBFcontribution*)contribution)->length());
         if ( EventSummary::diagnostic(contribution->summary())) {
             //   Process the trigger primitives in the diagnostic data
@@ -200,6 +208,7 @@ namespace ldfReader {
 
 int LatComponentParser::error(EBFevent* event, TEMcontribution* contribution) {
     ldfReader::ErrData err(contribution->summary());
+    err.setExist();
     err.initLength(((EBFcontribution*)contribution)->length());    
     ldfReader::LatData::instance()->setErr(err);
     if ( EventSummary::error(contribution->summary())) {
