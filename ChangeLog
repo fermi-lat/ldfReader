@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Wed Dec 22 15:12:58 PST 2004
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+handle error bits
+    *
+------------------------------------------------------------
+User: heather  Wed Dec 22 15:12:58 PST 2004
 ldfReader/src
 
 Modified Files:
