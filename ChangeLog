@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Oct 27 14:24:41 PDT 2004
+ldfReader/src/test
+
+Modified Files:
+	test_ldfReader.cxx 
+Log Message:
+handle veto discrim correctly
+    *
+------------------------------------------------------------
 User: heather  Wed Oct 27 14:24:15 PDT 2004
 ldfReader/ldfReader/data
 
