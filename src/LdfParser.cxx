@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.17 2005/03/14 07:54:23 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.18 2005/03/15 20:15:53 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -59,42 +59,42 @@ namespace ldfReader {
                     throw LdfException("Could not move to primary HDU");
 
                 // Get the RunId from the Primary Header
+                int numKeys, moreKeys;
+                fits_get_hdrspace(ffile, &numKeys, &moreKeys, &status);
+
+                int iKey;
                 char* comment=0;
-                bool gotIt = false;
-                char runId[15];
-                fits_read_keyword(ffile, "KEY_0001", runId, comment, &status);
-                if (status == 0) {
-                    std::string runIdStr(runId);
-                    std::string tempStr("'RunId   '");
-                    if (runIdStr == tempStr) {
-                        fits_read_key(ffile, TULONG, "VAL_0001", &m_runId, comment, &status);
-                        if (status != 0) { 
-                            printf("Failed to retrieve RunId, setting to zero\n");
-                            m_runId = 0;
-                        } else
-                            gotIt = true;
-                    }
-                }  
-                if ( (status != 0) || (gotIt == false)) { // Try KEY_0002 instead
-                    status = 0;
-                    fits_read_keyword(ffile, "KEY_0002", runId, comment, &status);
-                    if (status != 0) {
-                        printf("Failed to retrieve RunId, setting to zero\n");
-                        m_runId = 0;
-                    } else {
-                        std::string runIdStr(runId);
+                char keyName[15], value[15];
+                for (iKey = 1; iKey <= numKeys; iKey++) {
+                    fits_read_keyn(ffile, iKey, keyName, value, comment, &status);
+                    if (status == 0) {
+                        std::string runIdStr(value);
                         std::string tempStr("'RunId   '");
                         if (runIdStr == tempStr) {
-                            fits_read_key(ffile, TULONG, "VAL_0002", &m_runId, comment, &status);
-                            if (status != 0) {
-                                printf("Failed to retrieve RunId, setting to zero\n");      
+                            fits_read_keyn(ffile, iKey+1, keyName, value, comment, &status);
+
+                            if (status != 0) { 
+                                printf("Failed to retrieve RunId, setting to zero\n");
                                 m_runId = 0;
-                            } else
-                                gotIt = true;
+                            } else {
+                                fits_read_key(ffile, TULONG, keyName, &m_runId, comment, &status);
+                                if (status != 0) {
+                                    printf("Failed to retrieve RunId, setting to zero\n");      
+                                    m_runId = 0;
+                                }
+ 
+
+                            }
+                            break;
                         }
+                    } else {
+                        status = 0;
                     }
-                    status = 0;
-                }    
+                 }
+
+
+                // put us back at the begining
+                fits_read_keyn(ffile, 0, keyName, value, comment, &status);
 
                 printf("RunId = %lu\n", m_runId);
 
