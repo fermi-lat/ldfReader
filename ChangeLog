@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Thu Jan 27 13:58:08 PST 2005
+ldfReader/src/test
+
+Modified Files:
+	test_ldfReader.cxx 
+Log Message:
+fix up print methods
+    *
+------------------------------------------------------------
+User: heather  Thu Jan 27 13:58:08 PST 2005
 ldfReader/src/iterators
 
 Modified Files:
