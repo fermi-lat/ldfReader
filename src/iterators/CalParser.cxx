@@ -4,7 +4,7 @@
 /** @file CalParser.cxx
 @brief Implementation of the CalParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.2 2004/05/12 06:27:36 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.3 2004/07/21 05:09:26 heather Exp $
 */
 
 // EBF Online Library includes
@@ -109,6 +109,14 @@ namespace ldfReader {
         digi->addReadout(ldfReader::CalDigi::CalReadout(theLog.positive().range(), theLog.positive().value(), 
             theLog.negative().range(), theLog.negative().value()));
 
+    }
+
+    int CalParser::handleError(CALcontribution *contribution, unsigned code, 
+                    unsigned p1, unsigned p2) const {
+        
+        fprintf(stderr, "MyCALiterator::handleError:  Somehow an error occured. \n ");
+        fprintf(stderr, "  code=%d, p1=%d, p2=%d\n", code, p1, p2);
+        return 0;
     }
 
 }

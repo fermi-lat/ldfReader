@@ -1,7 +1,7 @@
 #ifndef AcdParser_H
 #define AcdParser_H 1
 
-// $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.h,v 1.1 2004/04/21 22:18:54 heather Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.h,v 1.2 2004/10/27 21:25:08 heather Exp $
 
 // Online EBF library includes
 #include "AEMcontributionIterator.h"
@@ -33,6 +33,8 @@ namespace ldfReader {
 
         virtual void header(unsigned cable, AEMheader hdr);
         virtual void pha(unsigned cable, unsigned channel, ACDpha p);
+
+        virtual int handleError(AEMcontribution *contribution, unsigned code, unsigned p1=0, unsigned p2=0) const;
 
         void setCurHeader(const AEMheader &header) { m_curHeader = header; };
         const AEMheader& getCurHeader() const { return m_curHeader; };

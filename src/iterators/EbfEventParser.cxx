@@ -30,5 +30,25 @@ namespace ldfReader {
         return status; // Return non-zero to abort iteration
     }
 
+
+int EbfEventParser::handleError(EBFevent* evt, unsigned code, unsigned p1,
+ unsigned p2) const
+ {
+   switch (code)
+   {
+     case EBFeventIterator::ERR_NonEBFevent:
+     {
+       fprintf(stderr, "EBFeventIterator::iterate: "
+                       "Encountered a non-EBFevent datagram contribution "
+                       "with typeId %08x\n", p1);
+       return 1;
+       break;
+     }
+     default: break;
+   }
+   return 0;
+ }
+
+
 }
 #endif

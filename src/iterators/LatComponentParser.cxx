@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.19 2005/03/14 07:54:14 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.20 2005/03/15 20:15:54 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -50,18 +50,19 @@ namespace ldfReader {
         const char* prefix = "  ";
         ldfReader::LatData::instance()->setSummary(event->summary());
         ldfReader::OswData osw(ldfReader::EventSummaryCommon(((EBFcontribution*)contribution)->summary()));
-        osw.initPacketError(contribution->packetError());
+        ldfReader::LatData::instance()->setOsw(osw);
+        ldfReader::LatData::instance()->getOsw().initPacketError(contribution->packetError());
 
-        //ldfReader::LatData::instance()->getOsw().initLength(((EBFcontribution*)contribution)->length());
-        osw.initLength(((EBFcontribution*)contribution)->length());
+        ldfReader::LatData::instance()->getOsw().initLength(((EBFcontribution*)contribution)->length());
+        //osw.initLength(((EBFcontribution*)contribution)->length());
 
         // OSW contribution only exists in later versions starting in Feb 2004
         if (ldfReader::LatData::instance()->getFormatIdentity() >= ID_WITH_OSW) {
-            osw.setExist(); 
+        //    osw.setExist(); 
+            ldfReader::LatData::instance()->getOsw().setExist();
             OswParser oswParse(event, contribution);
             oswParse.iterate();
         }
-        ldfReader::LatData::instance()->setOsw(osw);
         return 0;
     }
 
@@ -375,5 +376,67 @@ void LatComponentParser::dumpLATPcellheader(const unsigned header, const char* p
   printf("%s     parity = %d\n"    , pfx, LATPcellHeader::parity     (header));
 }
 
+
+int LatComponentParser::handleError(EBFcontribution* contrib,
+                                         unsigned code, unsigned p1, unsigned p2) const
+ {
+   fprintf(stderr, "MyLATcomponentIterator::handleError:  Somehow an error occured. \n");
+   fprintf(stderr, "  code=%d, p1=%d, p2=%d\n", code, p1, p2);
+   return 0;
+ }
+
+int LatComponentParser::handleError(EBFevent* event,
+                                unsigned code, unsigned p1, unsigned p2) const
+ {
+   switch (code)
+   {
+     case EBFcontributionIterator::ERR_NumContributions:
+     {
+       fprintf(stderr, "EBFcontributionIterator::iterate: "
+                      "Number of contributions found > %d\n",
+                      p1);
+       break;
+     }
+     case EBFcontributionIterator::ERR_PastEnd:
+     {
+       fprintf(stderr, "EBFcontributionIterator::iterate: "
+                      "Iterated past end of event by 0x%0x = %d bytes\n",
+                      p1, p1);
+       break;
+     }
+     case EBFcontributionIterator::ERR_ZeroLength:
+     {
+       fprintf(stderr, "\nEBFcontributionIterator::iterate:\n"
+              "  Found a contribution with zero length\n");
+       break;
+     }
+     case EBFcontributionIterator::ERR_PacketError:
+     {
+       /* ERR_PacketError gets an additional parameter */
+       char *type;
+
+       switch (p1)
+       {
+         case EBFcontribution::Parity:      type = "parity";       break;
+         case EBFcontribution::Truncated:   type = "truncated";    break;
+         case EBFcontribution::WriteFault:  type = "write fault";  break;
+         case EBFcontribution::TimedOut:    type = "timed out";    break;
+         default:                           type = "unknown";      break;
+       }
+       fprintf(stderr, "\nEBFcontributionIterator::iterate:\n   Skipping contribution with source ID %d having packet %s error\n", p2, type);
+       break;
+     }
+     case EBFcontributionIterator::ERR_NoMap:
+     {
+       fprintf(stderr, "No contribution map exists for EBF version %0x\n",
+              p1);
+       break;
+     }
+     default: break;
+   }
+   return code;
+ }
+
 }
+
 #endif

@@ -4,7 +4,7 @@
 /** @file LatContributionParser.cxx
 @brief Implementation of the LatContributionParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatContributionParser.cxx,v 1.1.1.1 2004/04/15 20:02:23 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatContributionParser.cxx,v 1.2 2005/01/14 19:55:41 heather Exp $
 */
 
 //#include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -25,5 +25,25 @@ namespace ldfReader {
         return 0;
 
     }
+
+int LatContributionParser::handleError(LATcontribution* contribution,
+                               unsigned code, unsigned p1, unsigned p2) const
+{
+  switch (code)
+  {
+    case LATcontributionIterator::ERR_UDFcontribution:
+    {
+      fprintf(stderr, "LATcontributionIterator::UDF: "
+        "Found unrecognized LATdatagram contribution type 0x%08X\n",
+        p1);
+      return -1;
+      break;
+    }
+    default: break;
+  }
+  return 0;
+}
+
+
 }
 #endif

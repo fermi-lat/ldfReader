@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.7 2004/09/24 15:30:53 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.8 2004/10/27 21:25:08 heather Exp $
 */
 
 // EBF Online Library includes
@@ -101,6 +101,23 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
         iterate();
     }
 
+
+
+ int AcdParser::handleError(AEMcontribution *contribution, unsigned code,
+                            unsigned p1, unsigned p2) const {
+     switch (code)
+     {
+         case AEMcontributionIterator::ERR_TooManyPhas:
+         {
+             fprintf(stderr, "AEMcontributionIterator::iterate: %s",
+                       "more PHA values found than bits set in the Accept Map\n");
+             break;
+         }
+
+         default: break;
+     }
+     return 0;
+ }
 
 }
 #endif

@@ -13,7 +13,7 @@
 @brief Calls the appropriate routines in the Online/EBF library to start
 processing the event.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDatagramParser.h,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDatagramParser.h,v 1.2 2004/08/04 21:44:20 heather Exp $
 */
 namespace ldfReader {
     class EbfDatagramParser : public LATdatagramIterator
@@ -23,6 +23,24 @@ namespace ldfReader {
         virtual ~EbfDatagramParser() {}
 
         virtual int process(LATdatagram*);
+
+        virtual int handleError(LATdatagram *datagram, unsigned code, unsigned p1=0, unsigned p2=0) const {
+
+        switch (code)
+        {
+            case LATdatagramIterator::ERR_IDmismatch:
+            {
+                fprintf(stderr, "LATdatagramIterator::iterate: "
+                       "Identity mismatch: got %08x, expected %08x\n",
+                       p1, p2);
+                return -1;
+                break;
+            }
+            default: break;
+        }
+        return 0;
+    };
+
     private:
         LatContributionParser m_lci;
     };
@@ -34,6 +52,7 @@ namespace ldfReader {
 
         return m_lci.status();
     }
+
 
 }
 #endif
