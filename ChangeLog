@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: heather  Wed Apr 21 15:11:38 PDT 2004
+ldfReader/ldfReader/data
+
+Modified Files:
+	LatData.h 
+Added Files:
+	AcdDigi.h 
+Log Message:
+first pass at handling ACD data
+    *
+------------------------------------------------------------
 User: heather  Wed Apr 21 15:08:35 PDT 2004
 ldfReader/doc
 
