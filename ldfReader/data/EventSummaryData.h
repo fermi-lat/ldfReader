@@ -1,6 +1,6 @@
 /* @class EventSummaryData
 * @brief Class for accessing fields in the event summary longword.
-* $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/EventSummaryData.h,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
+* $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/EventSummaryData.h,v 1.2 2004/07/29 22:00:50 heather Exp $
 */
 
 #ifndef ldfReaderEventSummaryData_H
@@ -54,6 +54,15 @@ namespace ldfReader {
         unsigned summary() const {return m_summary;}
         unsigned upperPpcTimeBaseWord() const { return m_upperPpcTimeBase; };
         unsigned lowerPpcTimeBaseWord() const { return m_lowerPpcTimeBase; };
+
+        /// returning a signed long - makes it easier to do check for 
+        /// monotonically increasing sequence numbers and the rollover
+        /// value is less than 140000, so sign shouldn't matter
+        long eventSequence() const {
+            unsigned eventNumber = EventSummary::eventNumber(m_summary);
+            unsigned tag = EventSummary::tag(m_summary);
+            return ((eventNumber << 2) | tag);
+        }
 
     private:
         unsigned m_summary;

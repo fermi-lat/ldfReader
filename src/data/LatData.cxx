@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.2 2004/04/21 22:16:26 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.3 2004/07/29 22:01:33 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -66,6 +66,26 @@ namespace ldfReader {
         m_acdCol.clear();
         m_diagnostic.clear();
         m_gem.clear();
+        m_flags = 0;
+    }
+
+
+    bool LatData::eventSeqConsistent() const {
+
+        unsigned long firstEvtSeq = getOsw().summary().eventSequence();
+        if (firstEvtSeq != getAem().summary().eventSequence()) return false;
+        if (firstEvtSeq != getErr().summary().eventSequence()) return false;
+        if (firstEvtSeq != getGem().summary().eventSequence()) return false;
+        if (firstEvtSeq != diagnostic()->summary().eventSequence()) return false;
+        std::map<unsigned int, TowerData*>::const_iterator towerIter = m_towerMap.begin();
+        while(towerIter != m_towerMap.end())
+        {
+            TowerData* tower = (towerIter++)->second;
+            const TemData tem = tower->getTem();
+            if (firstEvtSeq != tem.summary().eventSequence()) return false;
+        }
+        // all ok
+        return true;
     }
 
 

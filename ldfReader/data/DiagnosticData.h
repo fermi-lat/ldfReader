@@ -5,6 +5,8 @@
 #include "CalDiagnosticData.h"
 #include <vector>
 
+#include "EventSummaryCommon.h"
+
 namespace ldfReader {
 
     /*! @class DiagnosticData
@@ -28,9 +30,16 @@ namespace ldfReader {
         const TkrDiagnosticData& getTkrDiagnosticByIndex(unsigned int index) const { return m_tkrVec[index]; };
         int getNumTkrDiagnostic() const { return m_tkrVec.size(); };
 
+
+        const EventSummaryCommon& summary() const { return m_summary; }
+        void setSummary(unsigned summary) {m_summary.setSummary(summary); };
+
     private:
         std::vector<CalDiagnosticData> m_calVec;
         std::vector<TkrDiagnosticData> m_tkrVec;
+
+        // Store the event sequence number for this contribution
+        EventSummaryCommon m_summary;
     };
 } // end namespace
 #endif

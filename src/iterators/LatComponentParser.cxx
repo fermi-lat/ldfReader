@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.5 2004/07/29 22:02:40 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.6 2004/08/04 21:44:20 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -37,6 +37,8 @@ namespace ldfReader {
     {
         const char* prefix = "  ";
         ldfReader::LatData::instance()->setSummary(event->summary());
+        const ldfReader::OswData summary(ldfReader::EventSummaryCommon(contribution->summary()));
+        ldfReader::LatData::instance()->setOsw(summary);
         // OSW contribution only exists in later versions starting in Feb 2004
         if (ldfReader::LatData::instance()->getFormatIdentity() >= ID_WITH_OSW) {
             OswParser osw(event, contribution);
@@ -49,6 +51,10 @@ namespace ldfReader {
         
         //if (EbfDebug::getDebug())  printf("\nGEM:\n");
         ldfReader::GemData gem;
+
+        ldfReader::EventSummaryCommon summary(contribution->summary());
+        gem.setSummary(summary);
+
         const GEMtileList *onlineTiles = contribution->tileList();
         ldfReader::GemDataTileList tileList(onlineTiles->XZM(), onlineTiles->XZP(),
                    onlineTiles->YZM(), onlineTiles->YZP(), onlineTiles->XY(),
@@ -98,6 +104,9 @@ namespace ldfReader {
     {
         using namespace ldfReader;
 
+        ldfReader::AemData summary(contribution->summary());
+        ldfReader::LatData::instance()->setAem(summary);
+
 //        _acdSrc = LATPcellHeader::source(contribution->header());
 //        if (EbfDebug::getDebug() ) printf("\nAEM %2d:\n", _acdSrc);
         if (EbfDebug::getDebug() ) commonComponentData((EBFcontribution*)contribution);
@@ -114,7 +123,20 @@ namespace ldfReader {
 
         using namespace ldfReader;
 
+        // Use this to determine if we've already picked up the TEM summary
         _calSrc = LATPcellHeader::source(contribution->header());
+        // Retrieve the tower object we wish to update
+        // Just doing this for the summary data
+        unsigned int towerId = _calSrc;
+        LatData* curLatData = LatData::instance();
+        TowerData* tower = curLatData->getTower(towerId);
+        if (!tower) {
+            tower = new TowerData(towerId);
+            curLatData->addTower(tower);
+        }
+        ldfReader::EventSummaryCommon summary(contribution->summary());
+        tower->setTem(summary);
+
        // if (EbfDebug::getDebug() ) printf("\nTEM %2d:\n", dumpLATPcellHeader(_calSrc));
 
         // Actually do the parsing
@@ -134,21 +156,20 @@ namespace ldfReader {
 
         using namespace ldfReader;
 
-        if (_calSrc != LATPcellHeader::source(contribution->header()))
-        {
-            // printf("\nTEM: %d\n", _calSrc);
-            //((MyEBFcontribution*)contribution)->dumpCommon("  ");
-        }
-
         // Retrieve the tower object we wish to update with this TKR data
-        unsigned int towerId = _calSrc;
+        unsigned int towerId = LATPcellHeader::source(contribution->header());
         LatData* curLatData = LatData::instance();
         TowerData* tower = curLatData->getTower(towerId);
         if (!tower) {
             tower = new TowerData(towerId);
             curLatData->addTower(tower);
         }
-
+        if (_calSrc != LATPcellHeader::source(contribution->header())) {
+            // We haven't picked up this TEM's event summary yet
+            ldfReader::EventSummaryCommon summary(contribution->summary());
+            tower->setTem(summary);
+        }
+        
         // Actually do the parsing
         TkrParser tkr(event, contribution, tower, "   ");
         tkr.parse();
@@ -158,6 +179,8 @@ namespace ldfReader {
     }
 
     int LatComponentParser::diagnostic (EBFevent* event, TEMcontribution* contribution) {
+       
+        ldfReader::LatData::instance()->diagnostic()->setSummary(contribution->summary());
         if ( EventSummary::diagnostic(contribution->summary())) {
             //   Process the trigger primitives in the diagnostic data
             DiagnosticParser iter(event,contribution,TKRend(),ldfReader::LatData::instance()->diagnostic());
@@ -170,6 +193,8 @@ namespace ldfReader {
     }
 
 int LatComponentParser::error(EBFevent* event, TEMcontribution* contribution) {
+    ldfReader::ErrData summary(contribution->summary());
+    ldfReader::LatData::instance()->setErr(summary);
     if ( EventSummary::error(contribution->summary())) {
         unsigned offset;
         if (0 != diagnosticEnd())

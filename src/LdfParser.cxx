@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.1 2004/05/12 06:26:07 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -232,6 +232,10 @@ namespace ldfReader {
         // Purpose and Method:  This routine loads the data from one event
         // The current event in the EBF file.
 
+        static long eventSeqNum = -1;
+        // From Ric Claus Aug, 2004
+        const long maxEventSeqNum = 131071;
+
         // First clear the LatData
         ldfReader::LatData::instance()->clearTowers();
         ldfReader::LatData::instance()->setRunId(m_runId);
@@ -246,6 +250,31 @@ namespace ldfReader {
             // An error occured
             return -1;
         }
+
+        printf("LDF Evt Seq %d\n", ldfReader::LatData::instance()->summaryData().eventSequence());
+        printf("static evt seq %d\n", eventSeqNum);
+
+        if (!ldfReader::LatData::instance()->eventSeqConsistent()) {
+            printf("Event Sequence numbers are not consistent within all contributions\n");
+            printf("Setting bad event flag\n");
+            ldfReader::LatData::instance()->setBadEventSeqFlag();
+            return 0;
+        }
+
+        // Now check to see that the event sequences are monotonically increasing
+        if (ldfReader::LatData::instance()->summaryData().eventSequence() < eventSeqNum) {
+            printf("Setting Bad Event Flag\n");
+            ldfReader::LatData::instance()->setBadEventSeqFlag();
+            return 0;
+        } else {
+            eventSeqNum = ldfReader::LatData::instance()->summaryData().eventSequence();
+        }
+
+       // reset the stored event sequence number when we hit the LDF's rollover
+       // value
+       if (eventSeqNum == maxEventSeqNum) eventSeqNum = -1;
+
+     
         return 0;
     }
 
