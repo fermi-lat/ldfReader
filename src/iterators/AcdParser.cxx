@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.4 2004/05/13 22:21:39 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.5 2004/06/22 21:01:25 heather Exp $
 */
 
 // EBF Online Library includes
@@ -78,7 +78,7 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
       acd = curLatData->getAcd(pmt->name());
   } 
   AcdDigi::ParityError err = (p.parityError() == 0) ? AcdDigi::NOERROR : AcdDigi::ERROR;
-  acd->addPmt(ldfReader::AcdDigi::AcdPmt(p.ADCvalue(), p.ADCrange(), digiSide, err));
+  acd->addPmt(ldfReader::AcdDigi::AcdPmt(p.ADCvalue(), p.ADCrange(), digiSide, channel, p.more(), err));
 
 }
 
