@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v1r5p8  03-Feb-2005 hmk Ditch useless information message to avoid confusion
 v1r5p7  02-Feb-2005 hmk No bad event flag for monotonically increases event
                     sequences check - waiting for prescaling/filtering flag 
 v1r5p6  31-Jan-2005 hmk Fix up RunId handling and store length of diagnostic
