@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.3 2004/05/12 06:27:36 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.4 2004/05/13 22:21:39 heather Exp $
 */
 
 // EBF Online Library includes
@@ -32,22 +32,25 @@ namespace ldfReader {
 
 void AcdParser::header(unsigned cable, AEMheader hdr)
 {
-  printf("%s  Cable %d = FREE board %s header:\n", m_prefix, cable,
-         map()->freeName(event()->identity(), cable));
-  printf("%s    Start-bit           = %01x\n",     m_prefix, hdr.startBit());
-  printf("%s    Hit-map             = 0x%05x\n",   m_prefix, hdr.hitMap());
-  printf("%s    Accept-map          = 0x%05x\n",   m_prefix, hdr.acceptMap());
-  printf("%s    PHA vector          = %01x\n",     m_prefix, hdr.phaVector());
-  printf("%s    Header parity error = %01x\n",     m_prefix, hdr.parityError());
-  printf("%s    End of Cables       = %01x\n",     m_prefix, hdr.endOfCables());
-  printf("%s    Cable Number        = %02x\n",     m_prefix, hdr.cableNumber());
-  if (hdr.phaVector())
-  {
-    printf("%s                                  Value    parity\n",      m_prefix);
-    printf("%s    Channel  Tile  Side Range (hex)  (dec) error  More\n", m_prefix);
-  }
-  else
-    printf("%s  Cable %d has no data\n", m_prefix, cable);
+    if (EbfDebug::getDebug()) {
+
+        printf("%s  Cable %d = FREE board %s header:\n", m_prefix, cable,
+            map()->freeName(event()->identity(), cable));
+        printf("%s    Start-bit           = %01x\n",     m_prefix, hdr.startBit());
+        printf("%s    Hit-map             = 0x%05x\n",   m_prefix, hdr.hitMap());
+        printf("%s    Accept-map          = 0x%05x\n",   m_prefix, hdr.acceptMap());
+        printf("%s    PHA vector          = %01x\n",     m_prefix, hdr.phaVector());
+        printf("%s    Header parity error = %01x\n",     m_prefix, hdr.parityError());
+        printf("%s    End of Cables       = %01x\n",     m_prefix, hdr.endOfCables());
+        printf("%s    Cable Number        = %02x\n",     m_prefix, hdr.cableNumber());
+        if (hdr.phaVector())
+        {
+            printf("%s                                  Value    parity\n",      m_prefix);
+            printf("%s    Channel  Tile  Side Range (hex)  (dec) error  More\n", m_prefix);
+        }
+        else
+            printf("%s  Cable %d has no data\n", m_prefix, cable);
+    }
 }
 
 void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
@@ -69,12 +72,13 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
   ldfReader::LatData* curLatData = ldfReader::LatData::instance();
   AcdDigi* acd = curLatData->getAcd(pmt->name());
   if (!acd) {
-      AcdDigi *digi = new AcdDigi(pmt->name(), tileNum);
+      AcdDigi *digi = new AcdDigi(pmt->name(), pmt->tile(), tileNum);
       curLatData->addAcd(digi);
       // Now retrieve the pointer to the newly created AcdDigi
       acd = curLatData->getAcd(pmt->name());
   } 
-  acd->addPmt(ldfReader::AcdDigi::AcdPmt(p.ADCvalue(), p.ADCrange(), digiSide));
+  AcdDigi::ParityError err = (p.parityError() == 0) ? AcdDigi::NOERROR : AcdDigi::ERROR;
+  acd->addPmt(ldfReader::AcdDigi::AcdPmt(p.ADCvalue(), p.ADCrange(), digiSide, err));
 
 }
 
