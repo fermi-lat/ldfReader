@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Apr  5 14:21:35 PDT 2005
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+upgrading to LDF v05-06-01
+    *
+------------------------------------------------------------
 TAG
 Tag name: v2r0p0, operation: add
 Package: ldfReader
