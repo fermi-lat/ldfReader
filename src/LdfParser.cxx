@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.12 2005/02/01 19:08:50 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.13 2005/02/02 21:58:55 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -181,8 +181,10 @@ namespace ldfReader {
         fits_read_descript(ffile, 1, m_currentRow, &nbytes,     // ffgdes
             &heapAddr, &status);
 
-        if (status != 0)
+        if (status != 0) {
+            printf("FITSIO Status Code: %d curRow = %d\n", status, m_currentRow);
             throw LdfException("Failed to read row description");
+        }
 
         if (!m_rowBuf) { // just allocate what we need for this event 
             m_maxSize = nbytes;
@@ -252,6 +254,14 @@ namespace ldfReader {
 
                     // complain
                     return -1;
+                } else { // check that this HDU is event data
+                    char name[50];
+                    fits_read_key_str(ffile, "EXTNAME", name, 0, &status);
+                    if (strcmp("Event Data", name) != 0) {
+                        printf("Current HDU is not Event Data - must have reached the end of event data\n");
+                        m_datagram = 0;
+                        return -1;
+                    }
                 }
 
                 fits_get_num_rows(ffile, &m_maxRow, &status);  // ffgnrw
