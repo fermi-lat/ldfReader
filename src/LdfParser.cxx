@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.14 2005/02/09 17:14:27 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.15 2005/02/09 18:16:34 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -331,16 +331,20 @@ namespace ldfReader {
 
                 if (!ldfReader::LatData::instance()->eventSeqConsistent()) {
                     printf("Event Sequence numbers are not consistent within all contributions\n");
-                    printf("Setting bad event flag\n");
+                    printf("Setting event flag\n");
                     ldfReader::LatData::instance()->setBadEventSeqFlag();
                     return 0;
                 }
 
                 // Now check to see that the event sequences are monotonically increasing
                 if (ldfReader::LatData::instance()->summaryData().eventSequence() < eventSeqNum) {
-                    printf("WARNING Event Seq # is not monotonically increasing ");
-                    printf("Last EventSeqNum %lu, current %lu\n", eventSeqNum,
+                    static bool warn = false;
+                    if (!warn) {
+                        printf("WARNING Event Seq # is not monotonically increasing  please check log to see if this was a prescaled/filtered run  ");
+                        printf("Last EventSeqNum %lu, current %lu\n", eventSeqNum,
                         ldfReader::LatData::instance()->summaryData().eventSequence());
+                        warn = true;
+                    }
                     eventSeqNum = ldfReader::LatData::instance()->summaryData().eventSequence();
                     // Feb 2, 2005 HMK
                     // Don't set bad event flag..until we have a way to tell
