@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Nov 24 13:45:06 PST 2004
+ldfReader/src/iterators
+
+Modified Files:
+	DiagnosticParser.cxx 
+Log Message:
+store tower and layer/gtcc for CAL/TKR diagnostic
+    *
+------------------------------------------------------------
 User: heather  Wed Nov 24 13:44:41 PST 2004
 ldfReader/ldfReader/data
 
