@@ -1,5 +1,5 @@
-#ifndef EBFPARSER_H
-#define EBFPARSER_H 1
+#ifndef LdfParser_H
+#define LdfParser_H 1
 
 #include <string>
 #include "DFC/EBF_fileIn.h"
@@ -9,22 +9,22 @@
 #include "../src/iterators/EbfDatagramParser.h"
 
 
-/** @class EbfParser
+/** @class LdfParser
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/EbfParser.h,v 1.8 2003/11/01 06:10:48 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/LdfParser.h,v 1.1.1.1 2004/04/15 20:02:21 heather Exp $
 */
 
 namespace ldfReader {
-    class EbfParser {
+    class LdfParser {
     public:
 
-        EbfParser();
-        EbfParser(std::string fileName, bool fitsWrap = false,
+        LdfParser();
+        LdfParser(std::string fileName, bool fitsWrap = false,
             const std::string& instrument="LAT");
 
-        ~EbfParser();
+        ~LdfParser();
 
         void clear();
 
