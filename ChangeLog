@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Jul 29 21:37:46 PDT 2004
+ldfReader/src/iterators
+
+Modified Files:
+	OswParser.h 
+Log Message:
+add return statement
+    *
+------------------------------------------------------------
 User: heather  Thu Jul 29 15:02:40 PDT 2004
 ldfReader/src/iterators
 
