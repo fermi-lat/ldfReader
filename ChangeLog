@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Mar 15 23:40:26 PST 2005
+ldfReader/ldfReader/data
+
+Modified Files:
+	GemData.h 
+Log Message:
+add missed method
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r9, operation: add
 Package: ldfReader
