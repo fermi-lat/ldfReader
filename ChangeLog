@@ -1,4 +1,16 @@
 ------------------------------------------------------------
+User: borgland  Sat Mar 19 18:23:46 PST 2005
+ldfReader/ldfReader/data
+
+Modified Files:
+	DiagnosticData.h 
+Log Message:
+
+	Fix to get all 8 TKR and CAL diagnostics contributions.
+
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r10p0, operation: add
 Package: ldfReader
