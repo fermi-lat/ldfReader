@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.5 2004/02/11 10:50:34 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -34,6 +34,20 @@ namespace ldfReader {
         return 0;
     }
 
+    AcdDigi* LatData::getAcd(const char *name) {
+        if (m_acdCol.find(name) != m_acdCol.end()) {
+            return m_acdCol[name];
+        }
+        return 0;
+    }
+
+//   const AcdDigi* LatData::getAcd(const char *name) const {
+//        if (m_acdCol.find(name) != m_acdCol.end()) {
+//            return m_acdCol[name];
+//        }
+//        return 0;
+//    }
+
     void LatData::clearTowers()
     {
         std::map<unsigned int, TowerData*>::iterator towerIter = m_towerMap.begin();
@@ -43,6 +57,13 @@ namespace ldfReader {
             delete tower;
         }
         m_towerMap.clear();
+
+        std::map<const char *, AcdDigi*>::iterator acdIter = m_acdCol.begin();
+        while(acdIter != m_acdCol.end()) {
+            AcdDigi *digi = (acdIter++)->second;
+            delete digi;
+        }
+        m_acdCol.clear();
         m_diagnostic.clear();
     }
 
