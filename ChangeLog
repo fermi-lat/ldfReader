@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue May 11 23:27:36 PDT 2004
+ldfReader/src/iterators
+
+Modified Files:
+	AcdParser.cxx CalParser.cxx TkrParser.cxx 
+Log Message:
+fix naming for ldf
+    *
+------------------------------------------------------------
 User: heather  Tue May 11 23:26:07 PDT 2004
 ldfReader/src
 
