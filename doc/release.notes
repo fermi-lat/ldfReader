@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v1r7p0  11-Mar-2005 hmk Only provide monotonically increasing warning once
 v1r7    21-Feb-2005 hmk Prepare for new GEM and LDF v05-04-01
 v1r6p0  09-Feb-2005 hmk search for Event Data HDUs in a better way
 v1r6    09-Feb-2005 hmk Check EXTNAME of HDU to make sure it is Event Data
