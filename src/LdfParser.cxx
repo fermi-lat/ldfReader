@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.18 2005/03/15 20:15:53 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.19 2005/03/31 07:38:52 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -21,6 +21,9 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.18 2005/03
 #include "longnam.h"
 
 namespace ldfReader {
+
+const unsigned LdfParser::BufferSize = 64*1024;
+
     LdfParser::LdfParser() {
         clear();
     }
@@ -127,16 +130,18 @@ namespace ldfReader {
                 // library does not get us the next event
                 m_datagramParser = new EbfDatagramParser(0, 0);
             }
-            else  { // For EBF or ARCH files
-                m_ebf  = EBF_open(m_fileName.c_str(), 0);
-                EBF_read(m_ebf);
-                EBF_close(m_ebf);
+            else  { // For LDF or ARCH files
+                m_ebf  = file_initialize(m_fileName.c_str());
 
-                LATdatagram* start = (LATdatagram*)EBF_edata(m_ebf);
-                LATdatagram* end   = (LATdatagram*)(&((char*)start)[EBF_size(m_ebf)]);
+                char buffer[BufferSize];
+                unsigned size = from_file(m_ebf, buffer);
+                if (size <= 0) throw LdfException("Could not read from LDF file");
+                LATdatagram* start = (LATdatagram*)buffer;
+                LATdatagram* end   = (LATdatagram*)(&buffer[size]);
 
                 m_datagram = start;
-                m_datagramParser = new EbfDatagramParser(start, end);
+                // no need to init start and end for datagramparser
+                //m_datagramParser = new EbfDatagramParser(0, 0);
 
                 m_start = start;
                 m_end = end;
@@ -152,9 +157,11 @@ namespace ldfReader {
 
 
     LdfParser::~LdfParser() {
+        if (!m_fitsWrap) file_finalize(m_ebf);
         clear();
         fitsfile* ffile = (fitsfile *) m_fitsfile;
         delete ffile;
+      
     }
 
     void LdfParser::clear() {
@@ -164,8 +171,8 @@ namespace ldfReader {
         m_eventId = 0;
         m_eventSize = 0;
         m_ebfSize = 0;
-        if (m_ebf) EBF_free(m_ebf);
-        m_ebf = 0;
+        //if (m_ebf) EBF_free(m_ebf);
+        //m_ebf = 0;
         //m_evt = 0;
     }
 
@@ -281,8 +288,14 @@ namespace ldfReader {
             // nbytes should never be 0, but just in case, leave this check in
             return (nbytes > 0) ? 0 : -1;
         }
-        else {  // raw ebf
-            m_datagram = m_datagram->next();
+        else {  // raw ldf
+            //m_datagram = m_datagram->next();
+            char buffer[BufferSize];
+            unsigned size = from_file(m_ebf, buffer);
+            if (size <= 0) return -1;
+            m_start = (LATdatagram*)buffer;
+            m_end = (LATdatagram*)(&buffer[size]);
+          
             return 0;
         }
       } catch(LdfException &e) {
@@ -316,11 +329,18 @@ namespace ldfReader {
         }
         else if ((!m_fitsWrap) && (m_datagram >= m_end)) return -1;
 
-        if (m_datagramParser->process(m_datagram) != 0)
-        {
-            // An error occured
-            throw(LdfException("LDF processing failed"));
-            //return -1;
+        if (m_fitsWrap) {
+            if (m_datagramParser->process(m_datagram) != 0)
+            {
+                // An error occured
+                throw LdfException("LDF processing failed");
+                //return -1;
+            }
+        } else {
+            EbfDatagramParser ldf(m_start, m_end);
+            ldf.iterate();
+            if (ldf.status()) throw LdfException("LDF LatDatagramIterator reported a bad status");
+   
         }
 
         // Only do this check on the event sequence if we have a recent
@@ -382,6 +402,75 @@ namespace ldfReader {
     bool LdfParser::end() {
         return (m_datagram < m_end);
     }
+
+
+
+
+    FILE* LdfParser::file_initialize(const char* filename) {
+        FILE* fpevents = fopen(filename, "rb");
+        if (!fpevents) {
+            fprintf(stderr, "*** LatSimOes: cannot open input data file '%s': %s\n", filename, strerror(errno));
+        } else {
+            fprintf(stdout, "LatSimOes: opening input data file '%s'\n", filename);
+        }
+
+        return fpevents;
+    }
+
+    unsigned LdfParser::from_file(FILE* fpevents, char* buffer) {
+        static const unsigned IntroWords = 2;
+        unsigned size = 0;
+        if (fpevents) {
+            size_t n = fread(buffer, sizeof(int), IntroWords, fpevents);
+            if (n == IntroWords) {
+                size = EBF_swap32(*evtsize(buffer));
+                if (size) {
+                    if ((size & 0x3) == 0) {
+                        unsigned remaining = (size>>2)-IntroWords;
+                        n = fread(evtremaining(buffer), sizeof(int), remaining, fpevents);
+                        if (n != remaining) {
+                            fprintf(stderr, "*** LDFdump: EOF found while reading\n");
+                            size = 0;
+                        }
+                    } else {
+                         fprintf(stderr,"*** LDFdump: datagram size %d not word aligned\n", size);
+                         size = 0;
+                     }
+                 } else {
+                     fprintf(stderr, "*** LDFdump: illegal zero datagram size\n");
+                     size = 0;
+                 }
+            } else {
+                fprintf(stdout, "LDFdump: reached EOF\n");
+            }
+         }
+
+         if (!DFC_BIG_ENDIAN)
+         EBF_swap32_lclXbigN((unsigned*)buffer, size / sizeof (unsigned));
+
+         return size;
+    }
+
+    void LdfParser::file_finalize(FILE* fpevents) {
+        if (fpevents) {
+            fprintf(stdout, "LDFdump: closing input data file\n");
+            fclose(fpevents);
+        }
+    }
+
+
+unsigned* LdfParser::evtsize(char* buffer)
+{
+  static const unsigned SizePos = 1<<2;
+  return (unsigned*)(buffer+SizePos);
+}
+
+unsigned* LdfParser::evtremaining(char* buffer)
+{
+  static const unsigned EvtRemaining = 2<<2;
+  return (unsigned*)(buffer+EvtRemaining);
+}
+
 
 }
 #endif
