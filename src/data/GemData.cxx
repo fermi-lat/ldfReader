@@ -4,7 +4,7 @@
 /** @file GemData.cxx
 @brief Implementation of the GemData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/GemData.cxx,v 1.4 2005/01/26 07:27:00 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/GemData.cxx,v 1.5 2005/01/27 21:58:08 heather Exp $
 */
 
 
@@ -24,10 +24,11 @@ namespace ldfReader {
         m_liveTime = gem.m_liveTime; 
         m_prescaled = gem.m_prescaled; 
         m_discarded = gem.m_discarded;
-        m_sent = gem.m_sent;
+        m_sent_condArr = gem.m_sent_condArr;
         m_triggerTime = gem.m_triggerTime;
         m_onePpsTime = gem.m_onePpsTime;
         m_deltaEventTime = gem.m_deltaEventTime;
+        m_deltaWindOpenTime = gem.m_deltaWindOpenTime;
         m_exist = gem.m_exist;
         m_lenInBytes = gem.m_lenInBytes;
     }
@@ -45,17 +46,34 @@ namespace ldfReader {
         m_tileList = tileList;
     }
 
+                  /*
     void GemData::initSummary(unsigned liveTime, unsigned prescaled, 
                   unsigned discarded, unsigned sent, unsigned triggerTime,
-                  const GemDataOnePpsTime &time, unsigned deltaEvtTime) {
+                  const GemDataOnePpsTime &time, unsigned short deltaEvtTime, unsigned short deltaWindOpenTime) {
         m_liveTime = liveTime;
         m_prescaled = prescaled;
         m_discarded = discarded;  
-        m_sent = sent;
+        m_sent_condArr.sent = sent;
         m_triggerTime = triggerTime;
         m_onePpsTime = time;
         m_deltaEventTime = deltaEvtTime;
+        m_deltaWindOpenTime = deltaWindOpenTime;
     }
+*/
+
+    void GemData::initSummary(unsigned liveTime, unsigned prescaled, 
+                  unsigned discarded, GemDataCondArrivalTime condArr, unsigned triggerTime,
+                  const GemDataOnePpsTime &time, unsigned short deltaEvtTime, unsigned short deltaWindOpenTime) {
+        m_liveTime = liveTime;
+        m_prescaled = prescaled;
+        m_discarded = discarded;  
+        m_sent_condArr.condArr.init(condArr.condArr());
+        m_triggerTime = triggerTime;
+        m_onePpsTime = time;
+        m_deltaEventTime = deltaEvtTime;
+        m_deltaWindOpenTime = deltaWindOpenTime;
+    }
+
 
     void GemData::clear() {
         m_tkrVector = 0;
@@ -68,10 +86,12 @@ namespace ldfReader {
         m_liveTime = 0;
         m_prescaled = 0;
         m_discarded = 0;
-        m_sent = 0;
+        m_sent_condArr.sent = 0;
+        m_sent_condArr.condArr.init(0);
         m_triggerTime = 0;
         m_onePpsTime.clear();
         m_deltaEventTime = 0;
+        m_deltaWindOpenTime = 0;
         m_exist = false;
         m_lenInBytes = 0;
         m_packetError=0;
@@ -94,10 +114,11 @@ namespace ldfReader {
        printf("Live time         = 0x%08x = %d\n", m_liveTime, m_liveTime);
        printf("Prescaled         = 0x%08x = %d\n", m_prescaled, m_prescaled);
        printf("Discarded         = 0x%08x = %d\n", m_discarded, m_discarded);
-       printf("Sent              = 0x%08x = %d\n", m_sent, m_sent);
+       printf("Conditional Arrival Time   = 0x%08x = %d\n", condArrTime().condArr() , condArrTime().condArr());
        printf("Trigger Time      = 0x%08x = %d\n", m_triggerTime, m_triggerTime);
        m_onePpsTime.print();
        printf("Delta event time  = 0x%08x = %d\n", m_deltaEventTime, m_deltaEventTime); 
+       printf("Delta Window Open Time = 0x%08x = %d\n", m_deltaWindOpenTime, m_deltaWindOpenTime);
    }
 }
 #endif
