@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu May 13 14:50:44 PDT 2004
+ldfReader/src/test
+
+Modified Files:
+	test_ldfReader.cxx 
+Log Message:
+update test for ebf->ldf move
+    *
+------------------------------------------------------------
 User: heather  Tue May 11 23:27:36 PDT 2004
 ldfReader/src/iterators
 
