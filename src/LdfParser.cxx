@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.2 2004/08/25 22:37:11 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.3 2004/08/26 20:06:29 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -251,6 +251,11 @@ namespace ldfReader {
             return -1;
         }
 
+        // Only do this check on the event sequence if we have a recent
+        // enough file..  I believe we want one where they started to store the
+        // event summary in each contribution separately
+        if (ldfReader::LatData::instance()->getFormatIdentity() >= ID_WITH_OSW) {
+
         if (!ldfReader::LatData::instance()->eventSeqConsistent()) {
             printf("Event Sequence numbers are not consistent within all contributions\n");
             printf("Setting bad event flag\n");
@@ -270,6 +275,7 @@ namespace ldfReader {
        // reset the stored event sequence number when we hit the LDF's rollover
        // value
        if (eventSeqNum == maxEventSeqNum) eventSeqNum = -1;
+       }
 
      
         return 0;
