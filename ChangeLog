@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Feb  3 12:38:20 PST 2005
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+ditch useless output statement
+    *
+------------------------------------------------------------
 User: heather  Thu Feb  3 12:38:09 PST 2005
 ldfReader/doc
 
