@@ -5,12 +5,12 @@
 /** @file test_ldfReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.1.1.1 2004/04/15 20:02:23 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.2 2004/04/21 22:20:00 heather Exp $
 */
 
 #include <iostream>
 
-#include "ldfReader/EbfParser.h"
+#include "ldfReader/LdfParser.h"
 #include "facilities/Util.h"
 #include "../../src/EbfDebug.h" 
 #include "ldfReader/data/LatData.h"
@@ -29,7 +29,7 @@ int main(int argn, char** argc) {
 
     EbfDebug::setDebug(true);
 
-    EbfParser *ebfP = new EbfParser(filename);
+    LdfParser *ebfP = new LdfParser(filename);
 
     int status = 0;
     do {
