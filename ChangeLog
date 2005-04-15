@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Apr 14 18:12:46 PDT 2005
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add support to pass full event size back
+    *
+------------------------------------------------------------
 User: heather  Thu Apr 14 18:12:36 PDT 2005
 ldfReader/doc
 
