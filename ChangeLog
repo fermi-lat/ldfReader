@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Apr 14 18:12:36 PDT 2005
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+add support to pass full event size back
+    *
+------------------------------------------------------------
 TAG
 Tag name: v2r1, operation: add
 Package: ldfReader
