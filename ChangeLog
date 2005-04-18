@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Apr 18 10:36:16 PDT 2005
+ldfReader/ldfReader
+
+Modified Files:
+	LdfParser.h 
+Log Message:
+store gem.missed and eventsizeinbytes
+    *
+------------------------------------------------------------
 User: heather  Mon Apr 18 10:36:01 PDT 2005
 ldfReader/doc
 
