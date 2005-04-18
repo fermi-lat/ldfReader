@@ -88,6 +88,9 @@ namespace ldfReader {
         unsigned errorEventSummary() const { return (m_flags & enums::SUMMARYERROR); }
         unsigned trgParityError() const { return (m_flags & enums::TRGPARITYERROR); }
 
+        void setEventSizeInBytes(unsigned long size){ m_eventSize = size; };
+        unsigned long eventSizeInBytes() const { return m_eventSize; };
+
     private:
 
         static LatData *m_instance;
@@ -104,6 +107,8 @@ namespace ldfReader {
         AemData m_aem;
 
         unsigned int m_flags;
+
+        unsigned long m_eventSize;
     };
 }
 #endif

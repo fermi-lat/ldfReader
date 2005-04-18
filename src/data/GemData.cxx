@@ -4,7 +4,7 @@
 /** @file GemData.cxx
 @brief Implementation of the GemData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/GemData.cxx,v 1.5 2005/01/27 21:58:08 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/GemData.cxx,v 1.6 2005/02/22 05:54:08 heather Exp $
 */
 
 
@@ -31,11 +31,13 @@ namespace ldfReader {
         m_deltaWindOpenTime = gem.m_deltaWindOpenTime;
         m_exist = gem.m_exist;
         m_lenInBytes = gem.m_lenInBytes;
+        m_missed = gem.m_missed;
     }
 
     void GemData::initTrigger(unsigned short tkr, unsigned short roi,
                   unsigned short calLE, unsigned short calHE, 
                   unsigned short cno, unsigned short conditionSummary, 
+                  unsigned short missed,
                   const GemDataTileList &tileList) {
         m_tkrVector = tkr;
         m_roiVector = roi;
@@ -43,6 +45,7 @@ namespace ldfReader {
         m_cal_HE_Vector = calHE;
         m_cno_Vector = cno;
         m_conditionSummary = conditionSummary;
+        m_missed = missed;
         m_tileList = tileList;
     }
 
@@ -95,6 +98,7 @@ namespace ldfReader {
         m_exist = false;
         m_lenInBytes = 0;
         m_packetError=0;
+        m_missed = 0;
     }
 
    void GemData::print() const {
@@ -109,6 +113,7 @@ namespace ldfReader {
        printf("CAL HE vector = 0x%04x\n", m_cal_HE_Vector);
        printf("CAL LE vector = 0x%04x\n", m_cal_LE_Vector);
        printf("Condition Summary = 0x%04x\n", m_conditionSummary);
+       printf("Missed = 0x%04x\n", m_missed);
        printf("CNO vector        = 0x%04x\n", m_cno_Vector);
        m_tileList.print();
        printf("Live time         = 0x%08x = %d\n", m_liveTime, m_liveTime);
