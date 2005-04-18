@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Mon Apr 18 10:37:03 PDT 2005
+ldfReader/src/iterators
+
+Modified Files:
+	LatComponentParser.cxx 
+Log Message:
+store gem.missed and eventsizeinbytes
+    *
+------------------------------------------------------------
+User: heather  Mon Apr 18 10:37:03 PDT 2005
 ldfReader/src/data
 
 Modified Files:
