@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Apr 18 10:36:01 PDT 2005
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+store gem.missed and eventsizeinbytes
+    *
+------------------------------------------------------------
 User: heather  Mon Apr 18 10:35:55 PDT 2005
 ldfReader/cmt
 
