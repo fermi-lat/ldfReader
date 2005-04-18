@@ -13,7 +13,7 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/LdfParser.h,v 1.1 2004/05/12 06:20:32 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/LdfParser.h,v 1.2 2005/03/31 23:58:37 heather Exp $
 */
 
 namespace ldfReader {
@@ -41,7 +41,7 @@ namespace ldfReader {
 
         unsigned int eventId() { return m_eventId; };
 
-        unsigned int eventSize() { return m_eventSize; };
+        unsigned long eventSize() { return m_eventSize; };
 
         //bool end(EBFevent *evt);
         bool end();
@@ -80,7 +80,7 @@ namespace ldfReader {
 
         unsigned int m_runId;
         unsigned int m_eventId;
-        unsigned int m_eventSize;
+        unsigned long m_eventSize;
 
         int m_ebfSize;
 

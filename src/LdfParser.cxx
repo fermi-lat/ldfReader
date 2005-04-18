@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.20 2005/03/31 23:55:05 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.21 2005/04/01 22:10:51 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -33,7 +33,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
     m_fileName(fileName), m_fitsWrap(fitsWrap), m_ebf(0), m_fitsfile(0), 
         m_maxRow(0), m_currentRow(0), m_maxHdu(0), m_currentHdu(0),
         m_rowBuf(0), m_maxSize(0), m_evtCount(0), m_instrument(instrument),
-        m_runId(0)
+        m_runId(0), m_eventSize(0)
     {
         try {
             // MyTkrIterator::setInstrument(instrument);
@@ -124,7 +124,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
                 // Believe that first row in FITS table is called 1.
                 m_currentRow = 1;
 
-                long nbytes = getRow();
+                m_eventSize = getRow();
 
                 // start and end are meaningless in FITS case since EBF 
                 // library does not get us the next event
@@ -136,6 +136,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
                 char buffer[BufferSize];
                 unsigned size = from_file(m_ebf, buffer);
                 if (size <= 0) throw LdfException("Could not read from LDF file");
+                m_eventSize = size;
                 LATdatagram* start = (LATdatagram*)buffer;
                 LATdatagram* end   = (LATdatagram*)(&buffer[size]);
 
@@ -285,6 +286,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
                 m_currentRow = 1;
             }
             long nbytes = getRow();
+            m_eventSize = nbytes;
             // nbytes should never be 0, but just in case, leave this check in
             return (nbytes > 0) ? 0 : -1;
         }
@@ -292,6 +294,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
             //m_datagram = m_datagram->next();
             char buffer[BufferSize];
             unsigned size = from_file(m_ebf, buffer);
+            m_eventSize = size;
             if (size <= 0) {
               return -1;
             }
@@ -326,6 +329,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
         // First clear the LatData
         ldfReader::LatData::instance()->clearTowers();
         ldfReader::LatData::instance()->setRunId(m_runId);
+        ldfReader::LatData::instance()->setEventSizeInBytes(m_eventSize);
 
         if ( (m_fitsWrap)  && (m_datagram == 0) ) {
             return -1;

@@ -5,7 +5,7 @@
 /** @file test_ldfReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.13 2005/03/15 20:15:55 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.14 2005/03/31 23:55:11 heather Exp $
 */
 
 #include <iostream>
@@ -47,6 +47,9 @@ int main(int argn, char** argc) {
         LatData* myLatData = LatData::instance();
 
         printf("\nSTART NEW EVENT\n");
+        printf("Run: %d, Event %d \n", myLatData->runId(), myLatData->summaryData().eventSequence());
+        printf("Event Size in Bytes %u \n", myLatData->eventSizeInBytes());
+
         printf("EBF Format Identity 0x%08x\n", myLatData->getFormatIdentity());
         // Event Summary
         EventSummaryData summary = myLatData->summaryData();
