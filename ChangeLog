@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Mon Apr 18 10:36:16 PDT 2005
+ldfReader/ldfReader/data
+
+Modified Files:
+	GemData.h LatData.h 
+Log Message:
+store gem.missed and eventsizeinbytes
+    *
+------------------------------------------------------------
+User: heather  Mon Apr 18 10:36:16 PDT 2005
 ldfReader/ldfReader
 
 Modified Files:
