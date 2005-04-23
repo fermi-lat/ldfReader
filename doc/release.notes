@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v2r3p0  22-Apr-2005 hmk Patch reading of AEM hitMap and acceptMap
 v2r3    17-Apr-2005 hmk Store Gem.Missed and EventSizeInBytes
 v2r2    14-Apr-2005 hmk Prepare to pass full event size in bytes - requested
         by Anders
