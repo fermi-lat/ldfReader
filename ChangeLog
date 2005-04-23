@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Apr 22 21:49:38 PDT 2005
+ldfReader/src/iterators
+
+Modified Files:
+	AcdParser.cxx 
+Log Message:
+read the hitmap and the acceptmap from left to right
+    *
+------------------------------------------------------------
 TAG
 Tag name: v2r3, operation: add
 Package: ldfReader
