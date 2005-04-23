@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Apr 22 21:50:32 PDT 2005
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+read the hitmap and the acceptmap from left to right
+    *
+------------------------------------------------------------
 User: heather  Fri Apr 22 21:50:19 PDT 2005
 ldfReader/doc
 
