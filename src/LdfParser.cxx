@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.21 2005/04/01 22:10:51 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.22 2005/04/18 17:37:03 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -67,7 +67,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
 
                 int iKey;
                 char* comment=0;
-                char keyName[15], value[15];
+                char keyName[15], value[50];
                 for (iKey = 1; iKey <= numKeys; iKey++) {
                     fits_read_keyn(ffile, iKey, keyName, value, comment, &status);
                     if (status == 0) {
