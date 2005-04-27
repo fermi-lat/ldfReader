@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Apr 26 23:01:09 PDT 2005
+ldfReader/src
+
+Modified Files:
+	LdfParser.cxx 
+Log Message:
+patch for JIRA SVAC-37
+    *
+------------------------------------------------------------
 User: heather  Tue Apr 26 23:00:52 PDT 2005
 ldfReader/cmt
 
