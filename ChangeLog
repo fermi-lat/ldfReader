@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Apr 26 23:00:34 PDT 2005
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+patch for JIRA SVAC-37
+    *
+------------------------------------------------------------
 TAG
 Tag name: v2r3p0, operation: add
 Package: ldfReader
