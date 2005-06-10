@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Jun  9 23:17:45 PDT 2005
+ldfReader/ldfReader/data
+
+Modified Files:
+	ErrData.h 
+Log Message:
+handle error summary
+    *
+------------------------------------------------------------
 User: heather  Thu Jun  9 23:17:00 PDT 2005
 ldfReader/cmt
 
