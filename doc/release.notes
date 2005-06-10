@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v2r4    03-Jun-2005 hmk Store error summary word
 v2r3p1  26-Apr-2005 hmk Patch LdfParser so that we allocate enough space for
         reading in header values - JIRA SVAC-37
 v2r3p0  22-Apr-2005 hmk Patch reading of AEM hitMap and acceptMap

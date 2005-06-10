@@ -9,7 +9,7 @@ namespace ldfReader {
 
     /** @class ErrData
       * @brief Local storage of error data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/ErrData.h,v 1.7 2005/01/27 21:57:29 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/ErrData.h,v 1.8 2005/03/15 19:57:33 heather Exp $
     */
     class ErrData {
     public:
@@ -22,6 +22,10 @@ namespace ldfReader {
 
         void clear() { 
             m_lenInBytes = 0; 
+            m_cal = 0;
+            m_tkr = 0;
+            m_phs = 0;
+            m_tmo = 0;
             m_exist = false; };
 
        void print() const {
@@ -30,6 +34,8 @@ namespace ldfReader {
                return;
            }
            printf("Error Data:\n\n");
+           printf("cal: %u tkr: %u \n", m_cal, m_tkr);
+           printf("phs: %u tmo: %u \n", m_phs, m_tmo);
         }
 
 
@@ -41,6 +47,24 @@ namespace ldfReader {
 
         void initPacketError(unsigned packetError) { m_packetError=packetError; };
         unsigned packetError() const { return m_packetError; };
+   
+        // How to unpack these bits is discussed in section 4.4 of the TEM doc
+
+        // bit  3  2  1  0
+        // GCCC 1  3  2  0 
+        unsigned short cal() const { return m_cal; };
+        void initCal(unsigned short cal) { m_cal = cal; };
+
+        // bit  7  6  5  4  3  2  1  0
+       //  GTCC 4  1  5  0  7  2  6  3 
+        unsigned short tkr() const { return m_tkr; };
+        void initTkr(unsigned short tkr) { m_tkr = tkr; };
+        
+        bool phs() const { return (m_phs && 1); };
+        void initPhs(unsigned short phs) { m_phs = phs; };
+
+        bool tmo() const { return (m_tmo && 1); };
+        void initTmo(unsigned short tmo) { m_tmo = tmo; };
 
     private:
 
@@ -49,6 +73,12 @@ namespace ldfReader {
 
         unsigned m_packetError;
         unsigned long m_lenInBytes;
+
+        // the four categories in the error summary word
+        unsigned short m_cal;  // CAL
+        unsigned short m_tkr;  // TKR
+        unsigned short m_phs;  // Phase Error
+        unsigned short m_tmo;  // Timeout Error
     };
 } // end namespace
 #endif

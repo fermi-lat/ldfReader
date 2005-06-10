@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.21 2005/04/05 21:23:39 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.22 2005/04/18 17:37:03 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -315,6 +315,11 @@ int LatComponentParser::error(EBFevent* event, TEMcontribution* contribution) {
         else
             offset=TKRend();
         ErrParser errParse(event,contribution,offset);
+        ErrorSummary theError = errParse.theError();
+        tower->getTem().getErr()->initCal(theError.cal());
+        tower->getTem().getErr()->initTkr(theError.tkr());
+        tower->getTem().getErr()->initPhs(theError.phs());
+        tower->getTem().getErr()->initTmo(theError.tmo());
         errParse.iterate();
         errorEnd(offset+errParse.size());
         tower->getTem().getErr()->initLength(errParse.size());    
