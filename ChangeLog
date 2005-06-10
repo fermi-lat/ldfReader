@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Jun  9 23:16:52 PDT 2005
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+handle error summary
+    *
+------------------------------------------------------------
 TAG
 Tag name: v2r3p1, operation: add
 Package: ldfReader
