@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Jul 22 22:43:18 PDT 2005
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+fix up printing of event number to use new event num and not old constructed event sequence
+    *
+------------------------------------------------------------
 TAG
 Tag name: v2r4, operation: add
 Package: ldfReader
