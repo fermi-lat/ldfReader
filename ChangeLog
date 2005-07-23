@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Jul 22 22:44:11 PDT 2005
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+fix up printing of event number to use new event num and not old constructed event sequence
+    *
+------------------------------------------------------------
 User: heather  Fri Jul 22 22:44:02 PDT 2005
 ldfReader/doc
 
