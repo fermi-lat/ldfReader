@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v2r4p2  28-Jul-2005 hmk Really fix JIRA ROOT-15 and use the Osq::evtSequence
 v2r4p1  22-Jul-2005 hmk Use eventSummary::eventNumber rather than 
         eventSummary::eventSequence method when printing out event number
 v2r4    03-Jun-2005 hmk Store error summary word
