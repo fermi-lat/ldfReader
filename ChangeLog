@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Aug 24 12:30:59 PDT 2005
+ldfReader/ldfReader/data
+
+Modified Files:
+	AcdDigi.h 
+Log Message:
+handle AEM header parity
+    *
+------------------------------------------------------------
 User: heather  Wed Aug 24 12:28:04 PDT 2005
 ldfReader/cmt
 
