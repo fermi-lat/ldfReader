@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Aug 24 12:31:21 PDT 2005
+ldfReader/src/iterators
+
+Modified Files:
+	AcdParser.cxx 
+Log Message:
+handle AEM header parity
+    *
+------------------------------------------------------------
 User: heather  Wed Aug 24 12:30:59 PDT 2005
 ldfReader/ldfReader/data
 
