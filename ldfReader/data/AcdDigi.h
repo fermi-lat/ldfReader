@@ -6,7 +6,7 @@
 namespace ldfReader {
     /** @class AcdDigi
       * @brief Local storage of CAL log data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.4 2004/07/22 00:24:57 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.5 2004/10/27 21:24:15 heather Exp $
     */
     class AcdDigi {
     public:
@@ -25,7 +25,7 @@ namespace ldfReader {
         class AcdPmt {
         public:
             AcdPmt() {};
-            AcdPmt(unsigned int pha, int r, PmtSide s, short c, short m, bool hit, bool phaAccept, ParityError err = NOERROR) {
+            AcdPmt(unsigned int pha, int r, PmtSide s, short c, short m, bool hit, bool phaAccept, ParityError err = NOERROR, ParityError headerParity=NOERROR) {
                 m_pha = pha;
                 m_range = r;
                 m_side = s;
@@ -33,7 +33,8 @@ namespace ldfReader {
                 m_more = m;
                 m_hit = hit;
                 m_accept = phaAccept;
-                m_error = err;
+                m_oddError = err;
+                m_headerParity = headerParity;
             };
 
             ~AcdPmt() {};
@@ -41,20 +42,28 @@ namespace ldfReader {
             void print(bool header=true) const {
                 char side = m_side ? 'A' : 'B';
                 if (header) {
-                    printf("Channel\tPHA\trange\tside\tparity\tmore\tVeto\tAccept\n");
+                    printf("Channel\tPHA\trange\tside\toddParity\theaderParity\tmore\tVeto\tAccept\n");
                     printf("\t\t\t\terror\n");
                 }
-                printf("%d\t%d\t%d\t%c\t%d\t%d\t%d\t%d\n", m_channel, m_pha, m_range, side, m_error, m_more, m_hit, m_accept);
+                printf("%d\t%d\t%d\t%c\t%d\t%d\t%d\t%d\n", m_channel, m_pha, m_range, side, m_oddError, m_headerParity, m_more, m_hit, m_accept);
             };
 
+            /// Pulse Height Analysis
             unsigned int getPha() const { return m_pha; };
             int getRange() const { return m_range; };
+            // Denotes A or B PMT
             const PmtSide getSide() const { return m_side; };
-            ParityError getParityError() const { return m_error; };
+            ParityError getParityError() const { return m_oddError; };
+            ParityError getOddParity() const { return m_oddError; };
             short getChannel() const { return m_channel; };
             short getMore() const { return m_more; };
+            /// Returns corresponding bit from hit map
             bool getHit() const { return m_hit; };
+            /// Returns corresponding bit from accept map
+            /// Sometimes also called the zero suppression bits
             bool getAccept() const { return m_accept; };
+            /// CMD/Data Error in header, also called header parity bit
+            ParityError getHeaderParity() const { return m_headerParity; };
 
             bool operator < (const AcdPmt& a) const{ return m_channel < a.m_channel;}
 
@@ -62,11 +71,13 @@ namespace ldfReader {
             unsigned int m_pha;
             int m_range;
             PmtSide m_side;
-            ParityError m_error;
+            ParityError m_oddError;
             short m_channel;
             short m_more;
             bool m_hit; /// veto
             bool m_accept; // PHA threshold
+            /// header parity bit (CMD/DATA error) from AEM header 
+            ParityError m_headerParity; 
         };
 
 
