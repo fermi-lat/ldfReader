@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Aug 24 12:27:51 PDT 2005
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+handle AEM header parity bit
+    *
+------------------------------------------------------------
 TAG
 Tag name: v2r4p2, operation: add
 Package: ldfReader
