@@ -1,5 +1,5 @@
 package ldfReader
-version v2r5
+version v3r0
 
 author Heather Kelly <heather@lheapop@gsfc.nasa.gov>
 author Joanne Bogart <jrb@slac.stanford.edu>
@@ -12,6 +12,7 @@ use cfitsio v1r*  IExternal
 use facilities  v*
 use enums v*
 
+use eventRet v* CHS
 
 apply_pattern package_include
 apply_pattern package_headers
@@ -60,4 +61,8 @@ macro_remove use_linkopts "$(<package>_linkopts)" WIN32 ""
 
 macro_append cpplinkflags "" WIN32 " oldnames.lib "
 
-application test_ldfReader test/*.cxx
+application test_ldfReader test/test_ldfReader.cxx
+
+application test_dfiReader test/test_dfiReader.cxx
+
+application test_lsfReader test/test_lsfReader.cxx

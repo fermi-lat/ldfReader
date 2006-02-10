@@ -1,6 +1,7 @@
 #ifndef LdfParser_H
 #define LdfParser_H 1
 
+#include "ldfReader/EbfParser.h"
 #include <string>
 //#include "DFC/EBF_fileIn.h"
 #include "data/LatData.h"
@@ -13,29 +14,29 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/LdfParser.h,v 1.2 2005/03/31 23:58:37 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/LdfParser.h,v 1.3 2005/04/18 17:36:16 heather Exp $
 */
 
 namespace ldfReader {
-    class LdfParser {
+    class LdfParser : public EbfParser {
     public:
 
         LdfParser();
         LdfParser(std::string fileName, bool fitsWrap = false,
             const std::string& instrument="LAT");
 
-        ~LdfParser();
+        virtual ~LdfParser();
 
-        void clear();
+        virtual void clear();
 
         /// Load data for the current event in the EBF file
-        int loadData();
+        virtual int loadData();
 
         /// Moves event pointer to the next event in the EBF file
-        int nextEvent();
+        virtual int nextEvent();
 
         /// Turn on or off debug output.  Returns old value of flag
-        bool setDebug(bool on);
+        //bool setDebug(bool on);
 
         unsigned int runId() { return m_runId; };
 
@@ -54,7 +55,7 @@ namespace ldfReader {
         unsigned* evtremaining(char* buffer);
 
         // local exception class
-        class Exception{ };
+        //class Exception{ };
 
     private:
         std::string m_fileName;
