@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.22 2005/04/18 17:37:03 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.23 2005/04/27 06:01:09 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -402,9 +402,9 @@ const unsigned LdfParser::BufferSize = 64*1024;
             return 0;
     }
 
-    bool LdfParser::setDebug(bool on) {
-        return EbfDebug::setDebug(on);
-    }
+    //bool LdfParser::setDebug(bool on) {
+    //    return EbfDebug::setDebug(on);
+   // }
 
     bool LdfParser::end() {
         return (m_datagram < m_end);
