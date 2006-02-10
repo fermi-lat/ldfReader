@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: heather  Fri Feb 10 11:47:39 PST 2006
+ldfReader/src
+
+Modified Files:
+	LdfParser.cxx 
+Added Files:
+	EbfParser.cxx DfiParser.cxx 
+Log Message:
+good place to commit
+    *
+------------------------------------------------------------
 User: heather  Fri Feb 10 11:46:18 PST 2006
 ldfReader/ldfReader
 
