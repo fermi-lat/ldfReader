@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Feb 21 11:48:54 PST 2006
+ldfReader/src
+
+Added Files:
+	ccsds2lsf.h ccsds2lsf.cxx 
+Log Message:
+add new guys
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r0, operation: add
 Package: ldfReader
