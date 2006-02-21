@@ -6,7 +6,7 @@
 namespace ldfReader {
     /** @class AcdDigi
       * @brief Local storage of CAL log data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.5 2004/10/27 21:24:15 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.6 2005/08/24 19:30:59 heather Exp $
     */
     class AcdDigi {
     public:
@@ -45,7 +45,7 @@ namespace ldfReader {
                     printf("Channel\tPHA\trange\tside\toddParity\theaderParity\tmore\tVeto\tAccept\n");
                     printf("\t\t\t\terror\n");
                 }
-                printf("%d\t%d\t%d\t%c\t%d\t%d\t%d\t%d\n", m_channel, m_pha, m_range, side, m_oddError, m_headerParity, m_more, m_hit, m_accept);
+                printf("%d\t%d\t%d\t%c\t%d\t%d\t%d\t%d\t%d\n", m_channel, m_pha, m_range, side, m_oddError, m_headerParity, m_more, m_hit, m_accept);
             };
 
             /// Pulse Height Analysis
