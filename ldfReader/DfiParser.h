@@ -8,6 +8,7 @@
 #include "EBFevent.h"
 //#include "LATdatagram.h"
 //#include "../src/iterators/EbfDatagramParser.h"
+#include "../src/ccsds2lsf.h"
 
 #include "eventRet/RetDef.h"
 #include "eventRet/LSE_Context.h"
@@ -21,7 +22,7 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/DfiParser.h,v 1.3 2005/04/18 17:36:16 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/DfiParser.h,v 1.1 2006/02/10 19:46:18 heather Exp $
 */
 
 namespace ldfReader {
@@ -60,6 +61,8 @@ namespace ldfReader {
 
     private:
 
+        int readContextAndInfo();
+
         eventRet::RetDef *m_retDef; // packet retrieval interface
         eventRet::LPA_Merger *m_eventMerger; // Interface to merging library
 
@@ -77,6 +80,7 @@ namespace ldfReader {
         eventRet::EBF_Data m_ebf;
         eventRet::LPA_Info m_info;
 
+        ldfReader::ccsds2lsf m_cnv;
 
     };
 }
