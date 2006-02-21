@@ -13,10 +13,14 @@ use facilities  v*
 use enums v*
 
 use eventRet v* CHS
+use lsfDataStore v*
 
-apply_pattern package_include
+
+#apply_pattern package_include
+apply_pattern shared_library
 apply_pattern package_headers
 
+private
 macro        ldfParser_headers ""  \
     WIN32  "..\src\data\*.h ..\src\iterators\*.h"
 
@@ -40,29 +44,28 @@ library ldfReader *.cxx iterators/*.cxx data/*.cxx \
 # Create this environment macro for use during testing
 set LDFROOT ${ldfExt_DIR}
 
-apply_pattern package_linkopts
-apply_pattern package_stamps
+#apply_pattern package_linkopts
+#apply_pattern package_stamps
 
 
 ## Our shareable library is loaded along with the executable;
 ## its directory needs to be added to LD_LIBRARY_PATH
-apply_pattern ld_library_path
+#apply_pattern ld_library_path
 
-
-private
+#private
 # get flags to build shared library
 # ditching the patterns until they work on windows and linux
 ##apply_pattern package_Lshlibflags
 ##apply_pattern package_shlibflags
 
-macro ldfReader_shlibflags "$(libraryshr_linkopts)" \ 
-                    WIN32      "$(libraryshr_linkopts) $(use_linkopts)" 
-macro_remove use_linkopts "$(<package>_linkopts)" WIN32 "" 
+#macro ldfReader_shlibflags "$(libraryshr_linkopts)" \ 
+#                    WIN32      "$(libraryshr_linkopts) $(use_linkopts)" 
+#macro_remove use_linkopts "$(<package>_linkopts)" WIN32 "" 
 
 macro_append cpplinkflags "" WIN32 " oldnames.lib "
 
-application test_ldfReader test/test_ldfReader.cxx
+application test_ldfReader -import=eventRet test/test_ldfReader.cxx
 
-application test_dfiReader test/test_dfiReader.cxx
+application test_dfiReader -import=eventRet test/test_dfiReader.cxx
 
-application test_lsfReader test/test_lsfReader.cxx
+application test_lsfReader -import=eventRet test/test_lsfReader.cxx
