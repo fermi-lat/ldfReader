@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Feb 21 09:29:31 PST 2006
+ldfReader/src/test
+
+Added Files:
+	test_dfiReader.cxx test_lsfReader.cxx 
+Log Message:
+add a couple tests
+    *
+------------------------------------------------------------
 User: heather  Tue Feb 21 09:28:58 PST 2006
 ldfReader/src/data
 
