@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Feb 23 23:33:09 PST 2006
+ldfReader/ldfReader
+
+Modified Files:
+	DfiParser.h 
+Log Message:
+preparing to handle LSF
+    *
+------------------------------------------------------------
 User: heather  Thu Feb 23 23:32:49 PST 2006
 ldfReader/cmt
 
