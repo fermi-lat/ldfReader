@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.1 2006/02/10 19:47:39 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.2 2006/02/21 17:28:58 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -14,8 +14,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.1 2006/02/
 #include "ldfReader/LdfException.h"
 #include <exception>
 #include <iostream>
-
-#include "eventRet/LPA_Merger.h"
+#include <stdexcept>
 
 #include "lsfDataStore/LsfTime.h"
 #include "./ccsds2lsf.h"
@@ -26,50 +25,26 @@ DfiParser::DfiParser() {
     clear();
 }
 
-DfiParser::DfiParser(const std::string &arch, int scid, 
-    std::vector<eventRet::ApidSpan*> &spans)
-{
-  // Purpose and Method:  Original ctor before xml file was available
-  // Inputs:  arch - directory 
-  //          scid - spacecraft id?
-  //          spans - vector of ApIds to access
-  try {
-    clear();
-    m_retDef = new eventRet::RetDef(arch, scid);
-    std::vector<eventRet::ApidSpan*>::const_iterator it;
-    for (it = spans.begin(); it != spans.end(); it++) {
-        m_retDef->add(**it);
-    }
-
-    m_eventMerger = new eventRet::LPA_Merger(*m_retDef);
-    m_eventMerger->go();
-    bool status = m_eventMerger->get(m_context, m_info, m_ebf);
-    if (status == false) throw; 
-
-    m_start = const_cast<EBFevent*>(m_ebf.start());
-    m_end = const_cast<EBFevent*>(m_ebf.end());
-
-  } catch(...) {
-        std::cerr << "Unknown Exception caught while creating DfiParser" 
-                  << std::endl;
-        throw;
-  }
-}
 
 DfiParser::DfiParser(const std::string &filename) {
-    //Purpose and Method:  Ctor using XML as input which contains everything
-    //   necessary to set up access to the CCSDS database
-    //Inputs:  filename - path and name of XML file containing scid, and apids
+    //Purpose and Method:  Ctor using LPA file as input 
+    // Open input file and read in first event
+    //Inputs:  filename 
     try {
        clear();
-       m_retDef = new eventRet::RetDef(filename);
-       m_eventMerger = new eventRet::LPA_Merger(*m_retDef);
-       m_eventMerger->go();
-       bool status = m_eventMerger->get(m_context, m_info, m_ebf);
-       if (status == false) throw; 
+       m_file = NULL;
+       m_file = new eventFile::LPA_File(filename, eventFile::LPA_File::Read);
+       m_more = m_file->read(m_context, m_info, m_ebf);
+       if (!m_more) {
+           std::cout << "No events in input file" << std::endl;
+           throw;
+       }
 
        m_start = const_cast<EBFevent*>(m_ebf.start());
        m_end = const_cast<EBFevent*>(m_ebf.end());
+    } catch(std::runtime_error e ) {
+        std::cerr << e.what() << std::endl;
+        throw(e);
     } catch (...) {
         std::cerr << "Unknown Exception caught while creating DfiParser" 
                   << std::endl;
@@ -80,8 +55,8 @@ DfiParser::DfiParser(const std::string &filename) {
 
 
 DfiParser::~DfiParser() {
-    if (m_retDef) delete m_retDef;
-    if (m_eventMerger) delete m_eventMerger;
+    if (m_file) delete m_file;
+    m_file = 0;
 }
 
 void DfiParser::clear() {
@@ -94,8 +69,8 @@ void DfiParser::clear() {
 
 int DfiParser::nextEvent() {
     try {
-        bool status = m_eventMerger->get(m_context, m_info, m_ebf);
-        if (status == false) return -1;
+        bool m_more = m_file->read(m_context, m_info, m_ebf);
+        if (m_more == false) return -1;
 
         m_start = const_cast<EBFevent*>(m_ebf.start());
         m_end = const_cast<EBFevent*>(m_ebf.end());
@@ -107,6 +82,9 @@ int DfiParser::nextEvent() {
 
         std::cerr << "LdfException caught: " << e.what() << std::endl;
         throw;
+    } catch(std::runtime_error e ) {
+        std::cerr << e.what() << std::endl;
+        throw(e);
     } catch(...) {
 
         std::cerr << "Unknown Exception caught in DfiParser::nextEvent" 
@@ -222,6 +200,9 @@ int DfiParser::loadData() {
     } catch (LdfException& e) {
        std::cerr << "Caught LdfException: " << e.what() << std::endl;
        throw;
+    } catch(std::runtime_error e ) {
+        std::cerr << e.what() << std::endl;
+        throw(e);
     } catch(...) {
        std::cerr << "Caught Exception" << std::endl;
        throw;

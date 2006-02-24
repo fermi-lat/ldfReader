@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r0    24-Feb-2005 hmk First version to handle LSF
 v2r5    24-Aug-2005 hmk Handle AEM header parity bit (CMD/Data error)
 v2r4p2  28-Jul-2005 hmk Really fix JIRA ROOT-15 and use the Osq::evtSequence
 v2r4p1  22-Jul-2005 hmk Use eventSummary::eventNumber rather than 
