@@ -12,15 +12,16 @@ use cfitsio v1r*  IExternal
 use facilities  v*
 use enums v*
 
-use eventRet v* CHS
+use eventFile v* CHS
 use lsfDataStore v*
 
 
 #apply_pattern package_include
 apply_pattern shared_library
-apply_pattern package_headers
 
 private
+apply_pattern package_headers
+
 macro        ldfParser_headers ""  \
     WIN32  "..\src\data\*.h ..\src\iterators\*.h"
 
@@ -66,6 +67,6 @@ macro_append cpplinkflags "" WIN32 " oldnames.lib "
 
 application test_ldfReader -import=eventRet test/test_ldfReader.cxx
 
-application test_dfiReader -import=eventRet test/test_dfiReader.cxx
+#application test_dfiReader -import=eventRet test/test_dfiReader.cxx
 
 application test_lsfReader -import=eventRet test/test_lsfReader.cxx

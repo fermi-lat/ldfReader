@@ -1,11 +1,11 @@
-#ifndef TEST_dfiReader_CXX
-#define TEST_dfiReader_CXX 1
+#ifndef TEST_lsfReader_CXX
+#define TEST_lsfReader_CXX 1
 
 
 /** @file test_dfiReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_lsfReaser.cxx,v 1.15 2005/04/18 17:37:03 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_lsfReader.cxx,v 1.1 2006/02/21 17:29:31 heather Exp $
 */
 
 #include <iostream>
@@ -20,7 +20,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_lsfReaser.cxx,v 1.
 int main(int argn, char** argc) {
   try {
     using namespace ldfReader;
-    std::string fileName("$(EVENTRETROOT)/test/LSEP_ret.xml");
+    std::string fileName("$(EVENTFILEROOT)/src/test/events.lpa");
 
 
     if( argn>1 ) fileName = argc[1];
