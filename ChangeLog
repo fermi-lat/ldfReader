@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Feb 23 23:33:21 PST 2006
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx ccsds2lsf.cxx ccsds2lsf.h 
+Log Message:
+preparing to handle LSF
+    *
+------------------------------------------------------------
 User: heather  Thu Feb 23 23:33:09 PST 2006
 ldfReader/ldfReader
 
