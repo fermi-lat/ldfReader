@@ -1,4 +1,16 @@
 ------------------------------------------------------------
+User: heather  Thu Feb 23 23:33:42 PST 2006
+ldfReader/src/test
+
+Modified Files:
+	test_lsfReader.cxx 
+Removed Files:
+      Tag: v3r0p1
+	test_dfiReader.cxx 
+Log Message:
+preparing to handle LSF
+    *
+------------------------------------------------------------
 User: heather  Thu Feb 23 23:33:21 PST 2006
 ldfReader/src
 
