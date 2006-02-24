@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Feb 23 23:32:27 PST 2006
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+preparing to handle LSF
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r0p1, operation: add
 Package: ldfReader
