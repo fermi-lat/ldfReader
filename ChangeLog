@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Sat Feb 25 00:29:35 PST 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+use lsfData package
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r1, operation: add
 Package: ldfReader
