@@ -3,7 +3,7 @@
 
 
 #include "./ccsds2lsf.h"
-#include "lsfDataStore/LsfGemTime.h"
+#include "lsfData/LsfGemTime.h"
 
 
 namespace ldfReader {
@@ -16,14 +16,14 @@ ccsds2lsf::~ccsds2lsf() {
    
 }
 
-void ccsds2lsf::timeToneCnv(eventFile::LSE_Context::FromTimetone ccsds, lsfDataStore::TimeTone &timetone) {
+void ccsds2lsf::timeToneCnv(eventFile::LSE_Context::FromTimetone ccsds, lsfData::TimeTone &timetone) {
     unsigned char curFlags = 0;
-    if (ccsds.missingGps) curFlags |= lsfDataStore::TimeTone::MISSING_GPS_MASK;
-    if (ccsds.missingCpuPps) curFlags |= lsfDataStore::TimeTone::MISSING_CPU_MASK;
-    if (ccsds.missingTimeTone) curFlags |= lsfDataStore::TimeTone::MISSING_TIMETONE_MASK;
-    if (ccsds.missingLatPps) curFlags |= lsfDataStore::TimeTone::MISSING_LAT_MASK;
+    if (ccsds.missingGps) curFlags |= lsfData::TimeTone::MISSING_GPS_MASK;
+    if (ccsds.missingCpuPps) curFlags |= lsfData::TimeTone::MISSING_CPU_MASK;
+    if (ccsds.missingTimeTone) curFlags |= lsfData::TimeTone::MISSING_TIMETONE_MASK;
+    if (ccsds.missingLatPps) curFlags |= lsfData::TimeTone::MISSING_LAT_MASK;
 
-    lsfDataStore::GemTime curTimeHack(ccsds.timeHack.hacks,
+    lsfData::GemTime curTimeHack(ccsds.timeHack.hacks,
                                       ccsds.timeHack.tics);
 
     timetone.set(ccsds.incomplete, ccsds.timeSecs, ccsds.flywheeling, 
@@ -33,7 +33,7 @@ void ccsds2lsf::timeToneCnv(eventFile::LSE_Context::FromTimetone ccsds, lsfDataS
 }
 
 
-void ccsds2lsf::runInfoCnv(eventFile::LSE_Context::FromRun ccsds, lsfDataStore::RunInfo &run) {
+void ccsds2lsf::runInfoCnv(eventFile::LSE_Context::FromRun ccsds, lsfData::RunInfo &run) {
 
   // HMK Check setting of platform and origin!!!!
     run.set(enums::Lsf::Platform(ccsds.platform), 
@@ -45,7 +45,7 @@ void ccsds2lsf::runInfoCnv(eventFile::LSE_Context::FromRun ccsds, lsfDataStore::
 }
 
 void ccsds2lsf::datagramInfoCnv(eventFile::LSE_Context::FromOpen open, eventFile::LSE_Context::FromClose close,
-               lsfDataStore::DatagramInfo &datagram) {
+               lsfData::DatagramInfo &datagram) {
 
     // HMK check setting of action and reason - use enums!!!
    datagram.set(enums::Lsf::Open::Action(open.action), 
@@ -70,7 +70,7 @@ datagram.set(m_openActionCol[open.actionTxt],
 
 }
 
-void ccsds2lsf::scalerCnv(eventFile::LSE_Context::FromScalers ccsds, lsfDataStore::GemScalers &scalers) {
+void ccsds2lsf::scalerCnv(eventFile::LSE_Context::FromScalers ccsds, lsfData::GemScalers &scalers) {
 
     scalers.set(ccsds.elapsed, ccsds.livetime, ccsds.prescaled, 
                ccsds.discarded, ccsds.sequence, ccsds.deadzone);

@@ -1,5 +1,5 @@
 package ldfReader
-version v3r1
+version v3r2
 
 author Heather Kelly <heather@lheapop@gsfc.nasa.gov>
 author Joanne Bogart <jrb@slac.stanford.edu>
@@ -13,7 +13,7 @@ use facilities  v*
 use enums v*
 
 use eventFile v* CHS
-use lsfDataStore v*
+use lsfData v*
 
 
 #apply_pattern package_include

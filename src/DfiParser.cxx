@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.2 2006/02/21 17:28:58 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.3 2006/02/24 07:33:21 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -16,7 +16,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.2 2006/02/
 #include <iostream>
 #include <stdexcept>
 
-#include "lsfDataStore/LsfTime.h"
+#include "lsfData/LsfTime.h"
 #include "./ccsds2lsf.h"
 
 namespace ldfReader {
@@ -98,31 +98,31 @@ int DfiParser::readContextAndInfo() {
 
     //m_context.dump();
     //m_info.dump();
-    lsfDataStore::MetaEvent *metaEvent = ldfReader::LatData::instance()->getMetaEventPtr();
+    lsfData::MetaEvent *metaEvent = ldfReader::LatData::instance()->getMetaEventPtr();
 
-    lsfDataStore::TimeTone current;
+    lsfData::TimeTone current;
     m_cnv.timeToneCnv(m_context.current, current);
-    lsfDataStore::TimeTone previous;
+    lsfData::TimeTone previous;
     m_cnv.timeToneCnv(m_context.previous, previous);
 
-    lsfDataStore::GemTime gemTime(m_info.timeHack.hacks, m_info.timeHack.tics);
-    lsfDataStore::Time lsfTime(current, previous, gemTime, m_info.timeTics);
+    lsfData::GemTime gemTime(m_info.timeHack.hacks, m_info.timeHack.tics);
+    lsfData::Time lsfTime(current, previous, gemTime, m_info.timeTics);
     lsfTime.set(current,previous, gemTime, m_info.timeTics);
     metaEvent->setTime(lsfTime);
 
-    lsfDataStore::RunInfo run;
+    lsfData::RunInfo run;
     m_cnv.runInfoCnv(m_context.run, run);
     metaEvent->setRun(run);
 
-    lsfDataStore::DatagramInfo datagramInfo;
+    lsfData::DatagramInfo datagramInfo;
     m_cnv.datagramInfoCnv(m_context.open, m_context.close, datagramInfo);
     metaEvent->setDatagram(datagramInfo);
 
-    lsfDataStore::GemScalers scalers;
+    lsfData::GemScalers scalers;
     m_cnv.scalerCnv(m_context.scalers, scalers);
     metaEvent->setScalers(scalers);
 
-    lsfDataStore::LpaConfiguration config(m_info.hardwareKey, m_info.softwareKey);
+    lsfData::LpaConfiguration config(m_info.hardwareKey, m_info.softwareKey);
     metaEvent->setConfiguration(config);
 
     return 0;
