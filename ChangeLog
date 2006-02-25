@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Sat Feb 25 00:30:51 PST 2006
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx ccsds2lsf.cxx ccsds2lsf.h 
+Log Message:
+use lsfData package
+    *
+------------------------------------------------------------
 User: heather  Sat Feb 25 00:30:44 PST 2006
 ldfReader/ldfReader/data
 
