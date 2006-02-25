@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Sat Feb 25 00:30:32 PST 2006
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+use lsfData package
+    *
+------------------------------------------------------------
 User: heather  Sat Feb 25 00:29:35 PST 2006
 ldfReader/cmt
 
