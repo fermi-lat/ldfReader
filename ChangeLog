@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Sun Feb 26 00:16:30 PST 2006
+ldfReader/src/test
+
+Added Files:
+	contextOutput.txt 
+Log Message:
+test file for context produced from eventFile
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r2p1, operation: add
 Package: ldfReader
