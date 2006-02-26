@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Sat Feb 25 23:59:55 PST 2006
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx 
+Log Message:
+improve testing
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r2, operation: add
 Package: ldfReader
