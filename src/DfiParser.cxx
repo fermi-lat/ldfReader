@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.3 2006/02/24 07:33:21 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.4 2006/02/25 08:30:51 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -96,8 +96,6 @@ int DfiParser::nextEvent() {
 
 int DfiParser::readContextAndInfo() {
 
-    //m_context.dump();
-    //m_info.dump();
     lsfData::MetaEvent *metaEvent = ldfReader::LatData::instance()->getMetaEventPtr();
 
     lsfData::TimeTone current;
@@ -124,7 +122,7 @@ int DfiParser::readContextAndInfo() {
 
     lsfData::LpaConfiguration config(m_info.hardwareKey, m_info.softwareKey);
     metaEvent->setConfiguration(config);
-
+ 
     return 0;
 }
 

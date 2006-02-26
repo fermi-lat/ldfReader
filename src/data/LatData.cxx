@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.21 2006/02/21 17:28:58 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.22 2006/02/25 08:30:51 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -26,34 +26,32 @@ namespace ldfReader {
     }
 
     void LatData::print() const {
-      std::cout << "MetaEvent:\n";
       const lsfData::RunInfo run = m_metaEvent.run();
       const lsfData::DatagramInfo dgm = m_metaEvent.datagram();
       const lsfData::GemScalers scalers = m_metaEvent.scalers();
       const lsfData::Time time = m_metaEvent.time();
 
-/*
-      printf("MetaEvent: \n");
-      time.print();
-      scalers.print();
-      run.print();
-      dgm.print();
-      time.printHack("LSE_Info:  ");
+      std::cout << "==========================================" 
+                << std::endl << std::endl << "Event " 
+                << scalers.sequence() << " context:" << std::endl;
 
-      const lsfData::Configuration *cfg = m_metaEvent.configuration();
-      if (cfg) 
-          cfg->print("LPA_Info:");
-
-      printf("\n");
-*/
-      std::cout << time << scalers << run << dgm 
-                << "LSE_Info:  timeTicks = 0x" << std::hex << std::setfill('0')
-                << time.timeTicks() << " (" << std::dec << time.timeTicks()
+      std::cout << time << scalers << run << dgm << std::endl
+                << "Event " << scalers.sequence() << " info:" << std::endl
+                << "---------------" << std::endl
+                << "LSE_Info:  timeTicks = 0x" << std::uppercase << std::hex 
+                << std::setfill('0') << std::setw(8) 
+                << time.timeTicks() << " (" << std::dec 
+                << time.timeTicks()
                 << ")\nLSE_Info:  " << time.timeHack() << std::endl;
       const lsfData::Configuration *cfg = m_metaEvent.configuration();
       if (cfg) {
           const lsfData::LpaConfiguration* lpa = cfg->castToLpaConfig();
-          //std::cout << "LPA_Info:" << *lpa << std::endl;
+          if (lpa) {
+          std::cout << "LPA_Info: softwareKey = 0x" << std::hex
+                    << lpa->softwareKey() << std::endl
+                    << "LPA_Info: hardwareKey = 0x" << lpa->hardwareKey() 
+                    << std::dec << std::endl;
+          }
       }
 
   }
