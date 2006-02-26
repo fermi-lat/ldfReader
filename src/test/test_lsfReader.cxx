@@ -5,7 +5,7 @@
 /** @file test_dfiReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_lsfReader.cxx,v 1.1 2006/02/21 17:29:31 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_lsfReader.cxx,v 1.2 2006/02/24 07:33:42 heather Exp $
 */
 
 #include <iostream>
@@ -20,10 +20,14 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_lsfReader.cxx,v 1.
 int main(int argn, char** argc) {
   try {
     using namespace ldfReader;
+    int debug = 1;
+    int contextOnly = 0;
     std::string fileName("$(EVENTFILEROOT)/src/test/events.lpa");
 
 
-    if( argn>1 ) fileName = argc[1];
+    if (argn>1) debug = facilities::Util::atoi(argc[1]);
+    if (argn>2) contextOnly = facilities::Util::atoi(argc[2]);
+    if( argn>3 ) fileName = argc[3];
 
     if (facilities::Util::expandEnvVar(&fileName) < 0) {
         std::cout << "Failed to expand env variable in file name "
@@ -31,7 +35,7 @@ int main(int argn, char** argc) {
         return -1;
     }
 
-    EbfDebug::setDebug(true);
+    EbfDebug::setDebug(((debug==1)?true:false));
 
     std::cout << "Reading file: " << fileName << std::endl;
 
@@ -47,7 +51,12 @@ int main(int argn, char** argc) {
         // Retrieve the LAT data for this event and print out its contents
         LatData* myLatData = LatData::instance();
 
+
+        if (contextOnly) {
+            myLatData->print();
+        } else {
         printf("\nSTART NEW EVENT\n");
+        myLatData->print();
         printf("Run: %d, Event %d \n", myLatData->runId(), myLatData->summaryData().eventSequence());
         printf("Event Size in Bytes %u \n", myLatData->eventSizeInBytes());
 
@@ -160,6 +169,7 @@ int main(int argn, char** argc) {
                 printf("\n\n");
 
             }
+        } 
         }
 
         // Move the event pointer to the next event in the EBF file
