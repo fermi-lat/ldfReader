@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.4 2006/02/25 08:30:51 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.5 2006/02/26 07:59:54 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -15,6 +15,9 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.4 2006/02/
 #include <exception>
 #include <iostream>
 #include <stdexcept>
+
+#include "facilities/Timestamp.h"
+#include "astro/JulianDate.h"
 
 #include "lsfData/LsfTime.h"
 #include "./ccsds2lsf.h"
@@ -34,7 +37,9 @@ DfiParser::DfiParser(const std::string &filename) {
        clear();
        m_file = NULL;
        m_file = new eventFile::LPA_File(filename, eventFile::LPA_File::Read);
+       std::cout << "Created eventFile" << std::endl;
        m_more = m_file->read(m_context, m_info, m_ebf);
+       std::cout<< "After first read " << std::endl;
        if (!m_more) {
            std::cout << "No events in input file" << std::endl;
            throw;
@@ -122,8 +127,28 @@ int DfiParser::readContextAndInfo() {
 
     lsfData::LpaConfiguration config(m_info.hardwareKey, m_info.softwareKey);
     metaEvent->setConfiguration(config);
+
+    lsfData::LsfCcsds* ccsdsData = ldfReader::LatData::instance()->getCcsdsPtr();
+    ccsdsData->initialize(m_context.ccsds.scid, m_context.ccsds.apid, 
+                          m_context.ccsds.utc);
+
+    ldfReader::LatData::instance()->setTimeInSecTds(timeForTds(m_context.ccsds.utc));
  
     return 0;
+}
+
+double DfiParser::timeForTds(double utc) {
+
+    long wholeSeconds = floor(utc);
+    double frac = utc - wholeSeconds;
+    int nanoSec = frac/0.000000001;
+    facilities::Timestamp facTimeStamp(wholeSeconds, nanoSec);
+    double julTimeStamp = facTimeStamp.getJulian();
+    astro::JulianDate julDate(julTimeStamp);
+    // Find number of seconds since missionStart
+    double tdsTimeInSeconds = julDate.seconds() - astro::JulianDate::missionStart().seconds();
+    return tdsTimeInSeconds;
+
 }
 
 int DfiParser::loadData() {

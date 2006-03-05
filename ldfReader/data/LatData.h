@@ -12,6 +12,7 @@
 #include "enums/EventFlags.h"
 
 #include "lsfData/LsfMetaEvent.h"
+#include "lsfData/LsfCcsds.h"
 
 /** @class LatData
 @brief Singleton class to provide global access to LAT data for one event
@@ -39,6 +40,10 @@ namespace ldfReader {
 
         lsfData::MetaEvent* getMetaEventPtr() {
                return &m_metaEvent; }
+
+        const lsfData::LsfCcsds& getCcsds() const { return m_ccsds; }
+
+        lsfData::LsfCcsds* getCcsdsPtr() { return &m_ccsds; };
 
         void setSummary(unsigned summary) { m_summaryData.setSummary(summary); };
 
@@ -102,6 +107,9 @@ namespace ldfReader {
         void setEventSizeInBytes(unsigned long size){ m_eventSize = size; };
         unsigned long eventSizeInBytes() const { return m_eventSize; };
 
+        void setTimeInSecTds(double t) { m_timeInSecTds = t; };
+        double getTimeInSecTds() const { return m_timeInSecTds; };
+
     private:
 
         static LatData *m_instance;
@@ -122,6 +130,10 @@ namespace ldfReader {
         unsigned long m_eventSize;
 
         lsfData::MetaEvent m_metaEvent;
+
+        lsfData::LsfCcsds m_ccsds;
+
+        double m_timeInSecTds;
     };
 }
 #endif

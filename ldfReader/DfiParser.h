@@ -23,7 +23,7 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/DfiParser.h,v 1.2 2006/02/21 17:28:25 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/DfiParser.h,v 1.3 2006/02/24 07:33:09 heather Exp $
 */
 
 namespace ldfReader {
@@ -61,6 +61,7 @@ namespace ldfReader {
         //class Exception{ };
 
     private:
+        double timeForTds(double utc);
 
         int readContextAndInfo();
 
