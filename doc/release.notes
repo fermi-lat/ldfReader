@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r3    04-Mar-2006 hmk Store ccsds items and add new method to create TDS time
 v3r2p1  25-Feb-2006 hmk improve test routine for context
 v3r2    25-Feb-2006 hmk use lsfData package
 v3r1    24-Feb-2006 hmk reading LSF through binary file

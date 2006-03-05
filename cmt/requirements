@@ -1,5 +1,5 @@
 package ldfReader
-version v3r2p1
+version v3r3
 
 author Heather Kelly <heather@lheapop@gsfc.nasa.gov>
 author Joanne Bogart <jrb@slac.stanford.edu>
@@ -9,17 +9,19 @@ use GlastPolicy v*
 
 use ldfExt  v0r*  IExternal
 use cfitsio v1r*  IExternal
-use facilities  v*
 use enums v*
 
 use eventFile v* CHS
 use lsfData v*
+use astro v*
+use facilities  v*
 
 
 #apply_pattern package_include
 apply_pattern shared_library
 
 private
+
 apply_pattern package_headers
 
 macro        ldfParser_headers ""  \
