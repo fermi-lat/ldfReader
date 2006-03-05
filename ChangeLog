@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Sun Mar  5 01:21:25 PST 2006
+ldfReader/ldfReader
+
+Modified Files:
+	DfiParser.h LdfParser.h 
+Log Message:
+store ccsds and time for TDS
+    *
+------------------------------------------------------------
 User: heather  Sun Mar  5 01:20:40 PST 2006
 ldfReader/doc
 
