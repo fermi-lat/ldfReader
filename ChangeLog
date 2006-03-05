@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Sun Mar  5 01:21:26 PST 2006
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+store ccsds and time for TDS
+    *
+------------------------------------------------------------
 User: heather  Sun Mar  5 01:21:25 PST 2006
 ldfReader/src
 
