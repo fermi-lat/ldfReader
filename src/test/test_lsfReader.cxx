@@ -5,7 +5,7 @@
 /** @file test_dfiReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_lsfReader.cxx,v 1.2 2006/02/24 07:33:42 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_lsfReader.cxx,v 1.3 2006/02/26 07:59:55 heather Exp $
 */
 
 #include <iostream>
@@ -41,9 +41,12 @@ int main(int argn, char** argc) {
 
     DfiParser *ebfP = new DfiParser(fileName);
 
+    std::cout << "DfiParser is set up" << std::endl;
+
     int status = 0;
     do {
         status = ebfP->loadData();
+        std::cout << "After loading" << std::endl;
         if (status < 0) {
             std::cout << "Failed to Load data - EOF" << std::endl;
             break;
