@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Mar  6 08:54:27 PST 2006
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+store run id for LSF from LICOS
+    *
+------------------------------------------------------------
 User: heather  Mon Mar  6 08:54:21 PST 2006
 ldfReader/cmt
 
