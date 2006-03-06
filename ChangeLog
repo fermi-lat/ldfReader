@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Mar  6 08:54:21 PST 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+store run id for LSF from LICOS
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r3, operation: add
 Package: ldfReader
