@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.24 2006/02/10 19:47:39 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.25 2006/03/05 09:21:25 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -396,6 +396,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
             ldfReader::LatData::instance()->checkTrgParityError();
 
             ldfReader::LatData::instance()->setTimeInSecTds(timeForTds());
+            ldfReader::LatData::instance()->setEventId(ldfReader::LatData::instance()->getOsw().evtSequence());
 
          } catch (LdfException& e) {
             std::cerr << "Caught LdfException: " << e.what() << std::endl;
