@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Mar  6 23:23:39 PST 2006
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+store eventid from either LDF or LSF
+    *
+------------------------------------------------------------
 User: heather  Mon Mar  6 23:23:38 PST 2006
 ldfReader/cmt
 
