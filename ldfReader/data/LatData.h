@@ -54,6 +54,9 @@ namespace ldfReader {
         void setRunId(unsigned int runId) { m_runId = runId; };
         unsigned int runId() const { return m_runId; };
 
+        void setEventId(unsigned long long eventId) { m_eventId = eventId; };
+        unsigned long long eventId() const { return m_eventId; };
+
         void setGem(const GemData& gem) { m_gem = gem; };
         GemData& getGem() { return m_gem; };
         const GemData& getGem() const { return m_gem; };
@@ -115,6 +118,7 @@ namespace ldfReader {
         static LatData *m_instance;
         EventSummaryData m_summaryData;
         unsigned int m_runId;
+        unsigned long long m_eventId;
         std::map<unsigned int, TowerData*> m_towerMap;
         std::map<const char*, AcdDigi*> m_acdCol;
         GemData m_gem;

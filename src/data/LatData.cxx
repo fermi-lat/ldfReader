@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.23 2006/02/26 07:59:55 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.24 2006/03/05 09:21:25 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -101,6 +101,7 @@ namespace ldfReader {
         m_eventSize = 0;
         m_metaEvent.clear();
         m_ccsds.clear();
+        m_eventId = 0;
     }
 
 
