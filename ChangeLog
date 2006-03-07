@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Mon Mar  6 23:23:39 PST 2006
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx LdfParser.cxx 
+Log Message:
+store eventid from either LDF or LSF
+    *
+------------------------------------------------------------
+User: heather  Mon Mar  6 23:23:39 PST 2006
 ldfReader/ldfReader/data
 
 Modified Files:
