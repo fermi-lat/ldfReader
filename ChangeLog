@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Thu Mar 16 13:03:13 PST 2006
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+sequence consistency checking for LSF
+    *
+------------------------------------------------------------
+User: heather  Thu Mar 16 13:03:13 PST 2006
 ldfReader/cmt
 
 Modified Files:
