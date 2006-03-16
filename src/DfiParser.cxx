@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.7 2006/03/06 16:54:35 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.8 2006/03/07 07:23:39 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -157,10 +157,6 @@ int DfiParser::loadData() {
 // Purpose and Method:  This routine loads the data from one event
 // The current event in the EBF file.
 
-    static long eventSeqNum = -1;
-    // From Ric Claus Aug, 2004
-    const long maxEventSeqNum = 131071;
-
 
     try {
         // First clear the LatData
@@ -176,46 +172,24 @@ int DfiParser::loadData() {
         EbfEventParser ldf;
         ldf.iterate(m_start, m_end);
 
-        if (ldf.status()) throw LdfException("LDF EBFeventParser reported a bad status");
+        if (ldf.status()) 
+            throw LdfException("LDF EBFeventParser reported a bad status");
    
 
         // Only do this check on the event sequence if we have a recent
         // enough file..  I believe we want one where they started to store the
         // event summary in each contribution separately
-        if (ldfReader::LatData::instance()->getFormatIdentity() >= 
-            LatComponentParser::ID_WITH_OSW) {
+//        if (ldfReader::LatData::instance()->getFormatIdentity() >= 
+//            LatComponentParser::ID_WITH_OSW) {
 
-            if (!ldfReader::LatData::instance()->eventSeqConsistent()) {
-                printf("Event Sequence numbers are not consistent within all contributions\n");
-                printf("Setting event flag\n");
-                ldfReader::LatData::instance()->setBadEventSeqFlag();
-                return 0;
-            }
+//            if (!ldfReader::LatData::instance()->eventSeqConsistent()) {
+//                printf("Event Sequence numbers are not consistent within all contributions\n");
+//                printf("Setting event flag\n");
+//                ldfReader::LatData::instance()->setBadEventSeqFlag();
+//                return 0;
+//            }
 
-            // Now check to see that the event sequences are monotonically increasing
-            if (ldfReader::LatData::instance()->summaryData().eventSequence() < eventSeqNum) {
-                static bool warn = false;
-                if (!warn) {
-                    printf("WARNING Event Seq # is not monotonically increasing  please check log to see if this was a prescaled/filtered run  ");
-                    printf("Last EventSeqNum %lu, current %lu\n", eventSeqNum,
-                    ldfReader::LatData::instance()->summaryData().eventSequence());
-                    warn = true;
-                }
-                eventSeqNum = ldfReader::LatData::instance()->summaryData().eventSequence();
-                // Feb 2, 2005 HMK
-                // Don't set bad event flag..until we have a way to tell
-                // if prescaling or filtering is on..
-                //printf("Setting Bad Event Flag\n");
-                //ldfReader::LatData::instance()->setBadEventSeqFlag();
-                return 0;
-            } else {
-                eventSeqNum = ldfReader::LatData::instance()->summaryData().eventSequence();
-            }
-
-        // reset the stored event sequence number when we hit the LDF's rollover
-        // value
-        if (eventSeqNum == maxEventSeqNum) eventSeqNum = -1;
-        }
+//        }
 
         ldfReader::LatData::instance()->checkTemError();
         ldfReader::LatData::instance()->checkPacketError();

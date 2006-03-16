@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.24 2006/03/05 09:21:25 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.25 2006/03/07 07:23:39 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -108,6 +108,7 @@ namespace ldfReader {
     bool LatData::eventSeqConsistent() const {
     //Purpose and Method:  Checks that the event sequence number is consistent
     // accross all contributions.  If not false is returned... 
+    // Assumes m_eventId for any errors messages
 
         unsigned long firstEvtSeq=0;
         bool foundFirst = false;
@@ -125,14 +126,6 @@ namespace ldfReader {
             return false;
         }
 
-        //if ( (getErr().exist()) && !foundFirst ) {
-        //    firstEvtSeq = getErr().summary().eventSequence(); 
-        //    foundFirst = true;
-        //} else if ( (getErr().exist()) && (firstEvtSeq != getErr().summary().eventSequence()) ) {
-         //   printf("ERR does not match event Seq %lu \n", getErr().summary().eventSequence());
-         //   return false;
-       // }
-
         if ( (getOsw().exist()) && !foundFirst ){
             firstEvtSeq = getOsw().summary().eventNumber();
             foundFirst = true;
@@ -140,14 +133,6 @@ namespace ldfReader {
             printf("OSW does not match event Seq %lu \n", getOsw().summary().eventSequence());
             return false;
         }
-
-        //if ((diagnostic()->exist()) && !foundFirst ){
-        //    firstEvtSeq = diagnostic()->summary().eventSequence();
-        //    foundFirst = true;
-       // } else if ((diagnostic()->exist()) && (firstEvtSeq != diagnostic()->summary().eventSequence()) ){
-      //      printf("DIAG does not match event Seq %lu \n", getGem().summary().eventSequence());
-      //      return false; 
-       // }
 
         std::map<unsigned int, TowerData*>::const_iterator towerIter = m_towerMap.begin();
         while(towerIter != m_towerMap.end())
@@ -170,6 +155,7 @@ namespace ldfReader {
     unsigned LatData::checkPacketError() {
         // Returns true if OR of all is TRUE
         // Returns false if OR of all packetError words is FALSE
+        // Assumes m_eventId has been set for any error messages
 
         unsigned orAll = 0;
 
@@ -181,15 +167,9 @@ namespace ldfReader {
             orAll |= getAem().packetError();
          }
 
-        //if ( getErr().exist()) 
-        //    orAll |= getErr().packetError();
-
         if ( getOsw().exist()) {
             orAll |= getOsw().packetError();
          }
-
-        //if (diagnostic()->exist()) 
-        //    orAll |= diagnostic()->packetError();
 
         std::map<unsigned int, TowerData*>::const_iterator towerIter = m_towerMap.begin();
         while(towerIter != m_towerMap.end())
@@ -201,35 +181,18 @@ namespace ldfReader {
             }
         }
         if (orAll != 0) {
-            unsigned int firstEvtSeq=0;
-            if (getOsw().exist()) firstEvtSeq = getOsw().evtSequence();
-            printf("Setting Packet Error Flag, Event: %u\n", firstEvtSeq);
+            printf("Setting Packet Error Flag, Event: %u\n", m_eventId);
             setPacketErrorFlag();
         }
         return (orAll);
     }
 
     unsigned LatData::checkTemError() {
+        // Assumes m_eventId has been set for any error messages
+
         unsigned orAll = 0;
-
-        //if(getGem().exist()) 
-            //orAll |= getGem().summary().error();
-
-        //if (getAem().exist()) 
-            //orAll |= getAem().summary().error();
-
-       // if ( getErr().exist()) {
-       //     orAll |= getErr().summary().error();
-       //     printf("err %d \n", orAll);
-       // }
-
-
-       // if (diagnostic()->exist()) {
-       //     orAll |= diagnostic()->summary().error();
-       //     printf("diag %d %d\n", orAll, diagnostic()->summary().error());
-       // }
-
         unsigned int temOrAll = 0;
+
         std::map<unsigned int, TowerData*>::const_iterator towerIter = m_towerMap.begin();
         while(towerIter != m_towerMap.end())
         {
@@ -246,13 +209,10 @@ namespace ldfReader {
         if ( getOsw().exist()) {
             orAll |= getOsw().summary().error();
             if (temOrAll != getOsw().summary().error()) 
-                printf("OSW error summary bit does not match OR of all error bits across all TEM contributions, %d event Num: %u\n", getOsw().summary().error(), getOsw().evtSequence());
+                printf("OSW error summary bit does not match OR of all error bits across all TEM contributions, %d event Num: %u\n", m_eventId);
         }
         if (orAll != 0) {
-            static unsigned int firstEvtSeq=0;
-            if (getOsw().exist()) firstEvtSeq = getOsw().evtSequence();
-            printf("Event Summary Error Flag Set, Event:  %u\n", firstEvtSeq);
-            firstEvtSeq++;
+            printf("Event Summary Error Flag Set, Event:  %u\n", m_eventId);
             setTemErrorFlag();
         }
         return (orAll);
@@ -260,6 +220,8 @@ namespace ldfReader {
 
 
     unsigned LatData::checkTrgParityError() {
+        // Assumes m_eventId has been set for any error messages
+
         unsigned orAll = 0;
 
         if(getGem().exist()) 
@@ -285,13 +247,10 @@ namespace ldfReader {
         if ( getOsw().exist()) {
             orAll |= getOsw().summary().trgParityError();
             if (temOrAll != getOsw().summary().trgParityError()) 
-                printf("OSW error summary bit does not match OR of all error bits across all TEM contributions, %d event Number: %u\n", getOsw().summary().trgParityError(), getOsw().evtSequence());
+                printf("OSW error summary bit does not match OR of all error bits across all TEM contributions, %d event Number: %u\n", getOsw().summary().trgParityError(), m_eventId);
         }
         if (orAll != 0) {
-            static unsigned int firstEvtSeq=0;
-            if (getOsw().exist()) firstEvtSeq = getOsw().evtSequence();
-            printf("Trg Parity Error Flag Set, Event:  %u\n", firstEvtSeq);
-            firstEvtSeq++;
+            printf("Trg Parity Error Flag Set, Event:  %u\n", m_eventId);
             setTrgParityErrorFlag();
         }
         return (orAll);
