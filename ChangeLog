@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Mar 16 12:16:20 PST 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+fix up use of eventId for LSF
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r5, operation: add
 Package: ldfReader
