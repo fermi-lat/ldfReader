@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Mar 16 13:03:14 PST 2006
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx 
+Log Message:
+sequence consistency checking for LSF
+    *
+------------------------------------------------------------
 User: heather  Thu Mar 16 13:03:13 PST 2006
 ldfReader/doc
 
