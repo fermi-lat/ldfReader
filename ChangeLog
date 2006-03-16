@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Thu Mar 16 12:16:21 PST 2006
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx LdfParser.cxx 
+Log Message:
+fix up use of eventId for LSF
+    *
+------------------------------------------------------------
+User: heather  Thu Mar 16 12:16:21 PST 2006
 ldfReader/doc
 
 Modified Files:
