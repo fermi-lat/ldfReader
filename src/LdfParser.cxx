@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.25 2006/03/05 09:21:25 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.26 2006/03/07 07:23:39 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -391,12 +391,13 @@ const unsigned LdfParser::BufferSize = 64*1024;
                 if (eventSeqNum == maxEventSeqNum) eventSeqNum = -1;
             }
 
+            ldfReader::LatData::instance()->setTimeInSecTds(timeForTds());
+            ldfReader::LatData::instance()->setEventId(ldfReader::LatData::instance()->getOsw().evtSequence());
+
             ldfReader::LatData::instance()->checkTemError();
             ldfReader::LatData::instance()->checkPacketError();
             ldfReader::LatData::instance()->checkTrgParityError();
 
-            ldfReader::LatData::instance()->setTimeInSecTds(timeForTds());
-            ldfReader::LatData::instance()->setEventId(ldfReader::LatData::instance()->getOsw().evtSequence());
 
          } catch (LdfException& e) {
             std::cerr << "Caught LdfException: " << e.what() << std::endl;
