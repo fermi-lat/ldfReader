@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Mar 16 13:03:13 PST 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+sequence consistency checking for LSF
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r6, operation: add
 Package: ldfReader
