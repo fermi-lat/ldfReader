@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Mar 17 00:27:04 PST 2006
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+print warning for AEM errors
+    *
+------------------------------------------------------------
 User: heather  Fri Mar 17 00:26:56 PST 2006
 ldfReader/cmt
 
