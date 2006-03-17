@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.25 2006/03/07 07:23:39 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.26 2006/03/16 20:16:21 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -122,7 +122,8 @@ namespace ldfReader {
             firstEvtSeq = getAem().summary().eventNumber(); 
             foundFirst = true;
         } else if ( (getAem().exist()) && (firstEvtSeq != getAem().summary().eventNumber()) ) {
-            printf("AEM does not match event Seq %lu \n", getAem().summary().eventSequence());
+            std::cout << "AEM does not match event Seq "
+                      << getAem().summary().eventSequence() << std::endl;
             return false;
         }
 
@@ -130,7 +131,8 @@ namespace ldfReader {
             firstEvtSeq = getOsw().summary().eventNumber();
             foundFirst = true;
         } else if ( (getOsw().exist()) && (firstEvtSeq != getOsw().summary().eventNumber()) ){
-            printf("OSW does not match event Seq %lu \n", getOsw().summary().eventSequence());
+            std::cout << "OSW does not match event Seq "
+                      <<  getOsw().summary().eventSequence() << std::endl;
             return false;
         }
 
@@ -143,7 +145,8 @@ namespace ldfReader {
                 firstEvtSeq = tem.summary().eventNumber();
                 foundFirst = true;
             } else if ( (tem.exist()) && (firstEvtSeq != tem.summary().eventNumber())) {
-                printf("TEM does not match event Seq %lu \n", tem.summary().eventSequence());
+                std::cout << "TEM does not match event Seq "
+                          <<  tem.summary().eventSequence() << std::endl;
                 return false;
             }
         }
@@ -181,7 +184,8 @@ namespace ldfReader {
             }
         }
         if (orAll != 0) {
-            printf("Setting Packet Error Flag, Event: %u\n", m_eventId);
+            std::cout << "Setting Packet Error Flag, Event: " 
+                      << m_eventId << std::endl;
             setPacketErrorFlag();
         }
         return (orAll);
@@ -209,10 +213,13 @@ namespace ldfReader {
         if ( getOsw().exist()) {
             orAll |= getOsw().summary().error();
             if (temOrAll != getOsw().summary().error()) 
-                printf("OSW error summary bit does not match OR of all error bits across all TEM contributions, %d event Num: %u\n", m_eventId);
+                std::cout << "OSW error summary bit does not match OR of all " 
+                          << "error bits across all TEM contributions, "
+                          << "event Num: " << m_eventId << std::endl;
         }
         if (orAll != 0) {
-            printf("Event Summary Error Flag Set, Event:  %u\n", m_eventId);
+            std::cout << "Event Summary Error Flag Set, Event:  "
+                      <<  m_eventId << std::endl;
             setTemErrorFlag();
         }
         return (orAll);
@@ -247,15 +254,53 @@ namespace ldfReader {
         if ( getOsw().exist()) {
             orAll |= getOsw().summary().trgParityError();
             if (temOrAll != getOsw().summary().trgParityError()) 
-                printf("OSW error summary bit does not match OR of all error bits across all TEM contributions, %d event Number: %u\n", getOsw().summary().trgParityError(), m_eventId);
+                std::cout << "OSW error summary bit does not match OR of all "
+                          << "error bits across all TEM contributions, "
+                          << getOsw().summary().trgParityError() 
+                          << " event Number: " << m_eventId << std::endl;
         }
         if (orAll != 0) {
-            printf("Trg Parity Error Flag Set, Event:  %u\n", m_eventId);
+            std::cout << "Trg Parity Error Flag Set, Event: " 
+                      << m_eventId << std::endl;
             setTrgParityErrorFlag();
         }
         return (orAll);
     }
 
+bool LatData::checkAemError() {
+
+    bool err = false;
+    const std::map<const char*, ldfReader::AcdDigi*> acdCol = getAcdCol();
+    std::map<const char*, ldfReader::AcdDigi*>::const_iterator thisAcdDigi;
+
+    for (thisAcdDigi = acdCol.begin(); 
+                       thisAcdDigi != acdCol.end(); 
+                       thisAcdDigi++) {
+        const char *tileName = thisAcdDigi->second->getTileName();
+
+        const std::vector<ldfReader::AcdDigi::AcdPmt> readoutCol = thisAcdDigi->
+second->getReadout();
+        if ( (readoutCol[0].getParityError() == AcdDigi::ERROR) ||
+             (readoutCol[1].getParityError() == AcdDigi::ERROR) ) {
+            std::cout << "AEM Parity Error tile " << tileName
+                      << " event: " << m_eventId << std::endl;
+            err = true;
+        }
+  
+    
+        if ( (readoutCol[0].getHeaderParity() == AcdDigi::ERROR) ||
+             (readoutCol[1].getHeaderParity() == AcdDigi::ERROR) ) {
+            std::cout << "AEM Header Parity Error tile " << tileName
+                     << " event: " << m_eventId << std::endl;
+            err = true;
+        }
+
+   }
+   return err;
 }
+
+
+}  // end namespace
+
 
 #endif

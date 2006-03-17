@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r8    17-Mar-2006 hmk print warning for AEM errors and move to cout
 v3r7    16-Mar-2006 hmk Continue event sequence consistency checking for LSF
 v3r6    16-Mar-2006 hmk Use LatData::m_eventId rather than OSW sequence
 v3r5    06-Mar-2006 hmk Store eventid from either LDF or LSF
