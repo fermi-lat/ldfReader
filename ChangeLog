@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Mar 17 00:26:56 PST 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+print warning for AEM errors
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r7, operation: add
 Package: ldfReader
