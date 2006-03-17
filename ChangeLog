@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Fri Mar 17 00:27:56 PST 2006
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+print warning for AEM errors
+    *
+------------------------------------------------------------
+User: heather  Fri Mar 17 00:27:56 PST 2006
 ldfReader/src
 
 Modified Files:
