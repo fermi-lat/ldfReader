@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.9 2006/03/16 20:16:21 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.10 2006/03/16 21:03:13 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -187,6 +187,7 @@ int DfiParser::loadData() {
         ldfReader::LatData::instance()->checkTemError();
         ldfReader::LatData::instance()->checkPacketError();
         ldfReader::LatData::instance()->checkTrgParityError();
+        ldfReader::LatData::instance()->checkAemError();
 
     } catch (LdfException& e) {
        std::cerr << "Caught LdfException: " << e.what() << std::endl;

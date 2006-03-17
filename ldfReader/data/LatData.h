@@ -102,6 +102,7 @@ namespace ldfReader {
         unsigned checkTemError();
         unsigned checkPacketError();
         unsigned checkTrgParityError();
+        bool checkAemError();
 
         unsigned packetError() const { return (m_flags & enums::PACKETERROR); };
         unsigned errorEventSummary() const { return (m_flags & enums::SUMMARYERROR); }
