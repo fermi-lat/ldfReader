@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Thu Mar 30 17:36:20 PST 2006
+ldfReader/src/iterators
+
+Modified Files:
+	CalParser.cxx LatComponentParser.cxx 
+Log Message:
+fix eventsummary storage for LICOS and readout4 check
+    *
+------------------------------------------------------------
+User: heather  Thu Mar 30 17:36:20 PST 2006
 ldfReader/doc
 
 Modified Files:
