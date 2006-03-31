@@ -4,6 +4,9 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r9    27-Mar-2006 hmk let GEM store eventSummary if there is no OSW
+                        fix check on BESTRANGE to work when processing
+                        events from both BEST and ALLRANGE
 v3r8    17-Mar-2006 hmk print warning for AEM errors and move to cout
 v3r7    16-Mar-2006 hmk Continue event sequence consistency checking for LSF
 v3r6    16-Mar-2006 hmk Use LatData::m_eventId rather than OSW sequence

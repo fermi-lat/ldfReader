@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.22 2005/04/18 17:37:03 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.23 2005/06/10 06:18:18 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -48,7 +48,9 @@ namespace ldfReader {
         }
 
         const char* prefix = "  ";
+
         ldfReader::LatData::instance()->setSummary(event->summary());
+
         ldfReader::OswData osw(ldfReader::EventSummaryCommon(((EBFcontribution*)contribution)->summary()));
         ldfReader::LatData::instance()->setOsw(osw);
         ldfReader::LatData::instance()->getOsw().initPacketError(contribution->packetError());
@@ -76,6 +78,9 @@ namespace ldfReader {
 
         //if (EbfDebug::getDebug())  printf("\nGEM:\n");
         ldfReader::GemData gem;
+
+        // Set EventSummary here - in case there is no OSW
+        ldfReader::LatData::instance()->setSummary(event->summary());
 
         ldfReader::EventSummaryCommon summary(((EBFcontribution*)contribution)->summary());
         gem.setExist();
