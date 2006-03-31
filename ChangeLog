@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Mar 30 23:26:47 PST 2006
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+use iterator over readout collection
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r9, operation: add
 Package: ldfReader
