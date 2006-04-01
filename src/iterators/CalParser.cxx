@@ -4,7 +4,7 @@
 /** @file CalParser.cxx
 @brief Implementation of the CalParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.4 2005/04/05 21:23:39 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.5 2006/03/31 01:36:20 heather Exp $
 */
 
 // EBF Online Library includes
@@ -100,9 +100,13 @@ namespace ldfReader {
             tData->addCalDigi(digi);
         } else {
             // If the digi already exists for this tower - we should be in AllRange mode
-            if (readout4 != 1) 
+            if (readout4 != 1) {
                 fprintf(stderr, 
-                "Two CalDigis with the same layer/column combination - yet we are in BESTRANGE mode\n");
+                "Two CalDigis with the same layer/column combination ");
+                fprintf(stderr,
+                " - yet we are in BESTRANGE mode.  Event %llu \n",
+                ldfReader::LatData::instance()->eventId()); 
+            }
         }
 
         // Add the readout data
