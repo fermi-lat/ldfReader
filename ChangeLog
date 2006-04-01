@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Sat Apr  1 01:33:38 PST 2006
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+pick up some additional error handling
+    *
+------------------------------------------------------------
 User: heather  Sat Apr  1 01:33:37 PST 2006
 ldfReader/cmt
 
