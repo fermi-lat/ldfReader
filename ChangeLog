@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Sat Apr  1 01:08:37 PST 2006
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+add event id for bestrange warning
+    *
+------------------------------------------------------------
+User: heather  Sat Apr  1 01:08:37 PST 2006
 ldfReader/cmt
 
 Modified Files:
