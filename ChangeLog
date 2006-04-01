@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Sat Apr  1 01:33:37 PST 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+pick up some additional error handling
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r10, operation: add
 Package: ldfReader
