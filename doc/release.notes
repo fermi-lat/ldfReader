@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r10   01-Apr-2006 hmk add event number for BESTRANGE warning
 v3r9    27-Mar-2006 hmk let GEM store eventSummary if there is no OSW
                         fix check on BESTRANGE to work when processing
                         events from both BEST and ALLRANGE
