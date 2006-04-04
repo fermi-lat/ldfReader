@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Apr  3 23:40:35 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+store number associated with NA in AEM
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r11, operation: add
 Package: ldfReader
