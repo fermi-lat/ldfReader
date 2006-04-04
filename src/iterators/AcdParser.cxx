@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.10 2005/04/23 04:49:38 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.11 2005/08/24 19:31:21 heather Exp $
 */
 
 // EBF Online Library includes
@@ -82,7 +82,23 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
   //       m_prefix, channel, map()->tileName(id, tile), side,
   //       p.ADCrange(), p.ADCvalue(), p.ADCvalue(), p.parityError(), p.more());
   char *pEnd;
-  unsigned int tileNum = strtol(pmt->name(), &pEnd, 10);
+  unsigned int tileNum;
+  if (strncmp(pmt->name(), "NA", 2) == 0) {
+      if ( (strlen(pmt->name()) == 3) || (strlen(pmt->name()) == 4) ) {
+        char num[10];
+        char* strptr = strpbrk(pmt->name(), "0123456789");
+        tileNum = 0;
+        if (strptr) {
+            strcpy(num, strptr );
+            tileNum = 1000 + strtol(num, &pEnd, 10);
+        }
+      } else {
+          printf("AEM Parsing:  tile name is non-standard %s\n", pmt->name());
+          tileNum = 0;
+      }
+
+  } else 
+      tileNum = strtol(pmt->name(), &pEnd, 10);
 
   // Retrieve the tower or create a new TowerData object if necessary
   ldfReader::LatData* curLatData = ldfReader::LatData::instance();
