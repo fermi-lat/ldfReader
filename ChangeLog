@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Apr  3 23:40:37 PDT 2006
+ldfReader/src/iterators
+
+Modified Files:
+	AcdParser.cxx 
+Log Message:
+store number associated with NA in AEM
+    *
+------------------------------------------------------------
 User: heather  Mon Apr  3 23:40:36 PDT 2006
 ldfReader/doc
 
