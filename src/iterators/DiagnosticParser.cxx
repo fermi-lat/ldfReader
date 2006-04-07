@@ -4,12 +4,13 @@
 /** @file DiagnosticParser.cxx
 @brief Implementation of the DiagnosticParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/DiagnosticParser.cxx,v 1.2 2004/11/24 21:45:06 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/DiagnosticParser.cxx,v 1.3 2005/04/05 21:23:39 heather Exp $
 */
 
 #include "DiagnosticParser.h"
 
 //#include "ldfReader/EbfException.h"
+#include "ldfReader/data/LatData.h"
 #include "../EbfDebug.h"
 
 namespace ldfReader {
@@ -48,6 +49,9 @@ namespace ldfReader {
  {
    fprintf(stderr, "MyDIAGiterator::handleError:  Somehow an error occured. \n");
    fprintf(stderr, "  code=%d, p1=%d, p2=%d\n", code, p1, p2);
+   fprintf(stderr, "Event %llu ApId: %d\n", 
+           ldfReader::LatData::instance()->eventId(), 
+           ldfReader::LatData::instance()->getCcsds().getApid());
    return 0;
  }
 
