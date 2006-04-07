@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.10 2006/03/16 21:03:13 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.11 2006/03/17 08:27:56 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -14,6 +14,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.10 2006/03
 #include "ldfReader/LdfException.h"
 #include <exception>
 #include <iostream>
+#include <sstream>
 #include <stdexcept>
 
 #include "facilities/Timestamp.h"
@@ -141,9 +142,9 @@ int DfiParser::readContextAndInfo() {
 
 double DfiParser::timeForTds(double utc) {
 
-    long wholeSeconds = floor(utc);
+    long wholeSeconds = long(floor(utc));
     double frac = utc - wholeSeconds;
-    int nanoSec = frac/0.000000001;
+    int nanoSec = int(frac/0.000000001);
     facilities::Timestamp facTimeStamp(wholeSeconds, nanoSec);
     double julTimeStamp = facTimeStamp.getJulian();
     astro::JulianDate julDate(julTimeStamp);
@@ -172,13 +173,22 @@ int DfiParser::loadData() {
         EbfEventParser ldf;
         ldf.iterate(m_start, m_end);
 
-        if (ldf.status()) 
-            throw LdfException("LDF EBFeventParser reported a bad status");
+        unsigned long long eventId = ldfReader::LatData::instance()->eventId();
+        int apid = ldfReader::LatData::instance()->getCcsds().getApid();
+
+        if (ldf.status()) {
+            std::ostringstream errMsg;
+            errMsg.str("LDF EBFeventParser reported a bad status ");
+            errMsg << apid;
+            throw LdfException(errMsg.str());
+        }
    
 
         if (!ldfReader::LatData::instance()->eventSeqConsistent()) {
-            printf("Event Sequence numbers are not consistent within all contributions\n");
-            printf("Setting event flag\n");
+            printf("Event Sequence numbers are not consistent within");
+            printf(" all contributions\n");
+            printf("Setting event flag for event: %llu apid: %u\n",
+                eventId, apid);
             ldfReader::LatData::instance()->setBadEventSeqFlag();
             return 0;
          }
@@ -190,13 +200,19 @@ int DfiParser::loadData() {
         ldfReader::LatData::instance()->checkAemError();
 
     } catch (LdfException& e) {
-       std::cerr << "Caught LdfException: " << e.what() << std::endl;
+       std::cerr << "Caught LdfException: " << e.what() << " Apid: "  
+                 << ldfReader::LatData::instance()->getCcsds().getApid()  
+                 << std::endl;
        throw;
     } catch(std::runtime_error e ) {
-        std::cerr << e.what() << std::endl;
+        std::cerr << e.what() << " Apid: " 
+                  << ldfReader::LatData::instance()->getCcsds().getApid()  
+                  << std::endl;
         throw(e);
     } catch(...) {
-       std::cerr << "Caught Exception" << std::endl;
+       std::cerr << "Caught Exception Apid:" 
+                 << ldfReader::LatData::instance()->getCcsds().getApid()  
+                 << std::endl;
        throw;
     }
     return 0;

@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.23 2005/06/10 06:18:18 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.24 2006/03/31 01:36:20 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -72,7 +72,10 @@ namespace ldfReader {
         
         // If there was a packet error - skip this contribution
         if (contribution->packetError())  {
-            printf("Packet Error in GEM - skipping\n");
+            printf("Packet Error in GEM - skipping ");
+            printf("Event: %llu Apid: %d\n", 
+                ldfReader::LatData::instance()->eventId(),
+                ldfReader::LatData::instance()->getCcsds().getApid());
             return 0; 
         }
 
@@ -145,6 +148,9 @@ namespace ldfReader {
         // Skip contribution if there was a packet error
         if (contribution->packetError()) {
            printf("Packet Error in ACD - skipping\n");
+           printf("Event: %llu Apid: %d\n", 
+                ldfReader::LatData::instance()->eventId(),
+                ldfReader::LatData::instance()->getCcsds().getApid());
            return 0;
         }
 
@@ -174,6 +180,9 @@ namespace ldfReader {
         // Skip this contribution if there was a packet error
         if ( (EBFcontribution*)contribution->packetError()) {
             printf("Packet Error in TEM - found in CAL processing - skipping\n");
+            printf("Event: %llu Apid: %d\n", 
+                ldfReader::LatData::instance()->eventId(),
+                ldfReader::LatData::instance()->getCcsds().getApid());
             return 0;
         }
 
@@ -220,6 +229,9 @@ namespace ldfReader {
         // Skip this contribution if there was a packet error
         if ( (EBFcontribution*)contribution->packetError()) {
             printf("Packet Error in TEM - found in TKR processing - skipping\n");
+            printf("Event: %llu Apid: %d\n", 
+                ldfReader::LatData::instance()->eventId(),
+                ldfReader::LatData::instance()->getCcsds().getApid());
             return 0;
          }
 
@@ -259,7 +271,12 @@ namespace ldfReader {
 
         // Skip this contribution if there was a packet error
         if ( (EBFcontribution*)contribution->packetError()) {
-            printf("Packet Error found in TEM - during Diagnostic processing - skipping\n");
+            printf("%s %s",
+                 "Packet Error found in TEM ",
+                 " - during Diagnostic processing - skipping ");
+            printf("Event: %llu Apid: %d\n", 
+                ldfReader::LatData::instance()->eventId(),
+                ldfReader::LatData::instance()->getCcsds().getApid());
             return 0;
         }
 
@@ -295,7 +312,11 @@ int LatComponentParser::error(EBFevent* event, TEMcontribution* contribution) {
 
     // Skip this contribution if there was a packet error
     if ( (EBFcontribution*)contribution->packetError()) {
-       printf("Packet Error found in TEM - during error processing - skipping\n");
+       printf("%s",
+          "Packet Error found in TEM - during error processing - skipping");
+       printf("Event: %llu Apid: %d\n", 
+              ldfReader::LatData::instance()->eventId(),
+              ldfReader::LatData::instance()->getCcsds().getApid());
        return 0;
     }
 
@@ -361,7 +382,10 @@ int LatComponentParser::cleanup (EBFevent*        /*event*/,
         {
             if (*mbz)
                 printf("%sNon-zero bytes beyond end of TEM: 0x%08x\n",
-                prefix,*mbz);
+                       prefix,*mbz);
+                printf("Event: %llu Apid: %d\n", 
+                    ldfReader::LatData::instance()->eventId(),
+                    ldfReader::LatData::instance()->getCcsds().getApid());
             mbz++;
         }
         return 0;
@@ -390,8 +414,12 @@ void LatComponentParser::dumpLATPcellheader(const unsigned header, const char* p
 int LatComponentParser::handleError(EBFcontribution* contrib,
                                          unsigned code, unsigned p1, unsigned p2) const
  {
-   fprintf(stderr, "MyLATcomponentIterator::handleError:  Somehow an error occured. \n");
+   fprintf(stderr, "%s %s\n",
+      "MyLATcomponentIterator::handleError:  Somehow an error occured.");
    fprintf(stderr, "  code=%d, p1=%d, p2=%d\n", code, p1, p2);
+   fprintf(stderr, "Event: %llu Apid: %d\n", 
+                    ldfReader::LatData::instance()->eventId(),
+                    ldfReader::LatData::instance()->getCcsds().getApid());
    return 0;
  }
 
@@ -405,6 +433,9 @@ int LatComponentParser::handleError(EBFevent* event,
        fprintf(stderr, "EBFcontributionIterator::iterate: "
                       "Number of contributions found > %d\n",
                       p1);
+       fprintf(stderr, "Event: %llu Apid: %d\n", 
+                    ldfReader::LatData::instance()->eventId(),
+                    ldfReader::LatData::instance()->getCcsds().getApid());
        break;
      }
      case EBFcontributionIterator::ERR_PastEnd:
@@ -412,12 +443,18 @@ int LatComponentParser::handleError(EBFevent* event,
        fprintf(stderr, "EBFcontributionIterator::iterate: "
                       "Iterated past end of event by 0x%0x = %d bytes\n",
                       p1, p1);
+       fprintf(stderr, "Event: %llu Apid: %d\n", 
+                    ldfReader::LatData::instance()->eventId(),
+                    ldfReader::LatData::instance()->getCcsds().getApid());
        break;
      }
      case EBFcontributionIterator::ERR_ZeroLength:
      {
        fprintf(stderr, "\nEBFcontributionIterator::iterate:\n"
               "  Found a contribution with zero length\n");
+       fprintf(stderr, "Event: %llu Apid: %d\n", 
+                    ldfReader::LatData::instance()->eventId(),
+                    ldfReader::LatData::instance()->getCcsds().getApid());
        break;
      }
      case EBFcontributionIterator::ERR_PacketError:
@@ -434,12 +471,18 @@ int LatComponentParser::handleError(EBFevent* event,
          default:                           type = "unknown";      break;
        }
        fprintf(stderr, "\nEBFcontributionIterator::iterate:\n   Skipping contribution with source ID %d having packet %s error\n", p2, type);
+       fprintf(stderr, "Event: %llu Apid: %d\n", 
+                    ldfReader::LatData::instance()->eventId(),
+                    ldfReader::LatData::instance()->getCcsds().getApid());
        break;
      }
      case EBFcontributionIterator::ERR_NoMap:
      {
        fprintf(stderr, "No contribution map exists for EBF version %0x\n",
               p1);
+       fprintf(stderr, "Event: %llu Apid: %d\n", 
+                    ldfReader::LatData::instance()->eventId(),
+                    ldfReader::LatData::instance()->getCcsds().getApid());
        break;
      }
      default: break;

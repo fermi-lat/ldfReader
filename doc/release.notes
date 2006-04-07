@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r13   07-Apr-2006 hmk print out apid with error messages
 v3r12   03-Apr-2006 hmk store the number associated with an ACD NA PMT
 v3r11   01-Apr-2006 hmk pick up additional error handling as seen in LDFdump.cpp
 v3r10   01-Apr-2006 hmk add event number for BESTRANGE warning

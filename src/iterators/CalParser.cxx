@@ -4,7 +4,7 @@
 /** @file CalParser.cxx
 @brief Implementation of the CalParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.5 2006/03/31 01:36:20 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.6 2006/04/01 09:08:37 heather Exp $
 */
 
 // EBF Online Library includes
@@ -90,7 +90,8 @@ namespace ldfReader {
         unsigned int offlineColumn = theLog.column();
         // Determine the mode
         unsigned readout4 = EventSummary::readout4(event()->summary());
-        ldfReader::CalDigi::CalTrigMode mode = (readout4 == 0) ? ldfReader::CalDigi::BESTRANGE : ldfReader::CalDigi::ALLRANGE;
+        ldfReader::CalDigi::CalTrigMode mode = (readout4 == 0) ? 
+                 ldfReader::CalDigi::BESTRANGE : ldfReader::CalDigi::ALLRANGE;
 
         // Retrieve the CalDigi object for this layer and column - or create a new one
         ldfReader::CalDigi *digi = tData->getCalDigi(offlineLayer, offlineColumn);
@@ -104,13 +105,15 @@ namespace ldfReader {
                 fprintf(stderr, 
                 "Two CalDigis with the same layer/column combination ");
                 fprintf(stderr,
-                " - yet we are in BESTRANGE mode.  Event %llu \n",
-                ldfReader::LatData::instance()->eventId()); 
+                " - yet we are in BESTRANGE mode.  Event %llu Apid: %d\n",
+                ldfReader::LatData::instance()->eventId(),
+                ldfReader::LatData::instance()->getCcsds().getApid()); 
             }
         }
 
         // Add the readout data
-        digi->addReadout(ldfReader::CalDigi::CalReadout(theLog.positive().range(), theLog.positive().value(), 
+        digi->addReadout(ldfReader::CalDigi::CalReadout( 
+            theLog.positive().range(), theLog.positive().value(), 
             theLog.negative().range(), theLog.negative().value()));
 
     }
@@ -118,8 +121,12 @@ namespace ldfReader {
     int CalParser::handleError(CALcontribution *contribution, unsigned code, 
                     unsigned p1, unsigned p2) const {
         
-        fprintf(stderr, "MyCALiterator::handleError:  Somehow an error occured. \n ");
+        fprintf(stderr, 
+           "MyCALiterator::handleError:  Somehow an error occured. \n ");
         fprintf(stderr, "  code=%d, p1=%d, p2=%d\n", code, p1, p2);
+        fprintf(stderr, " Event: %llu Apid: %d\n", 
+            ldfReader::LatData::instance()->eventId(),
+            ldfReader::LatData::instance()->getCcsds().getApid());
         return 0;
     }
 

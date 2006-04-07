@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.11 2005/08/24 19:31:21 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.12 2006/04/04 06:40:37 heather Exp $
 */
 
 // EBF Online Library includes
@@ -93,7 +93,10 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
             tileNum = 1000 + strtol(num, &pEnd, 10);
         }
       } else {
-          printf("AEM Parsing:  tile name is non-standard %s\n", pmt->name());
+          printf("AEM Parsing:  tile name is non-standard %s ", pmt->name());
+          printf(" Event: %ull, Apid: %d\n", 
+                  ldfReader::LatData::instance()->eventId(), 
+                  ldfReader::LatData::instance()->getCcsds().getApid());
           tileNum = 0;
       }
 
@@ -129,8 +132,11 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
      {
          case AEMcontributionIterator::ERR_TooManyPhas:
          {
-             fprintf(stderr, "AEMcontributionIterator::iterate: %s",
-                       "more PHA values found than bits set in the Accept Map\n");
+             fprintf(stderr, "%s %s %s %ull %s %d\n", 
+                       "AEMcontributionIterator::iterate: ",
+                       "more PHA values found than bits set in the Accept Map",
+                       " Event: ", ldfReader::LatData::instance()->eventId(), 
+                       " Apid: ", ldfReader::LatData::instance()->getCcsds().getApid());
              break;
          }
 

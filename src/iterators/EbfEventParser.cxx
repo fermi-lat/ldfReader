@@ -12,7 +12,9 @@ namespace ldfReader {
         {
             printf("\n");
             printf("Bad status %d in event header\n", event->status());
-            printf("Aborting processing of event\n");
+            printf("Aborting processing of event: %luu Apid: %d\n",
+                ldfReader::LatData::instance()->eventId(),
+                ldfReader::LatData::instance()->getCcsds().getApid());
             printf("\n");
             return event->status();
         }
@@ -41,6 +43,9 @@ int EbfEventParser::handleError(EBFevent* evt, unsigned code, unsigned p1,
        fprintf(stderr, "EBFeventIterator::iterate: "
                        "Encountered a non-EBFevent datagram contribution "
                        "with typeId %08x\n", p1);
+       fprintf(stderr, "Event: %llu Apid: %d\n", 
+          ldfReader::LatData::instance()->eventId(), 
+          ldfReader::LatData::instance()->getCcsds().getApid());
        return 1;
        break;
      }

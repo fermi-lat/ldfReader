@@ -4,7 +4,7 @@
 /** @file TkrParser.cxx
 @brief Implementation of the TkrParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.5 2005/04/05 21:23:39 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.6 2006/04/01 09:33:38 heather Exp $
 */
 #include <stdio.h> // included for TKRcontributionIterator.h
 // Online EBF library includes
@@ -12,6 +12,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.
 // ldfReader includes
 #include "TkrParser.h"
 #include "ldfReader/LdfException.h"
+#include "ldfReader/data/LatData.h"
 #include "../EbfDebug.h"
 
 namespace {
@@ -157,8 +158,10 @@ namespace ldfReader {
         } else if ((strcmp(myXy, "y")==0) && (myLowHigh == 1)) {
             layer->addYStripC1(stripId);
         } else {
-            fprintf(stderr, 
-                "failed to find the TKR layer, view, controller combination\n");
+            fprintf(stderr, "%s %s %llu %s %d",
+                "failed to find the TKR layer, view, controller combination",
+                "Event: ", ldfReader::LatData::instance()->eventId(),
+                " Apid: ", ldfReader::LatData::instance()->getCcsds().getApid());
         }
     }
 
@@ -195,6 +198,9 @@ namespace ldfReader {
         } else {
             fprintf(stderr, 
                 "failed to find the TKR layer, view, controller combination\n");
+            fprintf(stderr, "%s %llu %s %d\n", " Event: ",
+                ldfReader::LatData::instance()->eventId(), " Apid: ",
+                ldfReader::LatData::instance()->getCcsds().getApid());
         }
 
     }
@@ -207,15 +213,26 @@ namespace ldfReader {
         switch (code)
         {
             case TKRcontributionIterator::ERR_WrongOrder:
-                fprintf(stderr, "TKRiterator.iterateTOTs: TOTs can not be accessed before TKRiterator.iterateStrips has executed.\n");
+                fprintf(stderr, "%s %s",
+                    "TKRiterator.iterateTOTs: TOTs can not be accessed",
+                    " before TKRiterator.iterateStrips has executed.");
+                fprintf(stderr, "%s %llu %s %d\n", " Event: ",
+                    ldfReader::LatData::instance()->eventId(), " Apid: ",
+                    ldfReader::LatData::instance()->getCcsds().getApid());
                return 0;
             case TKRcontributionIterator::ERR_PastEnd:
                 fprintf(stderr, "TKRcontributionIterator.iterateStrips:"
-                "Iterated past the end of the contribution by %d words\n", p1);
+                "Iterated past the end of the contribution by %d words", p1);
+                fprintf(stderr, "%s %llu %s %d\n", " Event: ",
+                    ldfReader::LatData::instance()->eventId(), " Apid: ",
+                    ldfReader::LatData::instance()->getCcsds().getApid());
                 return 0;
             default: 
                 fprintf(stderr, "TKRcontributionIterator.iterate:"
-                "Unrecognized error code found: %d\n", code);
+                "Unrecognized error code found: %d", code);
+                fprintf(stderr, "%s %llu %s %d\n", " Event: ",
+                    ldfReader::LatData::instance()->eventId(), " Apid: ",
+                    ldfReader::LatData::instance()->getCcsds().getApid());
                 return 0;
         }
         return 0;
