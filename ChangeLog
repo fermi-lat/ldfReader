@@ -1,5 +1,16 @@
 ------------------------------------------------------------
 User: heather  Fri Apr  7 09:46:49 PDT 2006
+ldfReader/src/iterators
+
+Modified Files:
+	AcdParser.cxx CalParser.cxx DiagnosticParser.cxx 
+	EbfEventParser.cxx ErrParser.h LatComponentParser.cxx 
+	LatContributionParser.cxx TkrParser.cxx 
+Log Message:
+printout apids with error messages
+    *
+------------------------------------------------------------
+User: heather  Fri Apr  7 09:46:49 PDT 2006
 ldfReader/src
 
 Modified Files:
