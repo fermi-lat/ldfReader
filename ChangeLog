@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Fri Apr  7 09:46:49 PDT 2006
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx 
+Log Message:
+printout apids with error messages
+    *
+------------------------------------------------------------
+User: heather  Fri Apr  7 09:46:49 PDT 2006
 ldfReader/doc
 
 Modified Files:
