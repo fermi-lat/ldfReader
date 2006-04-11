@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Apr 11 10:58:11 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+update for new CHS/eventFile interface and LCI
+    *
+------------------------------------------------------------
 User: heather  Tue Apr 11 10:57:18 PDT 2006
 ldfReader/src/data
 
