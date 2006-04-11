@@ -3,19 +3,21 @@
 
 #include "ldfReader/EbfParser.h"
 #include <string>
-//#include "DFC/EBF_fileIn.h"
 #include "data/LatData.h"
 #include "EBFevent.h"
-//#include "LATdatagram.h"
-//#include "../src/iterators/EbfDatagramParser.h"
-#include "../src/ccsds2lsf.h"
+//#include "../src/ccsds2lsf.h"
 
-//#include "eventRet/RetDef.h"
+#include "eventFile/LSFReader.h"
+#include "lsfData/LsfMetaEvent.h"
+#include "lsfData/LsfCcsds.h"
+#include "eventFile/EBF_Data.h"
+
+/*
 #include "eventFile/LPA_File.h"
 #include "eventFile/LSE_Context.h"
 #include "eventFile/LSE_Info.h"
 #include "eventFile/EBF_Data.h"
-//#include "eventRet/LPA_Merger.h"
+*/
 
 #include <vector>
 
@@ -23,7 +25,7 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/DfiParser.h,v 1.3 2006/02/24 07:33:09 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/DfiParser.h,v 1.4 2006/03/05 09:21:25 heather Exp $
 */
 
 namespace ldfReader {
@@ -31,8 +33,6 @@ namespace ldfReader {
     public:
 
         DfiParser();
-//        DfiParser(const std::string &arch, int scid, 
-//                  std::vector<eventRet::ApidSpan*> &spans);
 
         DfiParser(const std::string &filename);
 
@@ -55,8 +55,6 @@ namespace ldfReader {
 
         unsigned long eventSize() { return m_eventSize; };
 
-//        bool end();
-
         // local exception class
         //class Exception{ };
 
@@ -65,9 +63,7 @@ namespace ldfReader {
 
         int readContextAndInfo();
 
-        eventFile::LPA_File *m_file;
- //       eventRet::RetDef *m_retDef; // packet retrieval interface
- //       eventRet::LPA_Merger *m_eventMerger; // Interface to merging library
+        eventFile::LSFReader *m_file;
 
         //long            m_evtCount;
 
@@ -79,13 +75,13 @@ namespace ldfReader {
 
         EBFevent *m_end, *m_start;
 
-        eventFile::LSE_Context m_context;
+        lsfData::LsfCcsds m_ccsds;
+        lsfData::MetaEvent m_meta;
         eventFile::EBF_Data m_ebf;
-        eventFile::LPA_Info m_info;
 
         bool m_more;
 
-        ldfReader::ccsds2lsf m_cnv;
+  //      ldfReader::ccsds2lsf m_cnv;
 
     };
 }

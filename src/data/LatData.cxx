@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.27 2006/03/17 08:27:56 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.28 2006/03/31 07:26:47 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -43,16 +43,10 @@ namespace ldfReader {
                 << time.timeTicks() << " (" << std::dec 
                 << time.timeTicks()
                 << ")\nLSE_Info:  " << time.timeHack() << std::endl;
+
       const lsfData::Configuration *cfg = m_metaEvent.configuration();
-      if (cfg) {
-          const lsfData::LpaConfiguration* lpa = cfg->castToLpaConfig();
-          if (lpa) {
-          std::cout << "LPA_Info: softwareKey = 0x" << std::hex
-                    << lpa->softwareKey() << std::endl
-                    << "LPA_Info: hardwareKey = 0x" << lpa->hardwareKey() 
-                    << std::dec << std::endl;
-          }
-      }
+      if (cfg) 
+          cfg->print();
 
   }
 
