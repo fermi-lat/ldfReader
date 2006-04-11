@@ -1,5 +1,16 @@
 ------------------------------------------------------------
 User: heather  Tue Apr 11 10:57:18 PDT 2006
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx 
+Removed Files:
+	ccsds2lsf.cxx ccsds2lsf.h 
+Log Message:
+update for new CHS/eventFile interface and LCI
+    *
+------------------------------------------------------------
+User: heather  Tue Apr 11 10:57:18 PDT 2006
 ldfReader/ldfReader
 
 Modified Files:
