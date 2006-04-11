@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.11 2006/03/17 08:27:56 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.12 2006/04/07 16:46:49 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -21,7 +21,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.11 2006/03
 #include "astro/JulianDate.h"
 
 #include "lsfData/LsfTime.h"
-#include "./ccsds2lsf.h"
+//#include "./ccsds2lsf.h"
 
 namespace ldfReader {
 
@@ -37,10 +37,10 @@ DfiParser::DfiParser(const std::string &filename) {
     try {
        clear();
        m_file = NULL;
-       m_file = new eventFile::LPA_File(filename, eventFile::LPA_File::Read);
+       m_file = new eventFile::LSFReader(filename);
        std::cout << "Created eventFile" << std::endl;
        m_runId = m_file->runid();
-       m_more = m_file->read(m_context, m_info, m_ebf);
+       m_more = m_file->read(m_ccsds, m_meta, m_ebf);
        std::cout<< "After first read " << std::endl;
        if (!m_more) {
            std::cout << "No events in input file" << std::endl;
@@ -70,13 +70,17 @@ void DfiParser::clear() {
     m_runId = 0;
     m_eventId = 0;
     m_eventSize = 0;
+    m_ccsds.clear();
+    m_meta.clear();
 }
 
 
 
 int DfiParser::nextEvent() {
     try {
-        bool m_more = m_file->read(m_context, m_info, m_ebf);
+        m_ccsds.clear();
+        m_meta.clear();
+        bool m_more = m_file->read(m_ccsds, m_meta, m_ebf);
         if (m_more == false) return -1;
 
         m_start = const_cast<EBFevent*>(m_ebf.start());
@@ -105,37 +109,14 @@ int DfiParser::readContextAndInfo() {
 
     lsfData::MetaEvent *metaEvent = ldfReader::LatData::instance()->getMetaEventPtr();
 
-    lsfData::TimeTone current;
-    m_cnv.timeToneCnv(m_context.current, current);
-    lsfData::TimeTone previous;
-    m_cnv.timeToneCnv(m_context.previous, previous);
-
-    lsfData::GemTime gemTime(m_info.timeHack.hacks, m_info.timeHack.tics);
-    lsfData::Time lsfTime(current, previous, gemTime, m_info.timeTics);
-    lsfTime.set(current,previous, gemTime, m_info.timeTics);
-    metaEvent->setTime(lsfTime);
-
-    lsfData::RunInfo run;
-    m_cnv.runInfoCnv(m_context.run, run);
-    metaEvent->setRun(run);
-
-    lsfData::DatagramInfo datagramInfo;
-    m_cnv.datagramInfoCnv(m_context.open, m_context.close, datagramInfo);
-    metaEvent->setDatagram(datagramInfo);
-
-    lsfData::GemScalers scalers;
-    m_cnv.scalerCnv(m_context.scalers, scalers);
-    metaEvent->setScalers(scalers);
-
-    lsfData::LpaConfiguration config(m_info.hardwareKey, m_info.softwareKey);
-    metaEvent->setConfiguration(config);
-
+    metaEvent->set(m_meta.run(), m_meta.datagram(), m_meta.scalers(),
+                   m_meta.time(), *(m_meta.configuration()));
+ 
     lsfData::LsfCcsds* ccsdsData = ldfReader::LatData::instance()->getCcsdsPtr();
-    ccsdsData->initialize(m_context.ccsds.scid, m_context.ccsds.apid, 
-                          m_context.ccsds.utc);
+    ccsdsData->initialize(m_ccsds.getScid(), m_ccsds.getApid(), m_ccsds.getUtc());
 
-    ldfReader::LatData::instance()->setTimeInSecTds(timeForTds(m_context.ccsds.utc));
-    ldfReader::LatData::instance()->setEventId(scalers.sequence());
+    ldfReader::LatData::instance()->setTimeInSecTds(timeForTds(m_ccsds.getUtc()));
+    ldfReader::LatData::instance()->setEventId(m_meta.scalers().sequence());
  
     return 0;
 }
