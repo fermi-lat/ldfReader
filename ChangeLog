@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Tue Apr 11 10:57:18 PDT 2006
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+update for new CHS/eventFile interface and LCI
+    *
+------------------------------------------------------------
+User: heather  Tue Apr 11 10:57:18 PDT 2006
 ldfReader/src
 
 Modified Files:
