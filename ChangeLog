@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Apr 11 10:57:18 PDT 2006
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+update for new CHS/eventFile interface and LCI
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r13, operation: add
 Package: ldfReader
