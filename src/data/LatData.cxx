@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.28 2006/03/31 07:26:47 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.29 2006/04/11 17:57:18 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -48,6 +48,7 @@ namespace ldfReader {
       if (cfg) 
           cfg->print();
 
+      m_ccsds.print();
   }
 
 

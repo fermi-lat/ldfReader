@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.13 2006/04/11 17:57:18 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.14 2006/04/12 07:19:54 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -141,6 +141,7 @@ int DfiParser::readContextAndInfo() {
     ldfReader::LatData::instance()->setTimeInSecTds(timeForTds(m_ccsds.getUtc()));
     ldfReader::LatData::instance()->setEventId(m_meta.scalers().sequence());
  
+    if (EbfDebug::getDebug()) ccsdsData->print();
     return 0;
 }
 
