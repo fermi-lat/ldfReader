@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.12 2006/04/07 16:46:49 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.13 2006/04/11 17:57:18 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -74,7 +74,30 @@ void DfiParser::clear() {
     m_meta.clear();
 }
 
+void DfiParser::printHeader() const {
+    // Purpose and Method: print the header summary information
 
+    printf( "retrieved %llu events for run %09u\n", 
+                                m_file->evtcnt(), m_file->runid());
+    printf( "first Spacecraft clock value = %u\n", m_file->begSec() );
+    printf( "last  Spacecraft clock value = %u\n", m_file->endSec() );
+    printf( "first GEM sequence counter value = %llu\n", m_file->begGEM() );
+    printf( "last  GEM sequence counter value = %llu\n", m_file->endGEM() );
+    for ( int i=0; i<LSEHEADER_MAX_APIDS; i++ ) {
+        std::pair<unsigned, unsigned> err = m_file->seqErr( i );
+        if ( err.first > 0 ) {
+            printf( "apid %04u had %10u sequence errors\n", 
+                                                 err.first, err.second );
+        }
+    }
+    for ( int i=0; i<LSEHEADER_MAX_APIDS; i++ ) {
+        std::pair<unsigned, unsigned> err = m_file->dfiErr( i );
+        if ( err.first > 0 ) {
+            printf( "apid %04u had %10u DFI errors\n", err.first, err.second );
+        }
+    }
+    printf( "\n" );
+}
 
 int DfiParser::nextEvent() {
     try {

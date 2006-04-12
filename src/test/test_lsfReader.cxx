@@ -5,7 +5,7 @@
 /** @file test_dfiReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_lsfReader.cxx,v 1.3 2006/02/26 07:59:55 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_lsfReader.cxx,v 1.4 2006/03/05 09:21:26 heather Exp $
 */
 
 #include <iostream>
@@ -42,6 +42,7 @@ int main(int argn, char** argc) {
     DfiParser *ebfP = new DfiParser(fileName);
 
     std::cout << "DfiParser is set up" << std::endl;
+    ebfP->printHeader();
 
     int status = 0;
     do {
