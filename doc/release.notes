@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r16   14-Apr-2006 hmk provide check on eventCount from CHS/eventFile
 v3r15   14-Apr-2006 hmk print new header from eventFile
 v3r14   11-Apr-2006 hmk update for new CHS/eventFile interface which includes
         LCI handling
