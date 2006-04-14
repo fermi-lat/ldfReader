@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Apr 14 16:24:21 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+check event count from CHS/eventFile header
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r15, operation: add
 Package: ldfReader
