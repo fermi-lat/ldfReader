@@ -5,7 +5,7 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/EbfParser.h,v 1.3 2006/02/10 19:46:18 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/EbfParser.h,v 1.4 2006/04/12 07:19:53 heather Exp $
 */
 
 namespace ldfReader {
@@ -25,6 +25,9 @@ namespace ldfReader {
         virtual int nextEvent() = 0;
 
         virtual void printHeader() const = 0;
+
+        /// Returns total number of events in input file
+        virtual unsigned long long eventCount() const = 0;
 
         /// Turn on or off debug output.  Returns old value of flag
         virtual bool setDebug(bool on);
