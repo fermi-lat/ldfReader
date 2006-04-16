@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.14 2006/04/12 07:19:54 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.15 2006/04/12 21:51:40 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -183,9 +183,13 @@ int DfiParser::loadData() {
 
         if (ldf.status()) {
             std::ostringstream errMsg;
-            errMsg.str("LDF EBFeventParser reported a bad status ");
-            errMsg << apid;
-            throw LdfException(errMsg.str());
+            errMsg.str("LDF EBFeventParser reported a bad status 0x");
+            errMsg << std::hex << ldf.status() << " = " << std::dec 
+                   << ldf.status() << " Event: " << eventId 
+                   << " APID: " << apid;
+            std::cout << errMsg << std::endl;
+            ldfReader::LatData::instance()->setBadLdfStatusFlag();
+            //throw LdfException(errMsg.str());
         }
    
 

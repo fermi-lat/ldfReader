@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.24 2006/03/31 01:36:20 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.25 2006/04/07 16:46:49 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -380,12 +380,13 @@ int LatComponentParser::cleanup (EBFevent*        /*event*/,
 
         while (mbz < (unsigned*)contribEnd)
         {
-            if (*mbz)
+            if (*mbz) {
                 printf("%sNon-zero bytes beyond end of TEM: 0x%08x\n",
                        prefix,*mbz);
                 printf("Event: %llu Apid: %d\n", 
                     ldfReader::LatData::instance()->eventId(),
                     ldfReader::LatData::instance()->getCcsds().getApid());
+            }
             mbz++;
         }
         return 0;

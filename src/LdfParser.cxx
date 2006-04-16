@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.27 2006/03/16 20:16:21 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.28 2006/03/17 08:27:56 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -14,6 +14,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.27 2006/03
 #include "EbfDebug.h"
 #include "ldfReader/LdfException.h"
 #include <exception>
+#include <sstream>
 #include <iostream>
 
 #include "facilities/Timestamp.h"
@@ -349,7 +350,17 @@ const unsigned LdfParser::BufferSize = 64*1024;
         } else {
             EbfDatagramParser ldf(m_start, m_end);
             ldf.iterate();
-            if (ldf.status()) throw LdfException("LDF LatDatagramIterator reported a bad status");
+            if (ldf.status()) {
+                std::ostringstream errMsg;
+                errMsg.str("LDF EBFeventParser reported a bad status 0x");
+                errMsg << std::hex << ldf.status() << " = " << std::dec
+                      << ldf.status() << " EventId: " 
+                      << ldfReader::LatData::instance()->getOsw().evtSequence();
+                std::cout << errMsg << std::endl;
+                ldfReader::LatData::instance()->setBadLdfStatusFlag();
+                //throw LdfException(
+                //"LDF LatDatagramIterator reported a bad status");
+            }
    
         }
 

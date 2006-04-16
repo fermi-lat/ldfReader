@@ -98,15 +98,21 @@ namespace ldfReader {
         void setPacketErrorFlag() { m_flags |= enums::PACKETERROR; };
         void setTemErrorFlag() { m_flags |= enums::SUMMARYERROR; };
         void setTrgParityErrorFlag() { m_flags |= enums::TRGPARITYERROR; };
+        void setBadLdfStatusFlag() { m_flags |= enums::BADLDFSTATUS; };
 
         unsigned checkTemError();
         unsigned checkPacketError();
         unsigned checkTrgParityError();
         bool checkAemError();
 
-        unsigned packetError() const { return (m_flags & enums::PACKETERROR); };
-        unsigned errorEventSummary() const { return (m_flags & enums::SUMMARYERROR); }
-        unsigned trgParityError() const { return (m_flags & enums::TRGPARITYERROR); }
+        unsigned packetError() const { return (m_flags & enums::PACKETERROR); }
+
+        unsigned errorEventSummary() const { 
+            return (m_flags & enums::SUMMARYERROR); }
+        unsigned trgParityError() const { 
+            return (m_flags & enums::TRGPARITYERROR); }
+        unsigned badLdfStatus() const { 
+            return (m_flags & enums::BADLDFSTATUS); }
 
         void setEventSizeInBytes(unsigned long size){ m_eventSize = size; };
         unsigned long eventSizeInBytes() const { return m_eventSize; };
