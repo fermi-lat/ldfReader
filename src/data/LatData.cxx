@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.29 2006/04/11 17:57:18 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.30 2006/04/12 21:51:40 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -180,7 +180,8 @@ namespace ldfReader {
         }
         if (orAll != 0) {
             std::cout << "Setting Packet Error Flag, Event: " 
-                      << m_eventId << std::endl;
+                      << m_eventId << " Apid: "
+                      << getCcsds().getApid() << std::endl;
             setPacketErrorFlag();
         }
         return (orAll);
@@ -210,11 +211,13 @@ namespace ldfReader {
             if (temOrAll != getOsw().summary().error()) 
                 std::cout << "OSW error summary bit does not match OR of all " 
                           << "error bits across all TEM contributions, "
-                          << "event Num: " << m_eventId << std::endl;
+                          << "event Num: " << m_eventId  
+                          << " Apid: " << getCcsds().getApid() << std::endl;
         }
         if (orAll != 0) {
             std::cout << "Event Summary Error Flag Set, Event:  "
-                      <<  m_eventId << std::endl;
+                      <<  m_eventId << " Apid: " 
+                      << getCcsds().getApid() << std::endl;
             setTemErrorFlag();
         }
         return (orAll);
@@ -252,11 +255,14 @@ namespace ldfReader {
                 std::cout << "OSW error summary bit does not match OR of all "
                           << "error bits across all TEM contributions, "
                           << getOsw().summary().trgParityError() 
-                          << " event Number: " << m_eventId << std::endl;
+                          << " Event: "
+                          <<  m_eventId << " Apid: " 
+                          << getCcsds().getApid() << std::endl;
         }
         if (orAll != 0) {
             std::cout << "Trg Parity Error Flag Set, Event: " 
-                      << m_eventId << std::endl;
+                      <<  m_eventId << " Apid: " 
+                      << getCcsds().getApid() << std::endl;
             setTrgParityErrorFlag();
         }
         return (orAll);
@@ -282,7 +288,9 @@ second->getReadout();
         if (curReadout->getParityError() == AcdDigi::ERROR) {
             std::cout << "AEM Parity Error tile " << tileName << " Side: "
                       << curReadout->getSide()
-                      << " event: " << m_eventId << std::endl;
+                      << " Event: "
+                      <<  m_eventId << " Apid: " 
+                      << getCcsds().getApid() << std::endl;
             err = true;
         }
   
@@ -290,7 +298,9 @@ second->getReadout();
         if (curReadout->getHeaderParity() == AcdDigi::ERROR) {
             std::cout << "AEM Header Parity Error tile " << tileName
                       << " Side: " << curReadout->getSide()
-                     << " event: " << m_eventId << std::endl;
+                      << " Event: "
+                      <<  m_eventId << " Apid: " 
+                      << getCcsds().getApid() << std::endl;
             err = true;
         }
       }
