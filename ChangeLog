@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Sun Apr 16 00:07:58 PDT 2006
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+add LDF status flag
+    *
+------------------------------------------------------------
+User: heather  Sun Apr 16 00:07:58 PDT 2006
 ldfReader/src
 
 Modified Files:
