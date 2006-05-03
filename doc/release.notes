@@ -4,6 +4,9 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r18   03-May-2005 hmk Modify ACD parsing to create AcdDigi objects during
+        the header method rather than just during PHA.  This takes care of the
+        unlikely occurance of veto latching occurring after GEM.
 v3r17   16-Apr-2006 hmk Add LDF status flag to enums and fix apid printing 
         in warning messages
 v3r16   14-Apr-2006 hmk provide check on eventCount from CHS/eventFile
