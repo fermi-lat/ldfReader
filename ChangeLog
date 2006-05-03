@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed May  3 13:54:15 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+ACD parsing in header method creates AcdDigi object in case veto latching occurs late
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r17, operation: add
 Package: ldfReader
