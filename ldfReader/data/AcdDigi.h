@@ -6,7 +6,7 @@
 namespace ldfReader {
     /** @class AcdDigi
       * @brief Local storage of CAL log data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.6 2005/08/24 19:30:59 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.7 2006/02/21 17:28:25 heather Exp $
     */
     class AcdDigi {
     public:
@@ -37,13 +37,33 @@ namespace ldfReader {
                 m_headerParity = headerParity;
             };
 
+
+             AcdPmt(PmtSide s, short c, bool hit, bool phaAccept, 
+                  ParityError err = NOERROR, ParityError headerParity=NOERROR) 
+             {
+                 m_side = s;
+                 m_channel = c;
+                 m_hit = hit;
+                 m_accept = phaAccept;
+                 m_oddError = err;
+                 m_headerParity = headerParity;
+             };
+
+             void initPhaValues(unsigned int pha, int r, short more,
+                  ParityError err=NOERROR) {
+                 m_pha = pha;
+                 m_range = r;
+                 m_more = more;
+                 m_oddError = err;
+
+             }
+
             ~AcdPmt() {};
 
             void print(bool header=true) const {
                 char side = m_side ? 'A' : 'B';
                 if (header) {
-                    printf("Channel\tPHA\trange\tside\toddParity\theaderParity\tmore\tVeto\tAccept\n");
-                    printf("\t\t\t\terror\n");
+                    printf("Chan\tPHA\trange\tside\toddErr\theaderErr\tmore\tVeto\tAccept\n");
                 }
                 printf("%d\t%d\t%d\t%c\t%d\t%d\t%d\t%d\t%d\n", m_channel, m_pha, m_range, side, m_oddError, m_headerParity, m_more, m_hit, m_accept);
             };
@@ -101,6 +121,25 @@ namespace ldfReader {
 
         const std::vector<AcdPmt> getReadout() const { return m_readout; };
 
+        const AcdPmt* getPmtSide(PmtSide side) const {
+            std::vector<AcdPmt>::const_iterator pmtIt;
+            for (pmtIt = m_readout.begin(); pmtIt != m_readout.end(); pmtIt++) 
+            {
+                if ((*pmtIt).getSide() == side)
+                    return(&(*pmtIt));
+            }
+            return 0;
+        };
+
+        AcdPmt* getPmtSide(PmtSide side) {
+            std::vector<AcdPmt>::iterator pmtIt;
+            for (pmtIt = m_readout.begin(); pmtIt != m_readout.end(); pmtIt++) 
+            {
+                if ((*pmtIt).getSide() == side)
+                    return(&(*pmtIt));
+            }
+            return 0;
+        };
 
     private:
 
