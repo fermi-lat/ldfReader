@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Wed May  3 13:54:15 PDT 2006
+ldfReader/ldfReader/data
+
+Modified Files:
+	AcdDigi.h 
+Log Message:
+ACD parsing in header method creates AcdDigi object in case veto latching occurs late
+    *
+------------------------------------------------------------
+User: heather  Wed May  3 13:54:15 PDT 2006
 ldfReader/doc
 
 Modified Files:
