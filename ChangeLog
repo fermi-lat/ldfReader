@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri May  5 14:30:06 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+remove Joanne as author at her request
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r18, operation: add
 Package: ldfReader
