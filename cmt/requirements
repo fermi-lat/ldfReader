@@ -2,7 +2,6 @@ package ldfReader
 version v3r18
 
 author Heather Kelly <heather@lheapop@gsfc.nasa.gov>
-author Joanne Bogart <jrb@slac.stanford.edu>
 author Tracy Usher   <usher@slac.stanford.edu>
 
 use GlastPolicy v*
