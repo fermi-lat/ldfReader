@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.15 2006/04/12 21:51:40 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.16 2006/04/16 07:07:58 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -180,6 +180,10 @@ int DfiParser::loadData() {
 
         unsigned long long eventId = ldfReader::LatData::instance()->eventId();
         int apid = ldfReader::LatData::instance()->getCcsds().getApid();
+
+        if (EbfDebug::getDebug()) 
+            std::cout << "Event: " << eventId << " APID: " << apid << std::endl;
+        
 
         if (ldf.status()) {
             std::ostringstream errMsg;
