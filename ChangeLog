@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Tue May 16 16:18:26 PDT 2006
+ldfReader/ldfReader/data
+
+Modified Files:
+	ErrData.h LatData.h 
+Log Message:
+handling errors
+    *
+------------------------------------------------------------
+User: heather  Tue May 16 16:18:26 PDT 2006
 ldfReader/doc
 
 Modified Files:
