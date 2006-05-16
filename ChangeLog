@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue May 16 16:45:15 PDT 2006
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx 
+Log Message:
+print event and apid when EbfDebuf is set
+    *
+------------------------------------------------------------
 User: heather  Tue May 16 16:45:14 PDT 2006
 ldfReader/doc
 
