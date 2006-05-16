@@ -4,6 +4,8 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r19   16-May-2006 hmk Store TKR fifo errors in all their glory and update
+        Eventflags to include common error bits in error contribution
 v3r18   03-May-2005 hmk Modify ACD parsing to create AcdDigi objects during
         the header method rather than just during PHA.  This takes care of the
         unlikely occurance of veto latching occurring after GEM.
