@@ -6,16 +6,39 @@
 
 /** @class ErrParser 
 @brief Provides callbacks for Error data .
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/ErrParser.h,v 1.3 2006/04/01 09:33:38 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/ErrParser.h,v 1.4 2006/04/07 16:46:49 heather Exp $
 */
 namespace ldfReader {
     class ErrParser : public ERRcontributionIterator
     {
     public:
-        ErrParser(EBFevent* event, TEMcontribution *contrib, unsigned dataStart) :
-            ERRcontributionIterator(event, contrib)  { offset(dataStart); }
+        ErrParser(EBFevent* event, TEMcontribution *contrib, unsigned dataStart,
+                  const char* prefix) :
+            ERRcontributionIterator(event, contrib),
+            m_prefix(prefix)  { offset(dataStart); }
 
         virtual ~ErrParser() {}
+
+        // definable error handlers
+        virtual int gcccError (unsigned tower, unsigned gccc, GCCCerror err);
+        virtual int gtccError (unsigned tower, unsigned gtcc, GTCCerror err);
+        virtual int phaseError (unsigned tower, unsigned short err);
+        virtual int timeoutError (unsigned tower, unsigned short err);
+        // TKR errors
+        virtual int gtrcPhaseError (unsigned tower, unsigned gtcc, 
+                                   unsigned gtrc, GTRCerror err);
+        virtual int gtfePhaseError (unsigned tower, unsigned gtcc, 
+                               unsigned gtrc,
+                               unsigned short err1, unsigned short err2,
+                               unsigned short err3, unsigned short err4, 
+                               unsigned short err5);
+        virtual int gtccFIFOerror (unsigned tower, unsigned gtcc, 
+                              unsigned short err);
+        virtual int gtccTMOerror        (unsigned tower, unsigned gtcc);
+        virtual int gtccHDRParityError  (unsigned tower, unsigned gtcc);
+        virtual int gtccWCParityError   (unsigned tower, unsigned gtcc);
+        virtual int gtrcSummaryError    (unsigned tower, unsigned gtcc);
+        virtual int gtccDataParityError (unsigned tower, unsigned gtcc);
 
 
         virtual int handleError(TEMcontribution* contribution, unsigned code, 
@@ -44,6 +67,7 @@ namespace ldfReader {
 
 
     private:
+        const char* m_prefix;
     };
 
 }

@@ -3,13 +3,13 @@
 
 #include <vector>
 
-//#include "EventSummaryCommon.h"
+#include "enums/DetectorConstants.h"
 
 namespace ldfReader {
 
     /** @class ErrData
       * @brief Local storage of error data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/ErrData.h,v 1.8 2005/03/15 19:57:33 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/ErrData.h,v 1.9 2005/06/10 06:17:45 heather Exp $
     */
     class ErrData {
     public:
@@ -26,7 +26,10 @@ namespace ldfReader {
             m_tkr = 0;
             m_phs = 0;
             m_tmo = 0;
-            m_exist = false; };
+            m_exist = false; 
+            unsigned short i;
+            for (i=0;i<enums::numGtcc;i++) m_tkrFifoFullCol[i]=0;
+        };
 
        void print() const {
            if (!exist()) {
@@ -66,6 +69,16 @@ namespace ldfReader {
         bool tmo() const { return (m_tmo && 1); };
         void initTmo(unsigned short tmo) { m_tmo = tmo; };
 
+        void setTkrFifoFull(unsigned int gtcc, unsigned char val=1) {
+           if((gtcc >= 0) && (gtcc < enums::numGtcc))
+               m_tkrFifoFullCol[gtcc] = val;
+        }
+        const unsigned char* tkrFifoFull() const { return m_tkrFifoFullCol; };
+        unsigned int tkrFifoFull(unsigned gtcc) const { 
+            if ((gtcc >= 0) && (gtcc < enums::numGtcc) ) 
+                return ((unsigned int)m_tkrFifoFullCol[gtcc]); 
+        }
+
     private:
 
         // denotes if this contribution exists for this event
@@ -79,6 +92,8 @@ namespace ldfReader {
         unsigned short m_tkr;  // TKR
         unsigned short m_phs;  // Phase Error
         unsigned short m_tmo;  // Timeout Error
+
+        unsigned char m_tkrFifoFullCol[8]; // Set bit if corresponding GTCC has FIFO full
     };
 } // end namespace
 #endif

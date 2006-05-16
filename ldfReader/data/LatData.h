@@ -99,6 +99,18 @@ namespace ldfReader {
         void setTemErrorFlag() { m_flags |= enums::SUMMARYERROR; };
         void setTrgParityErrorFlag() { m_flags |= enums::TRGPARITYERROR; };
         void setBadLdfStatusFlag() { m_flags |= enums::BADLDFSTATUS; };
+        void setGtrcPhaseFlag() { m_flags |= enums::GTRCPHASE; };
+        void setGtfePhaseFlag() { m_flags |= enums::GTFEPHASE; };
+        void setGtccFifoFlag() { m_flags |= enums::GTCCFIFO; };
+        void setGtccHdrParityFlag() { m_flags |= enums::GTCCHDRPARITY; };
+        void setGtccWcParityFlag() { m_flags |= enums::GTCCWCPARITY; };
+        void setGtrcSummaryFlag() { m_flags |= enums::GTRCSUMMARY; };
+        void setGtccDataParityFlag() { m_flags |= enums::GTCCDATAPARITY; };
+        void setGtccTimeoutFlag() { m_flags |= enums::GTCCTIMEOUT; };
+        void setGcccErrorFlag() { m_flags |= enums::GCCCERROR; };
+        void setGtccErrorFlag() { m_flags |= enums::GTCCERROR; };
+        void setPhaseErrorFlag() { m_flags |= enums::PHASEERROR; };
+        void setTimeoutErrorFlag() { m_flags |= enums::TIMEOUTERROR; };
 
         unsigned checkTemError();
         unsigned checkPacketError();
@@ -113,6 +125,30 @@ namespace ldfReader {
             return (m_flags & enums::TRGPARITYERROR); }
         unsigned badLdfStatus() const { 
             return (m_flags & enums::BADLDFSTATUS); }
+        unsigned gtrcPhase() const { 
+            return (m_flags & enums::GTRCPHASE); }
+        unsigned gtfePhase() const { 
+            return (m_flags & enums::GTFEPHASE); }
+        unsigned gtccFifo() const { 
+            return (m_flags & enums::GTCCFIFO); }
+        unsigned gtccHdrParity() const { 
+            return (m_flags & enums::GTCCHDRPARITY); }
+        unsigned gtccWcParity() const { 
+            return (m_flags & enums::GTCCWCPARITY); }
+        unsigned gtrcSummary() const { 
+            return (m_flags & enums::GTRCSUMMARY); }
+        unsigned gtccDataParity() const { 
+            return (m_flags & enums::GTCCDATAPARITY); }
+        unsigned gtccTimeout() const { 
+            return (m_flags & enums::GTCCTIMEOUT); }
+        unsigned gcccError() const { 
+            return (m_flags & enums::GCCCERROR); }
+        unsigned gtccError() const { 
+            return (m_flags & enums::GTCCERROR); }
+        unsigned phaseError() const { 
+            return (m_flags & enums::PHASEERROR); }
+        unsigned timeoutError() const { 
+            return (m_flags & enums::TIMEOUTERROR); }
 
         void setEventSizeInBytes(unsigned long size){ m_eventSize = size; };
         unsigned long eventSizeInBytes() const { return m_eventSize; };
