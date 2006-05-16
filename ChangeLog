@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue May 16 16:45:13 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+print event and apid when EbfDebuf is set
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r19, operation: add
 Package: ldfReader
