@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue May 16 23:50:49 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add in ErrParser.cxx
+    *
+------------------------------------------------------------
 User: heather  Tue May 16 23:49:58 PDT 2006
 ldfReader/src/iterators
 
