@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r19p2 16-May-2006 hmk Forgot to add ErrParser.cxx
 v3r19p1 16-May-2006 print eventId and apid when reading LSF with EbfDebug set
 v3r19   16-May-2006 hmk Store TKR fifo errors in all their glory and update
         Eventflags to include common error bits in error contribution
