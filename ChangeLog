@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Tue May 16 23:50:49 PDT 2006
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+add in ErrParser.cxx
+    *
+------------------------------------------------------------
+User: heather  Tue May 16 23:50:49 PDT 2006
 ldfReader/cmt
 
 Modified Files:
