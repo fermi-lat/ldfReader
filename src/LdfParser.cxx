@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.28 2006/03/17 08:27:56 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.29 2006/04/16 07:07:58 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -16,6 +16,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.28 2006/03
 #include <exception>
 #include <sstream>
 #include <iostream>
+#include <math.h> // for floor
 
 #include "facilities/Timestamp.h"
 #include "astro/JulianDate.h"
@@ -32,7 +33,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
         clear();
     }
 
-    LdfParser::LdfParser(std::string fileName, bool fitsWrap, 
+    LdfParser::LdfParser(const std::string &fileName, bool fitsWrap, 
         const std::string& instrument) :
     m_fileName(fileName), m_fitsWrap(fitsWrap), m_ebf(0), m_fitsfile(0), 
         m_maxRow(0), m_currentRow(0), m_maxHdu(0), m_currentHdu(0),
