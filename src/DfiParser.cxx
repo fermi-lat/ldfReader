@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.16 2006/04/16 07:07:58 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.17 2006/05/16 23:45:14 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -16,6 +16,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.16 2006/04
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
+#include <math.h> // for floor
 
 #include "facilities/Timestamp.h"
 #include "astro/JulianDate.h"
