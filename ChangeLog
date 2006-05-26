@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu May 25 17:01:16 PDT 2006
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx LdfParser.cxx 
+Log Message:
+the management politely requests we avoid referring to dogs, cats or any other small mammals in our CVS messages
+    *
+------------------------------------------------------------
 User: heather  Thu May 25 16:59:26 PDT 2006
 ldfReader/ldfReader
 
