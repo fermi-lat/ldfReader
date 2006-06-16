@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.29 2006/04/16 07:07:58 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.30 2006/05/26 00:01:15 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -410,6 +410,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
             ldfReader::LatData::instance()->checkPacketError();
             ldfReader::LatData::instance()->checkTrgParityError();
             ldfReader::LatData::instance()->checkAemError();
+            ldfReader::LatData::instance()->checkCalReadout();
 
 
          } catch (LdfException& e) {

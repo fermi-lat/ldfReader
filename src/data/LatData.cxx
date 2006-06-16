@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.30 2006/04/12 21:51:40 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.31 2006/04/16 07:07:58 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -309,6 +309,39 @@ second->getReadout();
    return err;
 }
 
+
+unsigned LatData::checkCalReadout() {
+    // Returns true if OR of all is TRUE ..all is ok
+    // Returns false if the incorrect number of readouts is available for 
+    // ALLRANGE 
+    // Assumes m_eventId has been set for any error messages
+
+    unsigned orAll = 0;
+
+    std::map<unsigned int, TowerData*>::const_iterator towerIter = 
+                                                          m_towerMap.begin();
+    while(towerIter != m_towerMap.end())
+    {
+        TowerData* tower = (towerIter++)->second;
+
+        const std::map<unsigned int, CalDigi*>& calCol = tower->getCalDigiCol(); 
+        std::map<unsigned int, CalDigi*>::const_iterator calIt = calCol.begin();
+        while (calIt != calCol.end()) {
+            CalDigi *cal = (calIt++)->second;
+            if (cal->getMode() != CalDigi::ALLRANGE) continue;
+            if (cal->getNumReadouts() != 4) ++orAll;
+        }
+
+    }
+    if (orAll != 0) {
+        std::cout << "Setting Missing Cal Readout Flag, "
+                  << orAll << " CalDigis are missing readouts for Event: " 
+                  << m_eventId << " Apid: "
+                  << getCcsds().getApid() << std::endl;
+        setCalReadoutFlag();
+    }
+    return (orAll);
+}
 
 }  // end namespace
 

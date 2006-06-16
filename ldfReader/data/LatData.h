@@ -111,11 +111,13 @@ namespace ldfReader {
         void setGtccErrorFlag() { m_flags |= enums::GTCCERROR; };
         void setPhaseErrorFlag() { m_flags |= enums::PHASEERROR; };
         void setTimeoutErrorFlag() { m_flags |= enums::TIMEOUTERROR; };
+        void setCalReadoutFlag() { m_flags |= enums::MISSINGCALREADOUT; };
 
         unsigned checkTemError();
         unsigned checkPacketError();
         unsigned checkTrgParityError();
         bool checkAemError();
+        unsigned checkCalReadout();
 
         unsigned packetError() const { return (m_flags & enums::PACKETERROR); }
 
