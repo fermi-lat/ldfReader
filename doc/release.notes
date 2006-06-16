@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r20   16-Jun-2006 hmk check for missing readouts in CAL ALLRANGE and flag
 v3r19p3 25-May-2006 hmk minor patches in LdfParser ctor to use const string
         and include math.h for floor
 v3r19p2 16-May-2006 hmk Forgot to add ErrParser.cxx
