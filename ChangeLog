@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Jun 16 12:17:56 PDT 2006
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+check for missing cal readouts in ALLRANGE and flag
+    *
+------------------------------------------------------------
 User: heather  Fri Jun 16 12:17:55 PDT 2006
 ldfReader/cmt
 
