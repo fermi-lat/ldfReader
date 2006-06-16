@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Jun 16 12:17:55 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+check for missing cal readouts in ALLRANGE and flag
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r19p3, operation: add
 Package: ldfReader
