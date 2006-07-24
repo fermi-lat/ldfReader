@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Jul 24 13:07:41 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+initial ci for ancillary data
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r20, operation: add
 Package: ldfReader
