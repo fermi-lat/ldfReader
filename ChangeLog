@@ -1,4 +1,16 @@
 ------------------------------------------------------------
+User: heather  Mon Jul 24 13:07:42 PDT 2006
+ldfReader/src/iterators
+
+Modified Files:
+	LatComponentParser.cxx LatContributionParser.cxx 
+	LatContributionParser.h 
+Added Files:
+	AdfParser.cxx AdfParser.h 
+Log Message:
+initial ci for ancillary data
+    *
+------------------------------------------------------------
 User: heather  Mon Jul 24 13:07:41 PDT 2006
 ldfReader/src/data
 
