@@ -7,6 +7,7 @@
 #include "EventSummaryData.h"
 #include "OswData.h"
 #include "AemData.h"
+#include "AdfData.h"
 #include <map>
 
 #include "enums/EventFlags.h"
@@ -44,6 +45,9 @@ namespace ldfReader {
         const lsfData::LsfCcsds& getCcsds() const { return m_ccsds; }
 
         lsfData::LsfCcsds* getCcsdsPtr() { return &m_ccsds; };
+
+        AdfData* getAdfPtr() { return &m_adf; }
+        const AdfData& getAdf() const{ return m_adf; }
 
         void setSummary(unsigned summary) { m_summaryData.setSummary(summary); };
 
@@ -183,6 +187,8 @@ namespace ldfReader {
         lsfData::LsfCcsds m_ccsds;
 
         double m_timeInSecTds;
+
+        AdfData m_adf;
     };
 }
 #endif

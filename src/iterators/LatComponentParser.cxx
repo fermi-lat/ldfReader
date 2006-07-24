@@ -4,7 +4,7 @@
 /** @file LatComponentParser.cxx
 @brief Implementation of the LatComponentParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.26 2006/04/16 07:07:58 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LatComponentParser.cxx,v 1.27 2006/05/16 23:18:27 heather Exp $
 */
 
 #include <stdio.h> // included for LATcomponentIterator.h in Online/EBF
@@ -33,6 +33,7 @@ namespace ldfReader {
             return 0;
         }
 
+        printf("Found UDF in LatComponentParser\n");
         //fprintf (stderr, "\nUndefined EBF component\n");
         //((MyEBFcontribution*)contribution)->dump("  ");
         return 0;
