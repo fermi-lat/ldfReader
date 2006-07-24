@@ -5,7 +5,7 @@
 /** @file test_ldfReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.14 2005/03/31 23:55:11 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.15 2005/04/18 17:37:03 heather Exp $
 */
 
 #include <iostream>
@@ -63,6 +63,9 @@ int main(int argn, char** argc) {
         // Check GEM data
         GemData gem = myLatData->getGem();
         gem.print();
+
+        AdfData adf = myLatData->getAdf();
+        adf.print();
 
         AemData aem = myLatData->getAem(); 
         aem.print();
@@ -161,6 +164,8 @@ int main(int argn, char** argc) {
             }
         }
 
+
+        printf("\nEND EVENT\n");
         // Move the event pointer to the next event in the EBF file
         status = ebfP->nextEvent();
 
