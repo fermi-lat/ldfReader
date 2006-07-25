@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Jul 25 08:34:06 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add AdfData.cxx
+    *
+------------------------------------------------------------
 User: heather  Tue Jul 25 08:33:20 PDT 2006
 ldfReader/src/data
 
