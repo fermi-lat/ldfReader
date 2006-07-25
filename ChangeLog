@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Jul 25 08:33:20 PDT 2006
+ldfReader/src/data
+
+Added Files:
+	AdfData.cxx 
+Log Message:
+try to add all the new files in
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r21, operation: add
 Package: ldfReader
