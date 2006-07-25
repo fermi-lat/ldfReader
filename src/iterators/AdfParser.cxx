@@ -4,7 +4,7 @@
 /** @file AdfParser.cxx
 @brief Implementation of the AdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AdfParser.cxx,v 1.7 2006/04/07 16:46:49 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AdfParser.cxx,v 1.1 2006/07/24 20:07:41 heather Exp $
 */
 
 #include <stdio.h>
@@ -49,7 +49,7 @@ int AdfParser::parseEvent(const unsigned char* buf ) {
     adf->initEventNum(evtNum);
     unsigned int spillNum = (h[3] >> 12) & 0xffff;
     unsigned int spillSize = h[3] & 0xfff;
-    adf->initBuffer(buf);
+    adf->initBuffer(buf,evtLen);
     if (EbfDebug::getDebug()) {
         printf("ver: 0x%08X %u, len: 0x%08X %u\n", ver, ver, evtLen, evtLen);
         printf("evtNum : %u\n", evtNum);
