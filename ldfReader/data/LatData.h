@@ -162,6 +162,9 @@ namespace ldfReader {
         void setTimeInSecTds(double t) { m_timeInSecTds = t; };
         double getTimeInSecTds() const { return m_timeInSecTds; };
 
+        void setAdfHdrTlr(bool val) { m_adfHdrTlr = val; };
+        bool adfHdrTlr() const { return m_adfHdrTlr; };
+
     private:
 
         static LatData *m_instance;
@@ -189,6 +192,8 @@ namespace ldfReader {
         double m_timeInSecTds;
 
         AdfData m_adf;
+
+        bool m_adfHdrTlr;
     };
 }
 #endif
