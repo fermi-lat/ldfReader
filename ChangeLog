@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Jul 25 22:30:19 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+checking for adf hdr or tlr
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r21p1, operation: add
 Package: ldfReader
