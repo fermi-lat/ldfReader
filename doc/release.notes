@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r22   25-Jul-2006 hmk check for adf hdr or tlr
 v3r21p1 25-Jul-2006 hmk add AdfData.cxx file
 v3r21   24-Jul-2006 hmk handle ADf ancillary data contributions for beamtest
 v3r20   16-Jun-2006 hmk check for missing readouts in CAL ALLRANGE and flag
