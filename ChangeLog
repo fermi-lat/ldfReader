@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Fri Jul 28 16:26:24 PDT 2006
+ldfReader/src/data
+
+Modified Files:
+	AdfData.cxx LatData.cxx 
+Log Message:
+acd remapping for beamtest
+    *
+------------------------------------------------------------
+User: heather  Fri Jul 28 16:26:24 PDT 2006
 ldfReader/src
 
 Modified Files:
