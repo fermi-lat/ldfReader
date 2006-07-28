@@ -5,7 +5,7 @@
 /** @file test_ldfReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.15 2005/04/18 17:37:03 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.16 2006/07/24 20:07:42 heather Exp $
 */
 
 #include <iostream>
@@ -20,11 +20,13 @@ int main(int argn, char** argc) {
   try {
     using namespace ldfReader;
     std::string filename = "$(LDFROOT)/test/muon-5.arch";
+    std::string remap = "";
 
     bool fitsWrap = false;
 
     if( argn>1 ) filename = argc[1];
     if (argn>2 ) fitsWrap = (atoi(argc[2])==1) ? true : false;
+    if( argn>3) remap = argc[3];
     
 
     if (facilities::Util::expandEnvVar(&filename) < 0) {
@@ -35,6 +37,7 @@ int main(int argn, char** argc) {
     EbfDebug::setDebug(true);
 
     LdfParser *ebfP = new LdfParser(filename, fitsWrap);
+    ebfP->setAcdRemap(remap);
 
     int status = 0;
     do {

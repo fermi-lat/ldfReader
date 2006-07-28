@@ -1,7 +1,7 @@
 #ifndef AcdParser_H
 #define AcdParser_H 1
 
-// $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.h,v 1.3 2005/04/05 21:23:39 heather Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.h,v 1.4 2006/05/03 20:54:15 heather Exp $
 
 // Online EBF library includes
 #include "AEMcontributionIterator.h"
@@ -40,6 +40,8 @@ namespace ldfReader {
         const AEMheader& getCurHeader() const { return m_curHeader; };
 
         unsigned int constructTileNum(const char *name);
+
+        int lookup(const char* name, std::string& newName, char &side);
 
     private:
         const char *m_prefix;

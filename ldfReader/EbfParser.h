@@ -5,14 +5,16 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/EbfParser.h,v 1.4 2006/04/12 07:19:53 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/EbfParser.h,v 1.5 2006/04/14 23:24:23 heather Exp $
 */
+
+#include <string>
 
 namespace ldfReader {
     class EbfParser {
     public:
 
-        EbfParser() {};
+        EbfParser() { };
 
         virtual ~EbfParser() { };
 
@@ -31,6 +33,9 @@ namespace ldfReader {
 
         /// Turn on or off debug output.  Returns old value of flag
         virtual bool setDebug(bool on);
+
+        virtual int setAcdRemap(const std::string &filename) ;
+
 
         // local exception class
         class Exception{ };

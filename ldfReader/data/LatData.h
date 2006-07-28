@@ -165,6 +165,10 @@ namespace ldfReader {
         void setAdfHdrTlr(bool val) { m_adfHdrTlr = val; };
         bool adfHdrTlr() const { return m_adfHdrTlr; };
 
+        int setAcdRemap(const std::string &filename);
+        bool acdRemap() const { return (!m_acdRemapCol.empty()); }
+        const std::map<std::string, std::string>& getAcdRemapCol() const { return m_acdRemapCol; };
+
     private:
 
         static LatData *m_instance;
@@ -194,6 +198,9 @@ namespace ldfReader {
         AdfData m_adf;
 
         bool m_adfHdrTlr;
+
+
+        std::map<std::string, std::string> m_acdRemapCol;
     };
 }
 #endif

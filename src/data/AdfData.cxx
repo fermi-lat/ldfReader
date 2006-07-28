@@ -6,6 +6,7 @@
 
 namespace ldfReader {
         AdfData::AdfData(const AdfData& aem) {
+           m_buf = 0;
            clear();
            m_lenInBytes = aem.m_lenInBytes;
            m_exist = aem.m_exist;

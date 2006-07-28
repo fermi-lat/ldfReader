@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.13 2006/04/07 16:46:49 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.14 2006/05/03 20:54:15 heather Exp $
 */
 
 // EBF Online Library includes
@@ -85,19 +85,30 @@ void AcdParser::header(unsigned cable, AEMheader hdr)
         LATtypeId id   = event()->identity();
         // Tile number in [0,107]
         const ACDtileSide *pmt = map()->lookup(id, cable, iChannel);
-        // A or B
         char      side = pmt->a() ? 'A' : 'B';
-        AcdDigi::PmtSide digiSide = pmt->a() ? AcdDigi::A : AcdDigi::B;
 
-        unsigned int tileNum = constructTileNum(pmt->name());
+        std::string tileName;
+        if (curLatData->acdRemap()) {
+            int stat = lookup(pmt->name(), tileName, side);
+            if (stat < 0) {
+                printf("ACD Remap failed for %s\n", pmt->name());
+                printf("retaining original assignment\n");
+                tileName = pmt->name();
+                side = pmt->a() ? 'A' : 'B';
+            }
+        }
+
+        // A or B
+        AcdDigi::PmtSide digiSide = (side == 'A') ? AcdDigi::A : AcdDigi::B;
+        unsigned int tileNum = constructTileNum(tileName.c_str());
 
         // Retrieve the tower or create a new TowerData object if necessary
-        AcdDigi* acd = curLatData->getAcd(pmt->name());
+        AcdDigi* acd = curLatData->getAcd(tileName.c_str());
         if (!acd) {
-            AcdDigi *digi = new AcdDigi(pmt->name(), pmt->tile(), tileNum);
+            AcdDigi *digi = new AcdDigi(tileName.c_str(), pmt->tile(), tileNum);
             curLatData->addAcd(digi);
             // Now retrieve the pointer to the newly created AcdDigi
-            acd = curLatData->getAcd(pmt->name());
+            acd = curLatData->getAcd(tileName.c_str());
         }
 
         AcdDigi::ParityError headerParity =
@@ -157,29 +168,41 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
   unsigned acceptMap = curHeader.acceptMap();
   bool accept = (acceptMap >> (offsetMap - channel)) & 1;
 
+  ldfReader::LatData* curLatData = ldfReader::LatData::instance();
+
   LATtypeId id   = event()->identity();
   // Tile number in [0,107]
   const ACDtileSide *pmt = map()->lookup(id, cable, channel);
 
   // A or B
   char      side = pmt->a() ? 'A' : 'B'; 
+  char sideSave = side;
+  std::string tileName;
+  if (curLatData->acdRemap()) {
+      int stat = lookup(pmt->name(), tileName, side);
+      if (stat < 0) {
+            tileName = pmt->name();
+            side = pmt->a() ? 'A' : 'B';
+       } else if (EbfDebug::getDebug()) {
+           printf("Remapping %s:%c to %s:%c\n", pmt->name(), sideSave, tileName.c_str(), side);
+        }
+   }
 
-  AcdDigi::PmtSide digiSide = pmt->a() ? AcdDigi::A : AcdDigi::B;
+  AcdDigi::PmtSide digiSide = (side == 'A') ? AcdDigi::A : AcdDigi::B;
 
   char *pEnd;
 
   // Retrieve the AcdDigi or create a new AcdDigi object if necessary
-  ldfReader::LatData* curLatData = ldfReader::LatData::instance();
-  AcdDigi* acd = curLatData->getAcd(pmt->name());
+  AcdDigi* acd = curLatData->getAcd(tileName.c_str());
   if (!acd) {
       printf("WARNING: AEM parsing - could not find AcdDigi %s\n", pmt->name());
-      unsigned int tileNum = constructTileNum(pmt->name());
+      unsigned int tileNum = constructTileNum(tileName.c_str());
 
-      AcdDigi *digi = new AcdDigi(pmt->name(), pmt->tile(), tileNum);
+      AcdDigi *digi = new AcdDigi(tileName.c_str(), pmt->tile(), tileNum);
       curLatData->addAcd(digi);
 
       // Now retrieve the pointer to the newly created AcdDigi
-      acd = curLatData->getAcd(pmt->name());
+      acd = curLatData->getAcd(tileName.c_str());
 
       AcdDigi::ParityError err = 
             (p.parityError() == 0) ? AcdDigi::NOERROR : AcdDigi::ERROR;
@@ -194,7 +217,7 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
             (p.parityError() == 0) ? AcdDigi::NOERROR : AcdDigi::ERROR;
       ldfReader::AcdDigi::AcdPmt* curPmt = acd->getPmtSide(digiSide);
       if (!curPmt) {
-          printf("WARNING:  PMT %c for %s does not exist\n", side, pmt->name());
+          printf("WARNING:  PMT %c for %s does not exist\n", side, tileName.c_str());
           AcdDigi::ParityError headerParity = 
             (curHeader.parityError() == 0) ? AcdDigi::NOERROR : AcdDigi::ERROR;
           acd->addPmt(ldfReader::AcdDigi::AcdPmt(p.ADCvalue(), p.ADCrange(), 
@@ -241,6 +264,29 @@ int AcdParser::handleError(AEMcontribution *contribution, unsigned code,
     }
     return 0;
 }
+
+
+int AcdParser::lookup(const char* name, std::string& newName, char &side) {
+
+    const std::map<std::string, std::string> acdMap =
+        ldfReader::LatData::instance()->getAcdRemapCol();
+
+    std::string searchStr=name;
+    searchStr += ":";
+    searchStr += side;
+
+    if (acdMap.find(searchStr) != acdMap.end()) {
+        std::string name2 = acdMap[searchStr];
+        std::string::size_type loc = name2.find(":",0);
+        if (loc == std::string::npos) return -1;
+        if (loc+1 >= name2.length()) return -1;
+        newName = name2.substr(0,loc);
+        side = name2.at(loc+1);
+    } else
+        return -1;
+
+}
+
 
 }
 #endif
