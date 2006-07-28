@@ -5,12 +5,12 @@ namespace ldfReader {
 
     /** @class AdfData
       * @brief Local storage of Ancillary data from beamtest 2006
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AdfData.h,v 1.1 2006/07/24 20:07:41 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AdfData.h,v 1.2 2006/07/25 05:53:03 heather Exp $
     */
     class AdfData {
     public:
 
-        AdfData() { clear(); };
+        AdfData() { m_buf = 0; clear(); };
         AdfData(const AdfData& aem);
 
         ~AdfData() { clear(); };

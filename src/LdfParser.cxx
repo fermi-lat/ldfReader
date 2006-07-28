@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.30 2006/05/26 00:01:15 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.31 2006/06/16 19:17:56 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -152,6 +152,8 @@ const unsigned LdfParser::BufferSize = 64*1024;
                 m_start = start;
                 m_end = end;
             }
+
+
         } catch( LdfException& e) {
             std::cerr << "Caught LdfException: " << e.what() << std::endl;
             throw;

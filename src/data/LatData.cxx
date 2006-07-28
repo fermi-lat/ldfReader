@@ -4,10 +4,13 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.33 2006/07/24 20:07:41 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.34 2006/07/26 05:30:19 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
+#include "../EbfDebug.h"
+#include <iostream>
+#include <fstream>
 
 namespace ldfReader {
 
@@ -16,6 +19,7 @@ namespace ldfReader {
 
     LatData::LatData() {
         clearTowers(); 
+        m_acdRemapCol.clear();
     }
 
     LatData* LatData::instance() {
@@ -345,6 +349,26 @@ unsigned LatData::checkCalReadout() {
     }
     return (orAll);
 }
+
+int LatData::setAcdRemap(const std::string& filename) {
+    if (filename == "") {
+        m_acdRemapCol.clear();
+        return -1;
+    }
+    std::ifstream infile(filename.c_str());
+    if (!infile.good()) return -1;
+    std::string fromStr, toStr;
+    while (infile.good()) {
+        infile >> fromStr;
+        infile >> toStr;
+        m_acdRemapCol[fromStr] = toStr;
+        if (EbfDebug::getDebug())
+            std::cout <<" Mapping " << fromStr << " to " << toStr << std::endl;
+    }
+
+    return 0; 
+}
+
 
 }  // end namespace
 
