@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Jul 28 16:26:22 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+acd remapping for beamtest
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r22, operation: add
 Package: ldfReader
