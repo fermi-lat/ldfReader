@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.15 2006/07/28 23:26:24 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.16 2006/07/30 06:07:27 heather Exp $
 */
 
 // EBF Online Library includes
@@ -286,6 +286,8 @@ int AcdParser::lookup(const char* name, std::string& newName, char &side) {
         side = name2.at(loc+1);
     } else
         return -1;
+
+    return 0;
 
 }
 
