@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.14 2006/05/03 20:54:15 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.15 2006/07/28 23:26:24 heather Exp $
 */
 
 // EBF Online Library includes
@@ -17,6 +17,8 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.
 #include "ldfReader/data/LatData.h"
 #include "ldfReader/LdfException.h"
 #include "../EbfDebug.h"
+
+#include <map>
 
 namespace {
 }   // end default namespace
@@ -268,15 +270,15 @@ int AcdParser::handleError(AEMcontribution *contribution, unsigned code,
 
 int AcdParser::lookup(const char* name, std::string& newName, char &side) {
 
-    const std::map<std::string, std::string> acdMap =
+    std::map<const char*, const char*> acdMap =
         ldfReader::LatData::instance()->getAcdRemapCol();
 
     std::string searchStr=name;
     searchStr += ":";
     searchStr += side;
 
-    if (acdMap.find(searchStr) != acdMap.end()) {
-        std::string name2 = acdMap[searchStr];
+    if (acdMap.find(searchStr.c_str()) != acdMap.end()) {
+        std::string name2 = acdMap[searchStr.c_str()];
         std::string::size_type loc = name2.find(":",0);
         if (loc == std::string::npos) return -1;
         if (loc+1 >= name2.length()) return -1;

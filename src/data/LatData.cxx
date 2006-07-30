@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.34 2006/07/26 05:30:19 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.35 2006/07/28 23:26:24 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -135,6 +135,15 @@ namespace ldfReader {
         } else if ( (getOsw().exist()) && (firstEvtSeq != getOsw().summary().eventNumber()) ){
             std::cout << "OSW does not match event Seq "
                       <<  getOsw().summary().eventSequence() << std::endl;
+            return false;
+        }
+
+        if ( (getAdf().exist()) && !foundFirst) {
+            firstEvtSeq = getAdf().evtNum();
+            foundFirst = true;
+        } else if ( (getAdf().exist()) && (firstEvtSeq != getAdf().evtNum()) ) {
+            std::cout << "ADF does not match event Seq "
+                << getAdf().evtNum() << std::endl;
             return false;
         }
 
@@ -361,7 +370,7 @@ int LatData::setAcdRemap(const std::string& filename) {
     while (infile.good()) {
         infile >> fromStr;
         infile >> toStr;
-        m_acdRemapCol[fromStr] = toStr;
+        m_acdRemapCol[fromStr.c_str()] = toStr.c_str();
         if (EbfDebug::getDebug())
             std::cout <<" Mapping " << fromStr << " to " << toStr << std::endl;
     }

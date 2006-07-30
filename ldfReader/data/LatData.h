@@ -167,7 +167,7 @@ namespace ldfReader {
 
         int setAcdRemap(const std::string &filename);
         bool acdRemap() const { return (!m_acdRemapCol.empty()); }
-        const std::map<std::string, std::string>& getAcdRemapCol() const { return m_acdRemapCol; };
+        std::map<const char*, const char*>& getAcdRemapCol() { return m_acdRemapCol; };
 
     private:
 
@@ -200,7 +200,7 @@ namespace ldfReader {
         bool m_adfHdrTlr;
 
 
-        std::map<std::string, std::string> m_acdRemapCol;
+        std::map<const char*, const char*> m_acdRemapCol;
     };
 }
 #endif
