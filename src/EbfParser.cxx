@@ -6,7 +6,7 @@
 /** @file EbfParser.cxx
 @brief Implementation of the EbfParser base class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/EbfParser.cxx,v 1.3 2006/02/10 19:47:39 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/EbfParser.cxx,v 1.4 2006/07/28 23:26:24 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -25,7 +25,12 @@ int EbfParser::setAcdRemap(const std::string& filename) {
     return -1;
 }
 
+
+void EbfParser::setIgnoreSegFault() {
+   ldfReader::LatData::instance()->setIgnoreSegFault(true);
+
 }
 
 
+} //namespace
 #endif

@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.18 2006/05/26 00:01:15 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.19 2006/06/16 19:17:56 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -131,6 +131,7 @@ int DfiParser::nextEvent() {
 
 int DfiParser::readContextAndInfo() {
 
+    ldfReader::LatData::instance()->setContextExists(true);
     lsfData::MetaEvent *metaEvent = ldfReader::LatData::instance()->getMetaEventPtr();
 
     metaEvent->set(m_meta.run(), m_meta.datagram(), m_meta.scalers(),

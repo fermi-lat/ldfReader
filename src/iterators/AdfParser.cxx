@@ -4,7 +4,7 @@
 /** @file AdfParser.cxx
 @brief Implementation of the AdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AdfParser.cxx,v 1.2 2006/07/25 05:53:03 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AdfParser.cxx,v 1.3 2006/07/26 05:30:19 heather Exp $
 */
 
 #include <stdio.h>
@@ -31,6 +31,7 @@ int AdfParser::parseHeader(const unsigned char *buf ) {
      }
     
     ldfReader::LatData* curLatData = ldfReader::LatData::instance();
+    curLatData->setRunId(runNum);
     curLatData->setAdfHdrTlr(true);
 
     return 0;

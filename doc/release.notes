@@ -4,6 +4,8 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r25   01-Aug-2006 hmk provide option to ignore seg faults, store run id 
+        from ADF header, print out better event ids during errors
 v3r24p1 29-Jul-2006 hmk patch...didn't return a value for all control paths in lookup
 v3r24   29-Jul-2006 hmk windows compilation and check event num in ADF
 v3r23   27-Jul-2006 hmk handle beamtest06 acd remapping
