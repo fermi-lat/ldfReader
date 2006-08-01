@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Tue Aug  1 08:52:15 PDT 2006
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+option to ignore seg faults, and some other stuff
+    *
+------------------------------------------------------------
+User: heather  Tue Aug  1 08:52:15 PDT 2006
 ldfReader/src
 
 Modified Files:
