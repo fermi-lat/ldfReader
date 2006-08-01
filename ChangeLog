@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Tue Aug  1 11:24:32 PDT 2006
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+error output messages
+    *
+------------------------------------------------------------
+User: heather  Tue Aug  1 11:24:32 PDT 2006
 ldfReader/doc
 
 Modified Files:
