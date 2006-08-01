@@ -5,9 +5,10 @@
 /** @file test_ldfReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.16 2006/07/24 20:07:42 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.17 2006/07/28 23:26:24 heather Exp $
 */
 
+#include <csignal>
 #include <iostream>
 
 #include "ldfReader/LdfParser.h"
@@ -38,6 +39,8 @@ int main(int argn, char** argc) {
 
     LdfParser *ebfP = new LdfParser(filename, fitsWrap);
     ebfP->setAcdRemap(remap);
+
+    ebfP->setIgnoreSegFault();
 
     int status = 0;
     do {

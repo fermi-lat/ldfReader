@@ -168,6 +168,11 @@ namespace ldfReader {
         int setAcdRemap(const std::string &filename);
         bool acdRemap() const { return (!m_acdRemapCol.empty()); }
         std::map<const char*, const char*>& getAcdRemapCol() { return m_acdRemapCol; };
+        bool contextExists() const { return m_contextExists; }
+        void setContextExists(bool set=true) { m_contextExists = set; }
+
+        void setIgnoreSegFault(bool val=true) { m_ignoreSegFault = val; }
+        bool ignoreSegFault() const { return m_ignoreSegFault; }
 
     private:
 
@@ -199,6 +204,9 @@ namespace ldfReader {
 
         bool m_adfHdrTlr;
 
+        bool m_contextExists;
+
+        bool m_ignoreSegFault;
 
         std::map<const char*, const char*> m_acdRemapCol;
     };
