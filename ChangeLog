@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Tue Aug  1 08:52:16 PDT 2006
+ldfReader/src/test
+
+Modified Files:
+	test_ldfReader.cxx 
+Log Message:
+option to ignore seg faults, and some other stuff
+    *
+------------------------------------------------------------
+User: heather  Tue Aug  1 08:52:16 PDT 2006
 ldfReader/src/iterators
 
 Modified Files:
