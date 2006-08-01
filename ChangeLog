@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Aug  1 08:52:14 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+option to ignore seg faults, and some other stuff
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r24p1, operation: add
 Package: ldfReader
