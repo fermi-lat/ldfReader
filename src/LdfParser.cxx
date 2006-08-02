@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.32 2006/07/28 23:26:24 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.33 2006/08/01 15:52:15 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -370,6 +370,10 @@ const unsigned LdfParser::BufferSize = 64*1024;
             }
    
         }
+
+        // Store run Id locally if we found a header or trailer
+        if (ldfReader::LatData::instance()->adfHdrTlr()) 
+            m_runId = ldfReader::LatData::instance()->runId();
 
         if (ldfReader::LatData::instance()->ignoreSegFault()) 
             ignoreSegFault(false);
