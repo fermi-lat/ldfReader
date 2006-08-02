@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.16 2006/07/30 06:07:27 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.17 2006/07/30 06:12:32 heather Exp $
 */
 
 // EBF Online Library includes
@@ -93,7 +93,7 @@ void AcdParser::header(unsigned cable, AEMheader hdr)
         if (curLatData->acdRemap()) {
             int stat = lookup(pmt->name(), tileName, side);
             if (stat < 0) {
-                printf("ACD Remap failed for %s\n", pmt->name());
+                printf("ACD Remap failed for %s:%c\n", pmt->name(), side);
                 printf("retaining original assignment\n");
                 tileName = pmt->name();
                 side = pmt->a() ? 'A' : 'B';
@@ -270,24 +270,29 @@ int AcdParser::handleError(AEMcontribution *contribution, unsigned code,
 
 int AcdParser::lookup(const char* name, std::string& newName, char &side) {
 
-    std::map<const char*, const char*> acdMap =
+    std::map<const std::string*, const std::string*> acdMap =
         ldfReader::LatData::instance()->getAcdRemapCol();
 
     std::string searchStr=name;
     searchStr += ":";
     searchStr += side;
 
-    if (acdMap.find(searchStr.c_str()) != acdMap.end()) {
-        std::string name2 = acdMap[searchStr.c_str()];
-        std::string::size_type loc = name2.find(":",0);
-        if (loc == std::string::npos) return -1;
-        if (loc+1 >= name2.length()) return -1;
-        newName = name2.substr(0,loc);
-        side = name2.at(loc+1);
-    } else
-        return -1;
+    std::map<const std::string*, const std::string*>::const_iterator acdMapIt;
+    for (acdMapIt = acdMap.begin(); acdMapIt != acdMap.end(); acdMapIt++) {
 
-    return 0;
+        if (searchStr.compare(*(acdMapIt->first)) == 0) {
+            std::string name2 = *(acdMapIt->second);
+            std::string::size_type loc = name2.find(":",0);
+            if (loc == std::string::npos) return -1;
+            if (loc+1 >= name2.length()) return -1;
+            newName = name2.substr(0,loc);
+            side = name2.at(loc+1);
+            return 0;
+        }
+    }
+
+    return -1;
+
 
 }
 
