@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Aug  2 10:01:31 PDT 2006
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+fix ADF event num check
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r25p1, operation: add
 Package: ldfReader
