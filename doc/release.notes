@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r25p3 02-Aug-2006 hmk Fix up remap of ACD
 v3r25p2 02-Aug-2006 hmk Fix check on ADF event num, and setting runId from 
         ADF Header
 v3r25p1 01-Aug-2006 hmk imporove error output messagse

@@ -4,11 +4,12 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.38 2006/08/01 18:24:32 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.39 2006/08/02 17:01:31 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
 #include "../EbfDebug.h"
+#include "facilities/Util.h"
 #include <iostream>
 #include <fstream>
 
@@ -367,15 +368,30 @@ int LatData::setAcdRemap(const std::string& filename) {
         m_acdRemapCol.clear();
         return -1;
     }
-    std::ifstream infile(filename.c_str());
+    std::string fileNameStr = filename.c_str();
+    facilities::Util::expandEnvVar(&fileNameStr);
+    std::ifstream infile(fileNameStr.c_str());
     if (!infile.good()) return -1;
     std::string fromStr, toStr;
     while (infile.good()) {
         infile >> fromStr;
         infile >> toStr;
-        m_acdRemapCol[fromStr.c_str()] = toStr.c_str();
+        //char *fromChar = new char[fromStr.length()+1];
+        //char *toChar = new char[toStr.length()+1];
+        //fromChar = fromStr.c_str();
+        //toChar = toStr.c_str();
+        //m_acdRemapCol[fromChar] = toChar;
+        //m_acdRemapCol[fromStr.c_str()] = toStr.c_str();
+        m_acdRemapCol[new std::string(fromStr)] = new std::string(toStr);
         if (EbfDebug::getDebug())
             std::cout <<" Mapping " << fromStr << " to " << toStr << std::endl;
+    }
+    if (EbfDebug::getDebug()) {
+        //std::map<const char*, const char*>::const_iterator acdMapIt;
+        std::map<const std::string*, const std::string*>::const_iterator acdMapIt;
+        std::cout << "Map Contains:" << std::endl;
+        for (acdMapIt = m_acdRemapCol.begin(); acdMapIt != m_acdRemapCol.end(); acdMapIt++) 
+            std::cout << *(acdMapIt->first) << " " << *(acdMapIt->second) << std::endl;
     }
 
     return 0; 
