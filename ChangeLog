@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Aug  2 13:08:03 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+fix up ACD remapping
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r25p2, operation: add
 Package: ldfReader
