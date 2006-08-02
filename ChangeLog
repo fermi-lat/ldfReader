@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Aug  2 10:25:00 PDT 2006
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+set run id from ADf header
+    *
+------------------------------------------------------------
 User: heather  Wed Aug  2 10:24:59 PDT 2006
 ldfReader/cmt
 
