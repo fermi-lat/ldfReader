@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.37 2006/08/01 15:52:15 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.38 2006/08/01 18:24:32 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -118,34 +118,25 @@ namespace ldfReader {
         bool foundFirst = false;
 
         if(getGem().exist()) {
-            firstEvtSeq = getGem().summary().eventNumber();
+            firstEvtSeq = getGem().summary().eventSequence();
             foundFirst = true;
         }
 
         if ( (getAem().exist()) && !foundFirst) {
-            firstEvtSeq = getAem().summary().eventNumber(); 
+            firstEvtSeq = getAem().summary().eventSequence(); 
             foundFirst = true;
-        } else if ( (getAem().exist()) && (firstEvtSeq != getAem().summary().eventNumber()) ) {
+        } else if ( (getAem().exist()) && (firstEvtSeq != getAem().summary().eventSequence()) ) {
             std::cout << "AEM does not match event Seq " << firstEvtSeq << " "
                       << getAem().summary().eventSequence() << std::endl;
             return false;
         }
 
         if ( (getOsw().exist()) && !foundFirst ){
-            firstEvtSeq = getOsw().summary().eventNumber();
+            firstEvtSeq = getOsw().summary().eventSequence();
             foundFirst = true;
-        } else if ( (getOsw().exist()) && (firstEvtSeq != getOsw().summary().eventNumber()) ){
+        } else if ( (getOsw().exist()) && (firstEvtSeq != getOsw().summary().eventSequence()) ){
             std::cout << "OSW does not match event Seq " << firstEvtSeq << " "
                       <<  getOsw().summary().eventSequence() << std::endl;
-            return false;
-        }
-
-        if ( (getAdf().exist()) && !foundFirst) {
-            firstEvtSeq = getAdf().evtNum();
-            foundFirst = true;
-        } else if ( (getAdf().exist()) && (firstEvtSeq != getAdf().evtNum()) ) {
-            std::cout << "ADF does not match event Seq " << firstEvtSeq << " "
-                << getAdf().evtNum() << std::endl;
             return false;
         }
 
@@ -155,14 +146,24 @@ namespace ldfReader {
             TowerData* tower = (towerIter++)->second;
             const TemData tem = tower->getTem();
             if ( (tem.exist()) && !foundFirst) {
-                firstEvtSeq = tem.summary().eventNumber();
+                firstEvtSeq = tem.summary().eventSequence();
                 foundFirst = true;
-            } else if ( (tem.exist()) && (firstEvtSeq != tem.summary().eventNumber())) {
+            } else if ( (tem.exist()) && (firstEvtSeq != tem.summary().eventSequence())) {
                 std::cout << "TEM does not match event Seq " << firstEvtSeq 
                           << " " <<  tem.summary().eventSequence() << std::endl;
                 return false;
             }
         }
+
+        // Assuming ADF will not be the only or first contribution found
+        // ADF event number will be one more than EBF contributions
+        // See Ric's email Aug 1, 2006
+        if ( (getAdf().exist()) && (firstEvtSeq != (getAdf().evtNum()+1)) ) {
+            std::cout << "ADF does not match event Seq " << firstEvtSeq << " "
+                      << (getAdf().evtNum()+1) << std::endl;
+            return false;
+        }
+
         // all ok
         return true;
     }
