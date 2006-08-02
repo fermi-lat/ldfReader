@@ -4,6 +4,8 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r25p2 02-Aug-2006 hmk Fix check on ADF event num, and setting runId from 
+        ADF Header
 v3r25p1 01-Aug-2006 hmk imporove error output messagse
 v3r25   01-Aug-2006 hmk provide option to ignore seg faults, store run id 
         from ADF header, print out better event ids during errors
