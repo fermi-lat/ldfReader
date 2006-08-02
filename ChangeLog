@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Wed Aug  2 10:25:00 PDT 2006
+ldfReader/src
+
+Modified Files:
+	LdfParser.cxx 
+Log Message:
+set run id from ADf header
+    *
+------------------------------------------------------------
+User: heather  Wed Aug  2 10:25:00 PDT 2006
 ldfReader/doc
 
 Modified Files:
