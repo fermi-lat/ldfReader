@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.17 2006/07/30 06:12:32 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.18 2006/08/02 20:08:03 heather Exp $
 */
 
 // EBF Online Library includes
@@ -234,6 +234,7 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
 
   if (EbfDebug::getDebug()) {
       const ldfReader::AcdDigi::AcdPmt* curPmt = acd->getPmtSide(digiSide);
+      printf("name: %s, id: %u\n", acd->getTileName(), acd->getTileId());
       if (curPmt) curPmt->print(true);
   }
 

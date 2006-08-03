@@ -17,6 +17,7 @@ namespace ldfReader {
 
     void AcdDigi::clear() {
         m_readout.clear();
+        delete [] m_tileName;
         m_tileName = "";
         m_tileId = -1;
     }
