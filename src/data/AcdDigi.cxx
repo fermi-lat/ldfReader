@@ -22,7 +22,9 @@ namespace ldfReader {
     }
     
     void AcdDigi::init(const char *name, int number, int id) {
-        m_tileName = name;
+        m_tileName = new char[strlen(name)+1];
+        //m_tileName = name;
+        strcpy(m_tileName, name);
         m_tileNumber = number;
         m_tileId = id;
     }
