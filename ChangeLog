@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Thu Aug  3 11:42:53 PDT 2006
+ldfReader/src/iterators
+
+Modified Files:
+	AcdParser.cxx 
+Log Message:
+fix up AcdDigis
+    *
+------------------------------------------------------------
+User: heather  Thu Aug  3 11:42:53 PDT 2006
 ldfReader/src/data
 
 Modified Files:
