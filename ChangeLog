@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Aug  3 11:42:52 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+fix up AcdDigis
+    *
+------------------------------------------------------------
 User: heather  Thu Aug  3 11:21:56 PDT 2006
 ldfReader/src/data
 
