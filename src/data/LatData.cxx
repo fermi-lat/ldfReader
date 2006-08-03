@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.40 2006/08/02 20:08:03 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.41 2006/08/03 18:21:56 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -20,6 +20,17 @@ namespace ldfReader {
 
     LatData::LatData() {
         clearTowers(); 
+        m_acdRemapCol.clear();
+    }
+
+    LatData::~LatData() {
+        clearTowers();
+        std::map<const std::string*, const std::string*>::const_iterator acdMapIt;
+        for (acdMapIt = m_acdRemapCol.begin(); acdMapIt != m_acdRemapCol.end();
+                                               acdMapIt++) {
+            delete acdMapIt->first;
+            delete acdMapIt->second;
+        }
         m_acdRemapCol.clear();
     }
 

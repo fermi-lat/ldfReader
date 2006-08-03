@@ -27,7 +27,7 @@ namespace ldfReader {
     public:
 
         static LatData *instance();
-        ~LatData() { clearTowers(); };
+        ~LatData();
 
     protected:
         LatData();
