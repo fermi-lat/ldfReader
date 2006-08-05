@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Fri Aug  4 23:02:03 PDT 2006
+ldfReader/ldfReader/data
+
+Modified Files:
+	AcdDigi.h 
+Log Message:
+patch - remove const from char* data member
+    *
+------------------------------------------------------------
+User: heather  Fri Aug  4 23:02:03 PDT 2006
 ldfReader/doc
 
 Modified Files:
