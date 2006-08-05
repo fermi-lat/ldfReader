@@ -6,7 +6,7 @@
 namespace ldfReader {
     /** @class AcdDigi
       * @brief Local storage of CAL log data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.7 2006/02/21 17:28:25 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.8 2006/05/03 20:54:15 heather Exp $
     */
     class AcdDigi {
     public:
@@ -145,7 +145,7 @@ namespace ldfReader {
 
         std::vector<AcdPmt> m_readout;
         int m_tileId;
-        const char *m_tileName;
+        char *m_tileName;
         /// Tile Number as reported by LDF
         int m_tileNumber;
 
