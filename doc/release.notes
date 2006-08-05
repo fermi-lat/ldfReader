@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r25p5 04-Aug-2006 hmk remove const from char* data member
 v3r25p4 03-Aug-2006 hmk Fix AcdDigi to store char* correctly
 v3r25p3 02-Aug-2006 hmk Fix up remap of ACD
 v3r25p2 02-Aug-2006 hmk Fix check on ADF event num, and setting runId from 
