@@ -1,5 +1,5 @@
 package ldfReader
-version v3r25p5
+version v3r26
 
 author Heather Kelly <heather@lheapop@gsfc.nasa.gov>
 author Tracy Usher   <usher@slac.stanford.edu>
@@ -72,4 +72,5 @@ application test_ldfReader -import=eventRet test/test_ldfReader.cxx
 
 application test_lsfReader -import=eventRet test/test_lsfReader.cxx
 
+application test_socketReader -import=eventRet test/test_socketReader.cxx
 
