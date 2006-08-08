@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: heather  Tue Aug  8 10:20:34 PDT 2006
+ldfReader/src/iterators
+
+Modified Files:
+	EbfDatagramParser.h 
+Added Files:
+	EbfDatagramParser.cxx 
+Log Message:
+move process method to .cxx file
+    *
+------------------------------------------------------------
 User: heather  Tue Aug  8 10:04:02 PDT 2006
 ldfReader/src/test
 
