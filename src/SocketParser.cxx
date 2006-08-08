@@ -4,7 +4,7 @@
 /** @file SocketParser.cxx
 @brief Implementation of the SocketParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/SocketParser.cxx,v 1.34 2006/08/02 17:25:00 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/SocketParser.cxx,v 1.1 2006/08/08 17:03:50 heather Exp $
 */
 
 #include "ldfReader/SocketParser.h"
@@ -80,6 +80,11 @@ SocketParser::SocketParser(unsigned int server) {
         if (setsockopt(m_handle,IPPROTO_IP,IP_ADD_MEMBERSHIP,&mreq,
                        sizeof(mreq)) < 0) 
             throw LdfException("sockopt");
+
+
+        // Request the first event be loaded
+        if (nextEvent() < 0) 
+            throw LdfException("Failed to load first event via socket");
 
     } catch( LdfException& e) {
         std::cerr << "Caught LdfException: " << e.what() << std::endl;
