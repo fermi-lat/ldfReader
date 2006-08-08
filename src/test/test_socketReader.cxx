@@ -5,7 +5,7 @@
 /** @file test_socketReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.18 2006/08/01 15:52:16 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_socketReader.cxx,v 1.1 2006/08/08 17:04:02 heather Exp $
 */
 
 #include <csignal>
@@ -37,7 +37,7 @@ int main(int argn, char** argc) {
 
 
     int status = 0;
-    status = ebfP->nextEvent();
+//    status = ebfP->nextEvent();
 /*
     std::cout << "Calling next event" << std::endl;
     do {
