@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Aug  8 10:04:02 PDT 2006
+ldfReader/src/test
+
+Added Files:
+	test_socketReader.cxx 
+Log Message:
+initial commit of socket handling on linux
+    *
+------------------------------------------------------------
 User: heather  Tue Aug  8 10:03:50 PDT 2006
 ldfReader/src
 
