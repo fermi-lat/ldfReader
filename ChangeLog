@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Aug  8 13:57:18 PDT 2006
+ldfReader/src
+
+Modified Files:
+	SocketParser.cxx 
+Log Message:
+load first socket event in ctor
+    *
+------------------------------------------------------------
 User: heather  Tue Aug  8 10:38:12 PDT 2006
 ldfReader/doc
 
