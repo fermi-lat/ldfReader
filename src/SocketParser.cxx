@@ -4,7 +4,7 @@
 /** @file SocketParser.cxx
 @brief Implementation of the SocketParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/SocketParser.cxx,v 1.2 2006/08/08 20:57:18 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/SocketParser.cxx,v 1.3 2006/08/09 17:16:42 heather Exp $
 */
 
 #include "ldfReader/SocketParser.h"
@@ -45,7 +45,7 @@ SocketParser::SocketParser(unsigned int server) {
         throw LdfException("No Windows support for sockets yet!");
 #else
         clear();
-  // Set up a UDP client
+        // Set up a UDP client
         if ( (m_handle = socket(AF_INET, SOCK_DGRAM, 0) ) < 0) 
             throw LdfException("Failed to receive handle from socket"); 
         bzero(&m_client_addr, sizeof(m_client_addr));
@@ -53,13 +53,17 @@ SocketParser::SocketParser(unsigned int server) {
         m_client_addr.sin_port = htons(PORT);
         m_client_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-        unsigned int yes;
+        unsigned int yes = 1;
         if (setsockopt(m_handle,SOL_SOCKET,SO_REUSEADDR,&yes, sizeof(yes)) < 0)
             throw LdfException("reuse addr");
 
         if (bind(m_handle, (struct sockaddr*)&m_client_addr, 
                   sizeof(m_client_addr)) < 0) 
             throw LdfException("failed bind");
+
+        unsigned int bufSize = BufferSize;
+        if (setsockopt(m_handle, SOL_SOCKET, SO_RCVBUF, &bufSize, sizeof(bufSize) ) < 0)
+            throw LdfException("failed to set RCVBUF");
 
         struct ip_mreq mreq;
         bzero(&mreq,sizeof(struct ip_mreq));
@@ -70,7 +74,7 @@ SocketParser::SocketParser(unsigned int server) {
         struct hostent *group;
         if ((group = gethostbyname(hostName.c_str())) == (struct hostent *)0)
             throw LdfException("failed to gethostbyname");
-        std::cout << "Joining group: " << hostName << std::endl;
+        std::cout << "ldfReader::SocketParser  Joining group: " << hostName << std::endl;
         struct in_addr ia;
         bcopy((void*)group->h_addr, (void*)&ia, group->h_length);
         bcopy(&ia, &mreq.imr_multiaddr.s_addr, sizeof(struct in_addr));
@@ -117,10 +121,10 @@ SocketParser::SocketParser(unsigned int server) {
 #ifndef WIN32
             char buffer[BufferSize+1];
             int ibuf;
-            for (ibuf = 0; ibuf < BufferSize; ibuf++)
+            for (ibuf = 0; ibuf < BufferSize+1; ibuf++)
                 buffer[ibuf] = 0;
             if (EbfDebug::getDebug())
-                std::cout << "calling recvfrom" << std::endl;
+                std::cout << "ldfReader::SocketParser calling recvfrom" << std::endl;
             int addrLen = sizeof(m_client_addr);
             int stat = recvfrom(m_handle, buffer, BufferSize, 0, 
                  (struct sockaddr *)&m_client_addr, &addrLen);  
