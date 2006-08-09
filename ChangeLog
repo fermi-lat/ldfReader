@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Aug  9 10:16:42 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+fix up windows build
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r26, operation: add
 Package: ldfReader
