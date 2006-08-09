@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Aug  9 16:01:19 PDT 2006
+ldfReader/src
+
+Modified Files:
+	SocketParser.cxx 
+Log Message:
+clean up
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r26p1, operation: add
 Package: ldfReader
