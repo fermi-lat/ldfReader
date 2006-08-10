@@ -4,7 +4,7 @@
 /** @file SocketParser.cxx
 @brief Implementation of the SocketParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/SocketParser.cxx,v 1.3 2006/08/09 17:16:42 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/SocketParser.cxx,v 1.4 2006/08/09 23:01:18 heather Exp $
 */
 
 #include "ldfReader/SocketParser.h"
@@ -24,6 +24,10 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/SocketParser.cxx,v 1.3 2006/
 #include <netdb.h> // for gethostbyname
 //#include <arpa/inet.h> //inet_addr
 #include <errno.h>
+#else
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <errno.h>
 #endif
 
 #include "facilities/Timestamp.h"
@@ -42,7 +46,63 @@ const std::string SocketParser::GROUP = "239.255.1.";
 SocketParser::SocketParser(unsigned int server) {
     try {
 #ifdef WIN32
-        throw LdfException("No Windows support for sockets yet!");
+        clear();
+        WSADATA wsa;
+        if (WSAStartup(0x0202, &wsa)) 
+            throw LdfException("Unable to initialize Winsock library 2.2");
+        m_client_addr = 0;
+        m_client_addr = new struct sockaddr_in;
+        memset(m_client_addr,0,sizeof(struct sockaddr_in));
+        m_client_addr->sin_family = AF_INET; 
+        int iLen=16;
+        // Create group string using input server number
+        std::string hostName = GROUP;
+        std::string outStr;
+        hostName += facilities::Util::itoa((server % 100), outStr);
+        int nRet = WSAStringToAddress ( (LPSTR)hostName.c_str(), AF_INET, NULL, (LPSOCKADDR)m_client_addr, &iLen);
+        if(nRet<0) {
+            throw LdfException("UPS address look up failed");
+        }
+
+        m_handle = WSASocket(AF_INET, SOCK_DGRAM, 0, (LPWSAPROTOCOL_INFO)NULL, 0, 
+            WSA_FLAG_MULTIPOINT_C_LEAF | 
+            WSA_FLAG_MULTIPOINT_D_LEAF); 
+        if(m_handle==INVALID_SOCKET) {
+            throw LdfException("Socket failed");
+        }
+
+        bool bFlag = TRUE;
+        nRet = setsockopt(m_handle, SOL_SOCKET, SO_REUSEADDR, (char *)&bFlag, sizeof (bFlag));    
+        if(nRet<0) {
+            closesocket(m_handle);
+            throw LdfException("ReUseAddr");
+        }
+
+        SOCKADDR_IN stSrcAddr;
+        stSrcAddr.sin_family = PF_INET;
+        stSrcAddr.sin_port = htons ( PORT );
+        stSrcAddr.sin_addr.s_addr = INADDR_ANY;
+        nRet = ::bind (m_handle, (struct sockaddr FAR *)&stSrcAddr,  sizeof(struct sockaddr));
+
+        if(nRet<0) {
+            closesocket(m_handle);
+            throw LdfException("send socket");
+        }
+
+        m_client_addr->sin_family = PF_INET;
+        nRet = WSAHtons(m_handle, PORT, &(m_client_addr->sin_port));
+        if(nRet<0) {
+            closesocket(m_handle);
+            throw LdfException("htons failed");
+        }
+
+        m_handle = WSAJoinLeaf (m_handle, (PSOCKADDR)m_client_addr, 
+            sizeof (sockaddr), NULL, NULL, NULL, NULL, JL_BOTH);
+        if(m_handle==INVALID_SOCKET) {
+            std::cout << "WSA=" << WSAGetLastError() << std::endl;
+            closesocket(m_handle);
+            throw LdfException("join failed");
+        }
 #else
         clear();
         // Set up a UDP client
@@ -82,14 +142,15 @@ SocketParser::SocketParser(unsigned int server) {
         // Request group membership
         mreq.imr_interface.s_addr=htonl(INADDR_ANY);
         if (setsockopt(m_handle,IPPROTO_IP,IP_ADD_MEMBERSHIP,&mreq,
-                       sizeof(mreq)) < 0) 
-            throw LdfException("sockopt");
-
+            sizeof(mreq)) < 0) {
+                std::cout << "IP_ADD_MEMBERSHIP Failure: " << strerror(errno) << std::endl;
+                throw LdfException("sockopt");
+            }
+#endif
 
         // Request the first event be loaded
         if (nextEvent() < 0) 
             throw LdfException("Failed to load first event via socket");
-#endif
 
     } catch( LdfException& e) {
         std::cerr << "Caught LdfException: " << e.what() << std::endl;
@@ -104,6 +165,12 @@ SocketParser::SocketParser(unsigned int server) {
     SocketParser::~SocketParser() {
 #ifndef WIN32
         close(m_handle);
+#else
+        closesocket(m_handle);
+        if (m_client_addr) {
+            delete m_client_addr;
+            m_client_addr = 0;
+        }
 #endif
         clear();
     }
@@ -118,16 +185,22 @@ SocketParser::SocketParser(unsigned int server) {
 
     int SocketParser::nextEvent() {
         try {
-#ifndef WIN32
+//#ifndef WIN32
             char buffer[BufferSize+1];
             int ibuf;
             for (ibuf = 0; ibuf < BufferSize+1; ibuf++)
                 buffer[ibuf] = 0;
             if (EbfDebug::getDebug())
                 std::cout << "ldfReader::SocketParser calling recvfrom" << std::endl;
+#ifndef WIN32       
             int addrLen = sizeof(m_client_addr);
             int stat = recvfrom(m_handle, buffer, BufferSize, 0, 
                  (struct sockaddr *)&m_client_addr, &addrLen);  
+#else
+            int addrLen = sizeof(struct sockaddr_in);
+            int stat = recvfrom(m_handle, buffer, BufferSize, 0,
+                (struct sockaddr*)m_client_addr, &addrLen);
+#endif
             if (stat < 0 ) {
                 std::cout << "recvfrom failed " << stat << " "
                           << strerror(errno) << std::endl;
@@ -142,7 +215,7 @@ SocketParser::SocketParser(unsigned int server) {
             m_end = (LATdatagram*)(&buffer[stat]);
             m_eventSize = stat;
             m_datagram = m_start;
-#endif
+
             return 0;
     
       } catch(LdfException &e) {

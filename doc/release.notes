@@ -4,6 +4,8 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r27   10-Aug-2006 hmk possible windows version of socket, need to test on
+        same LAN as running LATTE
 v3r26p2 09-Aug-2006 hmk patch up setting of setsockopt
 v3r26p1 09-Aug-2006 hmk Fix up windows build
 v3r26   08-Aug-2006 hmk Socket Gleam - UDP sockets for Linux

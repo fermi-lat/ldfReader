@@ -15,12 +15,13 @@
 
 #include "../src/iterators/EbfDatagramParser.h"
 
+struct sockaddr_in;
 
 /** @class SocketParser
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure, when using a socket to obtain data.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/SocketParser.h,v 1.9 2006/08/01 15:52:15 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/SocketParser.h,v 1.1 2006/08/08 17:03:42 heather Exp $
 */
 
 namespace ldfReader {
@@ -84,6 +85,8 @@ namespace ldfReader {
         int m_handle;  // stores return value from socket call
 #ifndef WIN32
         struct sockaddr_in m_client_addr;
+#else 
+        struct sockaddr_in *m_client_addr;  // must be a pointer on windows, can't include winsock2 here
 #endif
 
     };
