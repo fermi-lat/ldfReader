@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.19 2006/06/16 19:17:56 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.20 2006/08/01 15:52:15 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -140,7 +140,8 @@ int DfiParser::readContextAndInfo() {
     lsfData::LsfCcsds* ccsdsData = ldfReader::LatData::instance()->getCcsdsPtr();
     ccsdsData->initialize(m_ccsds.getScid(), m_ccsds.getApid(), m_ccsds.getUtc());
 
-    ldfReader::LatData::instance()->setTimeInSecTds(timeForTds(m_ccsds.getUtc()));
+    // Do this after reading LDF data
+    //ldfReader::LatData::instance()->setTimeInSecTds(timeForTds(m_ccsds.getUtc()));
     ldfReader::LatData::instance()->setEventId(m_meta.scalers().sequence());
  
     if (EbfDebug::getDebug()) ccsdsData->print();
@@ -149,8 +150,86 @@ int DfiParser::readContextAndInfo() {
 
 double DfiParser::timeForTds(double utc) {
 
-    long wholeSeconds = long(floor(utc));
-    double frac = utc - wholeSeconds;
+// Code from Anders July, 2006
+// Right now the missing GPS lock is always set so can't use "incomplete" 
+// Time Tone flag!
+// Need to check each flag explicitly - can't rely on correct redundancy 
+// behaviour right now.
+//
+
+    double timestamp;
+
+    // Method flag:
+    int methodFlag = -1;
+
+    // Warren's empirical LAT system clock correction from SLAC and NRL:
+    double warrenLATSystemClockCorrection = 100.0;
+
+    // LAT system clock:
+    double LATSystemClock = 20000000.0;
+
+    // Check that the current TimeTone is OK?
+    const lsfData::MetaEvent& metaEvent = ldfReader::LatData::instance()->getMetaEvent();
+    if (!(metaEvent.time().current().flywheeling()) &&
+        !(metaEvent.time().current().missingCpuPps()) &&
+        !(metaEvent.time().current().missingLatPps()) &&
+        !(metaEvent.time().current().missingTimeTone())) {
+
+        // Check previous TimeTone is OK?
+        if (!(metaEvent.time().previous().flywheeling()) &&
+            !(metaEvent.time().previous().missingCpuPps()) &&
+            !(metaEvent.time().previous().missingLatPps()) &&
+            !(metaEvent.time().previous().missingTimeTone()) &&
+            // and different from the current TimeTone
+            (metaEvent.time().current().timeHack().ticks() != metaEvent.time().previous().timeHack().ticks())) {
+            // use full formula for correcting system clock drift using last
+            // two TimeTones..i.e. extrapolation
+            timestamp = double(metaEvent.time().current().timeSecs()) +
+                       (double (metaEvent.time().timeTicks()) /
+                        double ((metaEvent.time().current().timeHack().ticks() 
+                        - metaEvent.time().previous().timeHack().ticks())));
+            methodFlag = 1;
+
+        } else {
+            // Cannot use previous TimeTone - will assume nomial value for 
+            // LAT system clock
+            timestamp = double (metaEvent.time().current().timeSecs()) +
+                       (double (metaEvent.time().timeTicks()) /
+                       (LATSystemClock + warrenLATSystemClockCorrection));
+            methodFlag = 2;
+        }
+    } else {
+    // Cannot trust curent TimeTone - is the previus TimeTone OK?
+        if (!(metaEvent.time().previous().flywheeling()) &&
+            !(metaEvent.time().previous().missingCpuPps()) &&
+            !(metaEvent.time().previous().missingLatPps()) &&
+            !(metaEvent.time().previous().missingTimeTone())) {
+
+            // Add a second to the previous TimeTone
+            timestamp = double (metaEvent.time().previous().timeSecs() + 1.0)
+                       + (double (metaEvent.time().timeTicks()) / 
+                         (LATSystemClock + warrenLATSystemClockCorrection));
+            methodFlag = 3;
+        } else {
+        // Cannot trust either TimeTone - use datagram creation time
+            timestamp = utc;
+            methodFlag = 4;
+        }
+    }
+
+    if (fabs(timestamp - utc) > 128.0) {
+        std::cout << "Warning!  The time stamp differs from the datagram "
+                  << "creation time with more than 128 seconds!  Timestamp "
+                  << "is " << timestamp << " while the datagram creation time "
+                  << "is " << utc << ".  I will use the latter!  The timestamp "
+                  << "was calculated  using method " << methodFlag << ". This "
+                  << "is event " << ldfReader::LatData::instance()->eventId()
+                  <<  std::endl;
+        timestamp = utc;
+    }
+
+    long wholeSeconds = long(floor(timestamp));
+    double frac = timestamp - wholeSeconds;
     int nanoSec = int(frac/0.000000001);
     facilities::Timestamp facTimeStamp(wholeSeconds, nanoSec);
     double julTimeStamp = facTimeStamp.getJulian();
@@ -186,6 +265,7 @@ int DfiParser::loadData() {
         if (EbfDebug::getDebug()) 
             std::cout << "Event: " << eventId << " APID: " << apid << std::endl;
         
+        ldfReader::LatData::instance()->setTimeInSecTds(timeForTds(ldfReader::LatData::instance()->getCcsds().getUtc()));
 
         if (ldf.status()) {
             std::ostringstream errMsg;
