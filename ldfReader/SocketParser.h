@@ -15,7 +15,6 @@
 
 #include "../src/iterators/EbfDatagramParser.h"
 
-struct sockaddr_in;
 
 /** @class SocketParser
 @brief Provides access to the EBF parsing routines and is the gateway to
@@ -85,8 +84,6 @@ namespace ldfReader {
         int m_handle;  // stores return value from socket call
 #ifndef WIN32
         struct sockaddr_in m_client_addr;
-#else 
-        struct sockaddr_in *m_client_addr;  // must be a pointer on windows, can't include winsock2 here
 #endif
 
     };
