@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Aug 16 12:31:13 PDT 2006
+ldfReader/ldfReader
+
+Modified Files:
+	SocketParser.h 
+Log Message:
+roll back windows updates from HEAD
+    *
+------------------------------------------------------------
 User: heather  Thu Aug 10 13:20:30 PDT 2006
 ldfReader/src
 
