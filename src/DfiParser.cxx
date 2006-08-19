@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.20 2006/08/01 15:52:15 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.21 2006/08/16 22:28:46 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -156,6 +156,16 @@ double DfiParser::timeForTds(double utc) {
 // Need to check each flag explicitly - can't rely on correct redundancy 
 // behaviour right now.
 //
+    // Convert UTC - which is seconds since 1/1/1970 into seconds since
+    // Mission Start which is 1/1/2001
+    long wholeSeconds = long(floor(utc));
+    double frac = utc - wholeSeconds;
+    int nanoSec = int(frac/0.000000001);
+    facilities::Timestamp facTimeStamp(wholeSeconds, nanoSec);
+    double julTimeStamp = facTimeStamp.getJulian();
+    astro::JulianDate julDate(julTimeStamp);
+    // Find number of seconds since missionStart
+    double timeInSecondsUTC = julDate.seconds() - astro::JulianDate::missionStart().seconds();
 
     double timestamp;
 
@@ -212,31 +222,24 @@ double DfiParser::timeForTds(double utc) {
             methodFlag = 3;
         } else {
         // Cannot trust either TimeTone - use datagram creation time
-            timestamp = utc;
+            timestamp = timeInSecondsUTC;
             methodFlag = 4;
         }
     }
 
-    if (fabs(timestamp - utc) > 128.0) {
+    if (fabs(timestamp - timeInSecondsUTC) > 128.0) {
         std::cout << "Warning!  The time stamp differs from the datagram "
                   << "creation time with more than 128 seconds!  Timestamp "
                   << "is " << timestamp << " while the datagram creation time "
-                  << "is " << utc << ".  I will use the latter!  The timestamp "
+                  << "is " << timeInSecondsUTC << ".  I will use the latter!  "
+                  << "The timestamp "
                   << "was calculated  using method " << methodFlag << ". This "
                   << "is event " << ldfReader::LatData::instance()->eventId()
                   <<  std::endl;
-        timestamp = utc;
+        timestamp = timeInSecondsUTC;
     }
 
-    long wholeSeconds = long(floor(timestamp));
-    double frac = timestamp - wholeSeconds;
-    int nanoSec = int(frac/0.000000001);
-    facilities::Timestamp facTimeStamp(wholeSeconds, nanoSec);
-    double julTimeStamp = facTimeStamp.getJulian();
-    astro::JulianDate julDate(julTimeStamp);
-    // Find number of seconds since missionStart
-    double tdsTimeInSeconds = julDate.seconds() - astro::JulianDate::missionStart().seconds();
-    return tdsTimeInSeconds;
+    return timestamp;
 
 }
 
