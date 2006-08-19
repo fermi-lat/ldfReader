@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Sat Aug 19 14:38:48 PDT 2006
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx 
+Log Message:
+patch timestamp code
+    *
+------------------------------------------------------------
 User: heather  Sat Aug 19 14:38:47 PDT 2006
 ldfReader/doc
 
