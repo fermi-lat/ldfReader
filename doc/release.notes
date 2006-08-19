@@ -4,6 +4,8 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r27p1 19-Aug-2006 hmk Patch timestamp code to convert datagram creation time
+        from starting 1/1/1970 to mission start 1/1/2001
 v3r27   16-Aug-2006 hmk implement Anders' timestamp code for LSF
 v3r26p2 09-Aug-2006 hmk patch up setting of setsockopt
 v3r26p1 09-Aug-2006 hmk Fix up windows build
