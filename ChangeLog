@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Sat Aug 19 14:38:47 PDT 2006
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+patch timestamp code
+    *
+------------------------------------------------------------
+User: heather  Sat Aug 19 14:38:47 PDT 2006
 ldfReader/cmt
 
 Modified Files:
