@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Oct 19 11:09:05 PDT 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add LDF WARNING flag to event flags
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r27p1, operation: add
 Package: ldfReader
