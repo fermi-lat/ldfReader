@@ -4,6 +4,8 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r28   19-Oct-2006 hmk Add new LDF Warning flag if read bytes beyond end of
+        TEM
 v3r27p1 19-Aug-2006 hmk Patch timestamp code to convert datagram creation time
         from starting 1/1/1970 to mission start 1/1/2001
 v3r27   16-Aug-2006 hmk implement Anders' timestamp code for LSF

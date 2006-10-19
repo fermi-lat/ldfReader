@@ -116,6 +116,7 @@ namespace ldfReader {
         void setPhaseErrorFlag() { m_flags |= enums::PHASEERROR; };
         void setTimeoutErrorFlag() { m_flags |= enums::TIMEOUTERROR; };
         void setCalReadoutFlag() { m_flags |= enums::MISSINGCALREADOUT; };
+        void setLdfWarningFlag() { m_flags |= enums::LDFWARNING; };
 
         unsigned checkTemError();
         unsigned checkPacketError();
@@ -155,6 +156,8 @@ namespace ldfReader {
             return (m_flags & enums::PHASEERROR); }
         unsigned timeoutError() const { 
             return (m_flags & enums::TIMEOUTERROR); }
+        unsigned ldfWarning() const {
+            return (m_flags & enums::LDFWARNING); }
 
         void setEventSizeInBytes(unsigned long size){ m_eventSize = size; };
         unsigned long eventSizeInBytes() const { return m_eventSize; };
