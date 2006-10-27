@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.21 2006/08/16 22:28:46 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.22 2006/08/19 21:38:48 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -151,9 +151,9 @@ int DfiParser::readContextAndInfo() {
 double DfiParser::timeForTds(double utc) {
 
 // Code from Anders July, 2006
-// Right now the missing GPS lock is always set so can't use "incomplete" 
+// Right now the missing GPS lock is always set so can't use "incomplete"
 // Time Tone flag!
-// Need to check each flag explicitly - can't rely on correct redundancy 
+// Need to check each flag explicitly - can't rely on correct redundancy
 // behaviour right now.
 //
     // Convert UTC - which is seconds since 1/1/1970 into seconds since
@@ -172,59 +172,65 @@ double DfiParser::timeForTds(double utc) {
     // Method flag:
     int methodFlag = -1;
 
+    // LAT nominal system clock:
+    double LATSystemClock = 20000000.0;
+
     // Warren's empirical LAT system clock correction from SLAC and NRL:
     double warrenLATSystemClockCorrection = 100.0;
 
-    // LAT system clock:
-    double LATSystemClock = 20000000.0;
+    // Roll over offset: 2**25
+    double RollOver = 33554432.0;
 
-    // Check that the current TimeTone is OK?
+    // Get it:
     const lsfData::MetaEvent& metaEvent = ldfReader::LatData::instance()->getMetaEvent();
+
+    // Number of ticks between current event and the current 1-PPS:
+    double awbTicks1 = double (metaEvent.time().timeTicks()) - 
+                       double (metaEvent.time().current().timeHack().ticks());
+
+    // Rollover? Should never be more than one! BTW, JJ has a much smarter way 
+    // to do this rollover check ... :-)
+    if (awbTicks1 < 0) {
+      awbTicks1 = awbTicks1 + RollOver;
+    }
+
+    // Check that the two TimeTones are OK and different:
     if (!(metaEvent.time().current().flywheeling()) &&
         !(metaEvent.time().current().missingCpuPps()) &&
         !(metaEvent.time().current().missingLatPps()) &&
-        !(metaEvent.time().current().missingTimeTone())) {
+        !(metaEvent.time().current().missingTimeTone()) &&
+        !(metaEvent.time().previous().flywheeling()) &&
+        !(metaEvent.time().previous().missingCpuPps()) &&
+        !(metaEvent.time().previous().missingLatPps()) &&
+        !(metaEvent.time().previous().missingTimeTone()) &&
+        (metaEvent.time().current().timeHack().ticks() != 
+                      metaEvent.time().previous().timeHack().ticks()) &&
+        ((metaEvent.time().current().timeSecs() -
+                      metaEvent.time().previous().timeSecs()) == 1)) {
 
-        // Check previous TimeTone is OK?
-        if (!(metaEvent.time().previous().flywheeling()) &&
-            !(metaEvent.time().previous().missingCpuPps()) &&
-            !(metaEvent.time().previous().missingLatPps()) &&
-            !(metaEvent.time().previous().missingTimeTone()) &&
-            // and different from the current TimeTone
-            (metaEvent.time().current().timeHack().ticks() != metaEvent.time().previous().timeHack().ticks())) {
-            // use full formula for correcting system clock drift using last
-            // two TimeTones..i.e. extrapolation
-            timestamp = double(metaEvent.time().current().timeSecs()) +
-                       (double (metaEvent.time().timeTicks()) /
-                        double ((metaEvent.time().current().timeHack().ticks() 
-                        - metaEvent.time().previous().timeHack().ticks())));
-            methodFlag = 1;
+      // Then use full formula for correcting system clock drift using last 
+      // two TimeTones i.e. extrapolation
+      double awbTicks2 = double (metaEvent.time().current().timeHack().ticks())
+                       - double (metaEvent.time().previous().timeHack().ticks());
 
-        } else {
-            // Cannot use previous TimeTone - will assume nomial value for 
-            // LAT system clock
-            timestamp = double (metaEvent.time().current().timeSecs()) +
-                       (double (metaEvent.time().timeTicks()) /
-                       (LATSystemClock + warrenLATSystemClockCorrection));
-            methodFlag = 2;
-        }
+      // Rollover? Should never be more than one rollover! BTW, JJ has a much 
+      // sm arter way to do this rollover check ... :-)
+      if (awbTicks2 < 0) {
+        awbTicks2 = awbTicks2 + RollOver;
+      }
+
+      // Timestamp:
+      timestamp = double (metaEvent.time().current().timeSecs()) + 
+                          (awbTicks1/awbTicks2);
+      methodFlag = 1;
+
     } else {
-    // Cannot trust curent TimeTone - is the previus TimeTone OK?
-        if (!(metaEvent.time().previous().flywheeling()) &&
-            !(metaEvent.time().previous().missingCpuPps()) &&
-            !(metaEvent.time().previous().missingLatPps()) &&
-            !(metaEvent.time().previous().missingTimeTone())) {
 
-            // Add a second to the previous TimeTone
-            timestamp = double (metaEvent.time().previous().timeSecs() + 1.0)
-                       + (double (metaEvent.time().timeTicks()) / 
-                         (LATSystemClock + warrenLATSystemClockCorrection));
-            methodFlag = 3;
-        } else {
-        // Cannot trust either TimeTone - use datagram creation time
-            timestamp = timeInSecondsUTC;
-            methodFlag = 4;
-        }
+      // Cannot use TimeTone(s) - will assume nominal value for the LAT system 
+      // clock
+      timestamp = double (metaEvent.time().current().timeSecs()) +
+                         (awbTicks1 / (LATSystemClock + warrenLATSystemClockCorrection));
+      methodFlag = 2;
     }
 
     if (fabs(timestamp - timeInSecondsUTC) > 128.0) {
