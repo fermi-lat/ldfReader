@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Thu Nov  9 03:33:52 PST 2006
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx 
+Log Message:
+update to Anders' timestamp code
+    *
+------------------------------------------------------------
+User: heather  Thu Nov  9 03:33:52 PST 2006
 ldfReader/doc
 
 Modified Files:
