@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Nov  9 03:33:52 PST 2006
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+update to Anders' timestamp code
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r29, operation: add
 Package: ldfReader
