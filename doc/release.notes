@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r30   09-Nov-2006 hmk Another patch from Anders for timestamp code
 v3r29   25-Oct-2006 hmk Anders' patch to timestamp code in response to David
         Smith's findings
 v3r28   19-Oct-2006 hmk Add new LDF Warning flag if read bytes beyond end of

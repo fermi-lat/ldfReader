@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.22 2006/08/19 21:38:48 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.23 2006/10/27 04:39:08 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -193,6 +193,23 @@ double DfiParser::timeForTds(double utc) {
     if (awbTicks1 < 0) {
       awbTicks1 = awbTicks1 + RollOver;
     }
+
+
+    // New:
+    int diffSecs = metaEvent.time().timeHack().hacks() - metaEvent.time().current().timeHack().hacks();
+    if (diffSecs != 0) {
+        std::cout << " Wow!: More than a second between the event and the "
+                  << "current timetone! " 
+                  << ldfReader::LatData::instance()->eventId() 
+                  << diffSecs << "  " 
+                  << metaEvent.time().timeHack().hacks() << "   "
+                  << metaEvent.time().current().timeHack().hacks() 
+                  << std::endl;
+        awbTicks1 = awbTicks1 + double(diffSecs)*RollOver;
+        awbTicks1 = awbTicks1 / double (diffSecs);
+  };
+  // End new!
+
 
     // Check that the two TimeTones are OK and different:
     if (!(metaEvent.time().current().flywheeling()) &&
