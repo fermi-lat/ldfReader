@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.23 2006/10/27 04:39:08 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.24 2006/11/09 11:33:52 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -148,14 +148,15 @@ int DfiParser::readContextAndInfo() {
     return 0;
 }
 
+
 double DfiParser::timeForTds(double utc) {
 
-// Code from Anders July, 2006
-// Right now the missing GPS lock is always set so can't use "incomplete"
-// Time Tone flag!
-// Need to check each flag explicitly - can't rely on correct redundancy
-// behaviour right now.
+// Code from Anders July, 2006. With many updates :-)
+// Right now the missing GPS lock is always set so can't use 
+// "incomplete" Time Tone flag! Need to check each flag explicitly - 
+// can't rely on correct redundancy behaviour right now.
 //
+
     // Convert UTC - which is seconds since 1/1/1970 into seconds since
     // Mission Start which is 1/1/2001
     long wholeSeconds = long(floor(utc));
@@ -167,51 +168,32 @@ double DfiParser::timeForTds(double utc) {
     // Find number of seconds since missionStart
     double timeInSecondsUTC = julDate.seconds() - astro::JulianDate::missionStart().seconds();
 
+    // Time stamp of the event in seconds (and fractions thereof) 
+    // since 01.01.2001 UTC:
     double timestamp;
 
     // Method flag:
     int methodFlag = -1;
 
-    // LAT nominal system clock:
+    // LAT nominal system clock: 20MHz
     double LATSystemClock = 20000000.0;
 
-    // Warren's empirical LAT system clock correction from SLAC and NRL:
-    double warrenLATSystemClockCorrection = 100.0;
-
-    // Roll over offset: 2**25
+    // Roll over offset for the 25 bit GEM counter: 2**25
     double RollOver = 33554432.0;
 
     // Get it:
     const lsfData::MetaEvent& metaEvent = ldfReader::LatData::instance()->getMetaEvent();
 
-    // Number of ticks between current event and the current 1-PPS:
-    double awbTicks1 = double (metaEvent.time().timeTicks()) - 
-                       double (metaEvent.time().current().timeHack().ticks());
+    // Number of ticks between the current event and the current 1-PPS:
+    double clockTicksEvt1PPS = double (metaEvent.time().timeTicks()) - 
+                               double (metaEvent.time().current().timeHack().ticks());
 
-    // Rollover? Should never be more than one! BTW, JJ has a much smarter way 
-    // to do this rollover check ... :-)
-    if (awbTicks1 < 0) {
-      awbTicks1 = awbTicks1 + RollOver;
+    // Rollover? 
+    if (clockTicksEvt1PPS < 0) {
+      clockTicksEvt1PPS = clockTicksEvt1PPS + RollOver;
     }
 
-
-    // New:
-    int diffSecs = metaEvent.time().timeHack().hacks() - metaEvent.time().current().timeHack().hacks();
-    if (diffSecs != 0) {
-        std::cout << " Wow!: More than a second between the event and the "
-                  << "current timetone! " 
-                  << ldfReader::LatData::instance()->eventId() 
-                  << diffSecs << "  " 
-                  << metaEvent.time().timeHack().hacks() << "   "
-                  << metaEvent.time().current().timeHack().hacks() 
-                  << std::endl;
-        awbTicks1 = awbTicks1 + double(diffSecs)*RollOver;
-        awbTicks1 = awbTicks1 / double (diffSecs);
-  };
-  // End new!
-
-
-    // Check that the two TimeTones are OK and different:
+    // Check that the two TimeTones are OK:
     if (!(metaEvent.time().current().flywheeling()) &&
         !(metaEvent.time().current().missingCpuPps()) &&
         !(metaEvent.time().current().missingLatPps()) &&
@@ -220,39 +202,39 @@ double DfiParser::timeForTds(double utc) {
         !(metaEvent.time().previous().missingCpuPps()) &&
         !(metaEvent.time().previous().missingLatPps()) &&
         !(metaEvent.time().previous().missingTimeTone()) &&
-        (metaEvent.time().current().timeHack().ticks() != 
-                      metaEvent.time().previous().timeHack().ticks()) &&
+        // If there is more than a second between 1-PPS I can 
+	// only use the nominal value for the LAT clock anyway!
         ((metaEvent.time().current().timeSecs() -
                       metaEvent.time().previous().timeSecs()) == 1)) {
 
-      // Then use full formula for correcting system clock drift using last 
-      // two TimeTones i.e. extrapolation
-      double awbTicks2 = double (metaEvent.time().current().timeHack().ticks())
-                       - double (metaEvent.time().previous().timeHack().ticks());
+      // Then use full formula for correcting system clock drift 
+      // using the last two TimeTones i.e. extrapolation!
 
-      // Rollover? Should never be more than one rollover! BTW, JJ has a much 
-      // sm arter way to do this rollover check ... :-)
-      if (awbTicks2 < 0) {
-        awbTicks2 = awbTicks2 + RollOver;
+      // Number of ticks between the current and the previous time tone:
+      double clockTicksDelta1PPS = double (metaEvent.time().current().timeHack().ticks())
+                                 - double (metaEvent.time().previous().timeHack().ticks());
+
+      // Rollover? 
+      if (clockTicksDelta1PPS < 0) {
+        clockTicksDelta1PPS = clockTicksDelta1PPS + RollOver;
       }
 
       // Timestamp:
-      timestamp = double (metaEvent.time().current().timeSecs()) + 
-                          (awbTicks1/awbTicks2);
+      timestamp = double (metaEvent.time().current().timeSecs()) 
+                  + (clockTicksEvt1PPS/clockTicksDelta1PPS);
       methodFlag = 1;
 
     } else {
 
-      // Cannot use TimeTone(s) - will assume nominal value for the LAT system 
-      // clock
-      timestamp = double (metaEvent.time().current().timeSecs()) +
-                         (awbTicks1 / (LATSystemClock + warrenLATSystemClockCorrection));
+      // Cannot use TimeTone(s) - will assume nominal value for the LAT system clock:
+      timestamp = double (metaEvent.time().current().timeSecs())
+                  + (clockTicksEvt1PPS/LATSystemClock);
       methodFlag = 2;
     }
 
-    if (fabs(timestamp - timeInSecondsUTC) > 128.0) {
+    if (fabs(timestamp - timeInSecondsUTC) > 128.227) {
         std::cout << "Warning!  The time stamp differs from the datagram "
-                  << "creation time with more than 128 seconds!  Timestamp "
+                  << "creation time with more than 128.227 seconds!  Timestamp "
                   << "is " << timestamp << " while the datagram creation time "
                   << "is " << timeInSecondsUTC << ".  I will use the latter!  "
                   << "The timestamp "
@@ -265,6 +247,7 @@ double DfiParser::timeForTds(double utc) {
     return timestamp;
 
 }
+
 
 int DfiParser::loadData() {
 // Purpose and Method:  This routine loads the data from one event
