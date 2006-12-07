@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Dec  7 13:03:57 PST 2006
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+patch for tileName in AcdParser.cxx
+    *
+------------------------------------------------------------
 User: heather  Thu Dec  7 13:03:56 PST 2006
 ldfReader/cmt
 
