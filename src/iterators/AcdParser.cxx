@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.18 2006/08/02 20:08:03 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.19 2006/08/03 18:42:53 heather Exp $
 */
 
 // EBF Online Library includes
@@ -98,6 +98,8 @@ void AcdParser::header(unsigned cable, AEMheader hdr)
                 tileName = pmt->name();
                 side = pmt->a() ? 'A' : 'B';
             }
+        } else { // typical case with no remapping
+            tileName = pmt->name();
         }
 
         // A or B
@@ -178,6 +180,11 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
 
   // A or B
   char      side = pmt->a() ? 'A' : 'B'; 
+  if (EbfDebug::getDebug()) {
+      printf("%s  %2d   %4s     %c    %d   %4d = 0x%03x    %d     %d\n",
+         "PMT Info: ", channel, pmt->name(), side,
+         p.ADCrange(), p.ADCvalue(), p.ADCvalue(), p.parityError(), p.more());
+  }
   char sideSave = side;
   std::string tileName;
   if (curLatData->acdRemap()) {
@@ -188,6 +195,8 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
        } else if (EbfDebug::getDebug()) {
            printf("Remapping %s:%c to %s:%c\n", pmt->name(), sideSave, tileName.c_str(), side);
         }
+   } else { // typical case with no remapping
+       tileName = pmt->name();
    }
 
   AcdDigi::PmtSide digiSide = (side == 'A') ? AcdDigi::A : AcdDigi::B;
