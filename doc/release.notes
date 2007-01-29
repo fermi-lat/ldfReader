@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r31p2 29-JAN-2007 awb Avoid 1/0 error. Add check on incomplete time tone.
 v3r31p1 07-Dec-2006 hmk patch to AcdParser to store tileName correctly
         when no remapping occurs
 v3r31   20-Nov-2006 hmk Anoter patch from Anders for the timestamp code :)
