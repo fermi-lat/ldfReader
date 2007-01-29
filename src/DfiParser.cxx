@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.24 2006/11/09 11:33:52 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.25 2006/11/21 05:09:57 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -155,6 +155,9 @@ double DfiParser::timeForTds(double utc) {
 // Right now the missing GPS lock is always set so can't use 
 // "incomplete" Time Tone flag! Need to check each flag explicitly - 
 // can't rely on correct redundancy behaviour right now.
+// After integration with the space craft in December 2006 we no longer have 
+// the missing GPS lock error. However, we now occasionally have an incomplete 
+// time tone without any other error flags set.
 //
 
     // Convert UTC - which is seconds since 1/1/1970 into seconds since
@@ -193,15 +196,20 @@ double DfiParser::timeForTds(double utc) {
       clockTicksEvt1PPS = clockTicksEvt1PPS + RollOver;
     }
 
-    // Check that the two TimeTones are OK:
-    if (!(metaEvent.time().current().flywheeling()) &&
+    // Verify that the two TimeTones are OK:
+    if (!(metaEvent.time().current().incomplete()) &&
+        !(metaEvent.time().current().flywheeling()) &&
         !(metaEvent.time().current().missingCpuPps()) &&
         !(metaEvent.time().current().missingLatPps()) &&
         !(metaEvent.time().current().missingTimeTone()) &&
+        !(metaEvent.time().previous().incomplete()) &&
         !(metaEvent.time().previous().flywheeling()) &&
         !(metaEvent.time().previous().missingCpuPps()) &&
         !(metaEvent.time().previous().missingLatPps()) &&
         !(metaEvent.time().previous().missingTimeTone()) &&
+	// Avoid 1/0 error:
+        (metaEvent.time().current().timeHack().ticks() != 
+                      metaEvent.time().previous().timeHack().ticks()) &&  
         // If there is more than a second between 1-PPS I can 
 	// only use the nominal value for the LAT clock anyway!
         ((metaEvent.time().current().timeSecs() -
