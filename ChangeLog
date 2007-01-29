@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: borgland  Mon Jan 29 15:41:59 PST 2007
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx 
+Log Message:
+Avoid 1/0 error. Add check on incomplete time tone.
+    *
+------------------------------------------------------------
+User: borgland  Mon Jan 29 15:41:59 PST 2007
 ldfReader/doc
 
 Modified Files:
