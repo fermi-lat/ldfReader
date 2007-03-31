@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Sat Mar 31 09:59:02 PDT 2007
+ldfReader/src
+
+Modified Files:
+	LdfParser.cxx 
+Log Message:
+patch for rhel4
+    *
+------------------------------------------------------------
+User: heather  Sat Mar 31 09:59:02 PDT 2007
 ldfReader/doc
 
 Modified Files:
