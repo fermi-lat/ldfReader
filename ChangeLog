@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Sat Mar 31 09:59:01 PDT 2007
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+patch for rhel4
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r31p2, operation: add
 Package: ldfReader
