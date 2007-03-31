@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.33 2006/08/01 15:52:15 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.34 2006/08/02 17:25:00 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -18,6 +18,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.33 2006/08
 #include <iostream>
 #include <math.h> // for floor
 #include <csignal> // For signal handling
+#include <errno.h>
 
 #include "facilities/Timestamp.h"
 #include "astro/JulianDate.h"
@@ -105,7 +106,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
                 // put us back at the begining
                 fits_read_keyn(ffile, 0, keyName, value, comment, &status);
 
-                printf("RunId = %lu\n", m_runId);
+                printf("RunId = %u\n", m_runId);
 
                 // Go to 2nd HDU
                 m_currentHdu = 2;
@@ -198,7 +199,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
             &heapAddr, &status);
 
         if (status != 0) {
-            printf("FITSIO Status Code: %d curRow = %d\n", status, m_currentRow);
+            printf("FITSIO Status Code: %d curRow = %l\n", status, m_currentRow);
             throw LdfException("Failed to read row description");
         }
 
