@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.25 2006/11/21 05:09:57 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.26 2007/01/29 23:41:59 borgland Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -160,23 +160,9 @@ double DfiParser::timeForTds(double utc) {
 // time tone without any other error flags set.
 //
 
-    // Convert UTC - which is seconds since 1/1/1970 into seconds since
-    // Mission Start which is 1/1/2001
-    long wholeSeconds = long(floor(utc));
-    double frac = utc - wholeSeconds;
-    int nanoSec = int(frac/0.000000001);
-    facilities::Timestamp facTimeStamp(wholeSeconds, nanoSec);
-    double julTimeStamp = facTimeStamp.getJulian();
-    astro::JulianDate julDate(julTimeStamp);
-    // Find number of seconds since missionStart
-    double timeInSecondsUTC = julDate.seconds() - astro::JulianDate::missionStart().seconds();
 
-    // Time stamp of the event in seconds (and fractions thereof) 
-    // since 01.01.2001 UTC:
+    // Time stamp of the event in seconds (and fractions thereof) since 01.01.2001 UTC:
     double timestamp;
-
-    // Method flag:
-    int methodFlag = -1;
 
     // LAT nominal system clock: 20MHz
     double LATSystemClock = 20000000.0;
@@ -230,30 +216,15 @@ double DfiParser::timeForTds(double utc) {
       // Timestamp:
       timestamp = double (metaEvent.time().current().timeSecs()) 
                   + (clockTicksEvt1PPS/clockTicksDelta1PPS);
-      methodFlag = 1;
-
     } else {
 
       // Cannot use TimeTone(s) - will assume nominal value for the LAT system clock:
       timestamp = double (metaEvent.time().current().timeSecs())
                   + (clockTicksEvt1PPS/LATSystemClock);
-      methodFlag = 2;
     }
 
-    if (fabs(timestamp - timeInSecondsUTC) > 128.227) {
-        std::cout << "Warning!  The time stamp differs from the datagram "
-                  << "creation time with more than 128.227 seconds!  Timestamp "
-                  << "is " << timestamp << " while the datagram creation time "
-                  << "is " << timeInSecondsUTC << ".  I will use the latter!  "
-                  << "The timestamp "
-                  << "was calculated  using method " << methodFlag << ". This "
-                  << "is event " << ldfReader::LatData::instance()->eventId()
-                  <<  std::endl;
-        timestamp = timeInSecondsUTC;
-    }
-
+    // Event time stamp:
     return timestamp;
-
 }
 
 
