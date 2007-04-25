@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.26 2007/01/29 23:41:59 borgland Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.27 2007/04/11 21:38:25 borgland Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -135,7 +135,7 @@ int DfiParser::readContextAndInfo() {
     lsfData::MetaEvent *metaEvent = ldfReader::LatData::instance()->getMetaEventPtr();
 
     metaEvent->set(m_meta.run(), m_meta.datagram(), m_meta.scalers(),
-                   m_meta.time(), *(m_meta.configuration()));
+                   m_meta.time(), *(m_meta.configuration()), *(m_meta.keys()));
  
     lsfData::LsfCcsds* ccsdsData = ldfReader::LatData::instance()->getCcsdsPtr();
     ccsdsData->initialize(m_ccsds.getScid(), m_ccsds.getApid(), m_ccsds.getUtc());

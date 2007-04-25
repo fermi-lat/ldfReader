@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r32   24-Apr-2007 hmk JIRA-ICS-199 to handle the LPA keys
 v3r31p4 11-Apr-2007 awb Removed CCSDS comparison for event time stamp.
 v3r31p3 31-Mar-2007 hmk patch LdfParser.cxx for rhel4
 v3r31p2 29-Jan-2007 awb Avoid 1/0 error. Add check on incomplete time tone.
