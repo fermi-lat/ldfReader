@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Apr 24 18:37:07 PDT 2007
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+prepare to handle lpa/lci keys
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r31p4, operation: add
 Package: ldfReader
