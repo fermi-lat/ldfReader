@@ -1,5 +1,5 @@
 package ldfReader
-version v3r32
+version v3r32p1
 
 author Heather Kelly <heather@lheapop@gsfc.nasa.gov>
 author Tracy Usher   <usher@slac.stanford.edu>
@@ -20,6 +20,9 @@ use facilities  v*
 apply_pattern shared_library
 
 private
+
+macro_append cppflags "-D_FILE_OFFSET_BITS=64 " \
+                WIN32 ""
 
 apply_pattern package_headers
 
