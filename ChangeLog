@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Tue Oct  2 18:40:19 PDT 2007
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+add FILE_OFFSET_BITS
+    *
+------------------------------------------------------------
+User: heather  Tue Oct  2 18:40:19 PDT 2007
 ldfReader/cmt
 
 Modified Files:
