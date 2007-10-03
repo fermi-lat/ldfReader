@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Oct  2 18:40:19 PDT 2007
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add FILE_OFFSET_BITS
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r32, operation: add
 Package: ldfReader
