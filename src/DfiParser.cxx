@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.27 2007/04/11 21:38:25 borgland Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.28 2007/04/25 01:37:08 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -38,7 +38,7 @@ DfiParser::DfiParser(const std::string &filename) {
     try {
        clear();
        m_file = NULL;
-       m_file = new eventFile::LSFReader(filename);
+       m_file = new lsfData::LSFReader(filename);
        std::cout << "Created eventFile" << std::endl;
        m_runId = m_file->runid();
        m_more = m_file->read(m_ccsds, m_meta, m_ebf);
