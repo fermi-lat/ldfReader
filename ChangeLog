@@ -1,5 +1,15 @@
 ------------------------------------------------------------
 User: heather  Thu Nov  8 09:52:12 PST 2007
+ldfReader/ldfReader/data
+
+Modified Files:
+      Tag: GlastReleasev12r15
+	LatData.h 
+Log Message:
+try debuggin on windows
+    *
+------------------------------------------------------------
+User: heather  Thu Nov  8 09:52:12 PST 2007
 ldfReader/ldfReader
 
 Modified Files:
