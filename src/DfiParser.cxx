@@ -5,8 +5,10 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.27 2007/04/11 21:38:25 borgland Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.28 2007/04/25 01:37:08 heather Exp $
 */
+
+#include "EBF_swap.h"
 
 #include "ldfReader/DfiParser.h"
 #include "iterators/EbfEventParser.h"
@@ -243,6 +245,12 @@ int DfiParser::loadData() {
 
         readContextAndInfo();
 
+        memset(mybuff,0,128*1024);
+        memcpy(mybuff, m_ebf.data()+8, m_ebf.size()-8);
+        //EBF_swap32_lclXbigN((unsigned*)mybuff, (m_ebf.size()) / sizeof (unsigned));
+        ldfReader::LatData::instance()->setEbf((char*)mybuff, m_ebf.size()-8);
+        std::cout << "ldfReader len " << m_ebf.size()-8 << " first byte "
+                  <<std::hex << (unsigned int)mybuff[0] << std::dec << std::endl;
 
         EbfEventParser ldf;
         ldf.iterate(m_start, m_end);

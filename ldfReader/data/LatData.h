@@ -14,6 +14,7 @@
 
 #include "lsfData/LsfMetaEvent.h"
 #include "lsfData/LsfCcsds.h"
+#include "lsfData/Ebf.h"
 
 /** @class LatData
 @brief Singleton class to provide global access to LAT data for one event
@@ -48,6 +49,13 @@ namespace ldfReader {
 
         AdfData* getAdfPtr() { return &m_adf; }
         const AdfData& getAdf() const{ return m_adf; }
+
+        const lsfData::Ebf& getEbf() const { return m_ebf; }
+        lsfData::Ebf* getEbfPtr() { return &m_ebf; }
+        void setEbf(char* data, unsigned int len) {
+            m_ebf.set(data, len);
+        }
+     
 
         void setSummary(unsigned summary) { m_summaryData.setSummary(summary); };
 
@@ -213,6 +221,8 @@ namespace ldfReader {
 
         //std::map<const char*, const char*> m_acdRemapCol;
         std::map<const std::string*, const std::string*> m_acdRemapCol;
+
+        lsfData::Ebf m_ebf;
     };
 }
 #endif
