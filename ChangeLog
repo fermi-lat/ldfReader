@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: heather  Thu Nov  8 09:52:12 PST 2007
+ldfReader/ldfReader
+
+Modified Files:
+      Tag: GlastReleasev12r15
+	DfiParser.h 
+Log Message:
+try debuggin on windows
+    *
+------------------------------------------------------------
 TAG
 Tag name: v3r33, operation: add
 Package: ldfReader
