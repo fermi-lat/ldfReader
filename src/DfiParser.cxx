@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.28 2007/04/25 01:37:08 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.29 2007/11/05 03:02:51 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -152,14 +152,9 @@ int DfiParser::readContextAndInfo() {
 double DfiParser::timeForTds(double utc) {
 
 // Code from Anders July, 2006. With many updates :-)
-// Right now the missing GPS lock is always set so can't use 
-// "incomplete" Time Tone flag! Need to check each flag explicitly - 
-// can't rely on correct redundancy behaviour right now.
-// After integration with the space craft in December 2006 we no longer have 
-// the missing GPS lock error. However, we now occasionally have an incomplete 
-// time tone without any other error flags set.
-//
-
+// Update April 2008: See JIRA https://jira.slac.stanford.edu/browse/GRINF-46
+//                    We now also have the sourceGps() flag instead of missingGps().
+//                    Also note that the lsb for the double precision for the full time stamp is 30 ns.            
 
     // Time stamp of the event in seconds (and fractions thereof) since 01.01.2001 UTC:
     double timestamp;
@@ -182,18 +177,20 @@ double DfiParser::timeForTds(double utc) {
       clockTicksEvt1PPS = clockTicksEvt1PPS + RollOver;
     }
 
-    // Verify that the two TimeTones are OK:
-    if (!(metaEvent.time().current().incomplete()) &&
-        !(metaEvent.time().current().flywheeling()) &&
+    // Verify that the two TimeTones are OK: 
+    // We will accept early events so we can't use the incomplete flag! 
+    // Also not checking flywheeling since we require sourceGps.
+    if ( (metaEvent.time().current().sourceGps()) &&
         !(metaEvent.time().current().missingCpuPps()) &&
         !(metaEvent.time().current().missingLatPps()) &&
         !(metaEvent.time().current().missingTimeTone()) &&
-        !(metaEvent.time().previous().incomplete()) &&
-        !(metaEvent.time().previous().flywheeling()) &&
+	 // That was the current Timetone. Now the previous one. 
+         (metaEvent.time().previous().sourceGps()) &&
         !(metaEvent.time().previous().missingCpuPps()) &&
         !(metaEvent.time().previous().missingLatPps()) &&
         !(metaEvent.time().previous().missingTimeTone()) &&
-	// Avoid 1/0 error:
+	// Avoid 1/0 error: This could probably be replaced by using 'RollOver' instead  
+        // because of the subsequent requirement.   
         (metaEvent.time().current().timeHack().ticks() != 
                       metaEvent.time().previous().timeHack().ticks()) &&  
         // If there is more than a second between 1-PPS I can 
@@ -216,6 +213,7 @@ double DfiParser::timeForTds(double utc) {
       // Timestamp:
       timestamp = double (metaEvent.time().current().timeSecs()) 
                   + (clockTicksEvt1PPS/clockTicksDelta1PPS);
+
     } else {
 
       // Cannot use TimeTone(s) - will assume nominal value for the LAT system clock:
