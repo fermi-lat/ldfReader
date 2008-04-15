@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v3r34	15-Apr-2008 awb Updated flags for time stamp calculation: JIRA GRINF-46.
 v3r33   04-Nov-2007 hmk Patch for LSFReader move from CHS/eventFile to lsfData
 v3r32p1 02-Oct-2007 hmk Add FILE_OFFSET_BITS to cppflags
 v3r32   24-Apr-2007 hmk JIRA-ICS-199 to handle the LPA keys
