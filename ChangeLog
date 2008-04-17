@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Thu Apr 17 09:32:06 PDT 2008
+ldfReader/ldfReader
+
+Modified Files:
+	EbfParser.h 
+Log Message:
+JIRA ROOT-34
+    *
+------------------------------------------------------------
+User: heather  Thu Apr 17 09:32:06 PDT 2008
 ldfReader/doc
 
 Modified Files:
