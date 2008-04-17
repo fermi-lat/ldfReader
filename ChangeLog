@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Apr 17 09:32:06 PDT 2008
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+JIRA ROOT-34
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-03-34-00, operation: add
 Package: ldfReader
