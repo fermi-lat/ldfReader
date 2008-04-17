@@ -177,6 +177,9 @@ namespace ldfReader {
         void setIgnoreSegFault(bool val=true) { m_ignoreSegFault = val; }
         bool ignoreSegFault() const { return m_ignoreSegFault; }
 
+        void setOldStyleRunId(bool flag=true) { m_oldStyleRunId = flag; }
+        bool oldStyleRunId() const { return m_oldStyleRunId; }
+
     private:
 
         static LatData *m_instance;
@@ -210,6 +213,11 @@ namespace ldfReader {
         bool m_contextExists;
 
         bool m_ignoreSegFault;
+
+        /// Flag set via LdfConverter's JO
+        /// Specifies which runId to access, lsfData::LsfReader::runId()
+        /// or ctx.run.startedAt (real data)
+        bool m_oldStyleRunId;
 
         //std::map<const char*, const char*> m_acdRemapCol;
         std::map<const std::string*, const std::string*> m_acdRemapCol;

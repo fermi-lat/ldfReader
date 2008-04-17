@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.29 2007/11/05 03:02:51 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.30 2008/04/15 21:29:23 borgland Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -235,12 +235,16 @@ int DfiParser::loadData() {
         // First clear the LatData
         ldfReader::LatData::instance()->clearTowers();
 
-        ldfReader::LatData::instance()->setRunId(m_runId);
-
         ldfReader::LatData::instance()->setEventSizeInBytes(m_eventSize);
 
         readContextAndInfo();
 
+        if (ldfReader::LatData::instance()->oldStyleRunId())
+            ldfReader::LatData::instance()->setRunId(m_runId);
+        else{
+            const lsfData::MetaEvent& meta = ldfReader::LatData::instance()->getMetaEvent();
+            ldfReader::LatData::instance()->setRunId(meta.run().startTime());
+        }
 
         EbfEventParser ldf;
         ldf.iterate(m_start, m_end);

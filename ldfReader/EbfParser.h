@@ -5,7 +5,7 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/EbfParser.h,v 1.6 2006/07/28 23:26:23 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/EbfParser.h,v 1.7 2006/08/01 15:52:15 heather Exp $
 */
 
 #include <string>
@@ -38,6 +38,11 @@ namespace ldfReader {
 
 
         virtual void setIgnoreSegFault();
+
+        /// Set flag that determines what method we use to retrieve the
+        /// the run ID.  We may use the LdfReader::runId routine (old I&T)
+        /// or use ctx.run.startedAt (real data)
+        virtual void setOldStyleRunId(bool flag=true);
 
         // local exception class
         class Exception{ };

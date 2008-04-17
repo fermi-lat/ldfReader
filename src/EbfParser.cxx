@@ -6,7 +6,7 @@
 /** @file EbfParser.cxx
 @brief Implementation of the EbfParser base class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/EbfParser.cxx,v 1.4 2006/07/28 23:26:24 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/EbfParser.cxx,v 1.5 2006/08/01 15:52:15 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -31,6 +31,9 @@ void EbfParser::setIgnoreSegFault() {
 
 }
 
+void EbfParser::setOldStyleRunId(bool flag) {
+   ldfReader::LatData::instance()->setOldStyleRunId(flag);
+}
 
 } //namespace
 #endif

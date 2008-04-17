@@ -4,6 +4,8 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v4r0    17-Apr-2008 hmk JIRA ROOT-34, change default method for setting
+        the runid, to use ctx.run.startedAt, rather than LSEReader::runid()
 v3r34	15-Apr-2008 awb Updated flags for time stamp calculation: JIRA GRINF-46.
 v3r33   04-Nov-2007 hmk Patch for LSFReader move from CHS/eventFile to lsfData
 v3r32p1 02-Oct-2007 hmk Add FILE_OFFSET_BITS to cppflags
