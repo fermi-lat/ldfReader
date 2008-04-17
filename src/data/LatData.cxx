@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.41 2006/08/03 18:21:56 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.42 2006/08/03 18:42:53 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -21,6 +21,7 @@ namespace ldfReader {
     LatData::LatData() {
         clearTowers(); 
         m_acdRemapCol.clear();
+        m_oldStyleRunId = false;
     }
 
     LatData::~LatData() {
