@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Thu Apr 17 09:32:06 PDT 2008
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx EbfParser.cxx 
+Log Message:
+JIRA ROOT-34
+    *
+------------------------------------------------------------
+User: heather  Thu Apr 17 09:32:06 PDT 2008
 ldfReader/ldfReader/data
 
 Modified Files:
