@@ -6,7 +6,7 @@
 namespace ldfReader {
     /** @class AcdDigi
       * @brief Local storage of CAL log data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.8 2006/05/03 20:54:15 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.9 2006/08/05 06:02:03 heather Exp $
     */
     class AcdDigi {
     public:
@@ -22,14 +22,22 @@ namespace ldfReader {
             ERROR = 1
         } ParityError;
 
+        typedef enum 
+        {
+           NOCABLE=-1
+        } UnDef;
+
         class AcdPmt {
         public:
             AcdPmt() {};
-            AcdPmt(unsigned int pha, int r, PmtSide s, short c, short m, bool hit, bool phaAccept, ParityError err = NOERROR, ParityError headerParity=NOERROR) {
+            AcdPmt(unsigned int pha, int r, PmtSide s, short c, short m, 
+                   bool hit, bool phaAccept, ParityError err = NOERROR, 
+                   ParityError headerParity=NOERROR) {
                 m_pha = pha;
                 m_range = r;
                 m_side = s;
                 m_channel = c;
+                m_cable = NOCABLE;
                 m_more = m;
                 m_hit = hit;
                 m_accept = phaAccept;
@@ -39,10 +47,12 @@ namespace ldfReader {
 
 
              AcdPmt(PmtSide s, short c, bool hit, bool phaAccept, 
-                  ParityError err = NOERROR, ParityError headerParity=NOERROR) 
+                  ParityError err = NOERROR, ParityError headerParity=NOERROR
+                  ) 
              {
                  m_side = s;
                  m_channel = c;
+                 m_cable = NOCABLE;
                  m_hit = hit;
                  m_accept = phaAccept;
                  m_oddError = err;
@@ -56,6 +66,10 @@ namespace ldfReader {
                  m_more = more;
                  m_oddError = err;
 
+             }
+
+             void initCable(short c) {
+                 m_cable = c;
              }
 
             ~AcdPmt() {};
@@ -76,6 +90,7 @@ namespace ldfReader {
             ParityError getParityError() const { return m_oddError; };
             ParityError getOddParity() const { return m_oddError; };
             short getChannel() const { return m_channel; };
+            short getCable() const { return m_cable; };
             short getMore() const { return m_more; };
             /// Returns corresponding bit from hit map
             bool getHit() const { return m_hit; };
@@ -93,6 +108,7 @@ namespace ldfReader {
             PmtSide m_side;
             ParityError m_oddError;
             short m_channel;
+            short m_cable;
             short m_more;
             bool m_hit; /// veto
             bool m_accept; // PHA threshold

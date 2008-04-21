@@ -4,6 +4,9 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v4r1    19-Apr-2008 hmk JIRA ACD-19 add AcdDigi::m_cable to stash the cable
+        number associated with this ACD PMT, so we can refer to it in 
+        LdfConverter and decode the CNO vector bits
 v4r0    17-Apr-2008 hmk JIRA ROOT-34, change default method for setting
         the runid, to use ctx.run.startedAt, rather than LSEReader::runid()
 v3r34	15-Apr-2008 awb Updated flags for time stamp calculation: JIRA GRINF-46.
