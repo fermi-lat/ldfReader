@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Sun Apr 20 21:47:41 PDT 2008
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v5r0
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-04-01-00, operation: add
 Package: ldfReader
