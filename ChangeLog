@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed May 28 13:03:50 PDT 2008
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+get those filter bits in
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-05-00-00, operation: add
 Package: ldfReader
