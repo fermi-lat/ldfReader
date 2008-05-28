@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v5r1    28-May-2008 hmk add filter bits
 v5r0    21-Apr-2008 hmk identical to v4r1, but decided this is an interface
         change and deserves a new version number
 v4r1    19-Apr-2008 hmk JIRA ACD-19 add AcdDigi::m_cable to stash the cable

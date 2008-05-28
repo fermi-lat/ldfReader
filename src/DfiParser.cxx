@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.30 2008/04/15 21:29:23 borgland Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.31 2008/04/17 16:32:06 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -136,6 +136,14 @@ int DfiParser::readContextAndInfo() {
 
     metaEvent->set(m_meta.run(), m_meta.datagram(), m_meta.scalers(),
                    m_meta.time(), *(m_meta.configuration()), *(m_meta.keys()));
+
+    //metaEvent->setHandlerCol(m_meta.lpaHandlerCol());
+    if (m_meta.gammaFilter()) metaEvent->addGammaHandler(*(m_meta.gammaFilter())); 
+    if (m_meta.mipFilter()) metaEvent->addMipHandler(*(m_meta.mipFilter())); 
+    if (m_meta.hipFilter()) metaEvent->addHipHandler(*(m_meta.hipFilter())); 
+    if (m_meta.dgnFilter()) metaEvent->addDgnHandler(*(m_meta.dgnFilter())); 
+    if (m_meta.passthruFilter()) metaEvent->addPassthruHandler(*(m_meta.passthruFilter())); 
+    if (m_meta.lpaHandler()) metaEvent->addLpaHandler(*(m_meta.lpaHandler())); 
  
     lsfData::LsfCcsds* ccsdsData = ldfReader::LatData::instance()->getCcsdsPtr();
     ccsdsData->initialize(m_ccsds.getScid(), m_ccsds.getApid(), m_ccsds.getUtc());
