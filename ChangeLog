@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: borgland  Mon Jun  9 10:44:35 PDT 2008
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx 
+Log Message:
+Fixed event time stamp - see GRINF-48.
+    *
+------------------------------------------------------------
+User: borgland  Mon Jun  9 10:44:35 PDT 2008
 ldfReader/doc
 
 Modified Files:
