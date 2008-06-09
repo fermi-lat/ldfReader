@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: borgland  Mon Jun  9 10:44:35 PDT 2008
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+Fixed event time stamp - see GRINF-48.
+    *
+------------------------------------------------------------
 User: borgland  Mon Jun  9 10:44:34 PDT 2008
 ldfReader/cmt
 
