@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.31 2008/04/17 16:32:06 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.32 2008/05/28 20:03:50 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -185,18 +185,15 @@ double DfiParser::timeForTds(double utc) {
       clockTicksEvt1PPS = clockTicksEvt1PPS + RollOver;
     }
 
-    // Verify that the two TimeTones are OK: 
-    // We will accept early events so we can't use the incomplete flag! 
-    // Also not checking flywheeling since we require sourceGps.
-    if ( (metaEvent.time().current().sourceGps()) &&
-        !(metaEvent.time().current().missingCpuPps()) &&
+    // UDL does averaging for us when there is no GPS lock.
+    // Also accepting early events.
+    // If there are no 1-PPS at CPU or LAT level we are probably hosed.
+    // Will use 20 MHz in that case.
+    if (!(metaEvent.time().current().missingCpuPps()) &&
         !(metaEvent.time().current().missingLatPps()) &&
-        !(metaEvent.time().current().missingTimeTone()) &&
 	 // That was the current Timetone. Now the previous one. 
-         (metaEvent.time().previous().sourceGps()) &&
         !(metaEvent.time().previous().missingCpuPps()) &&
         !(metaEvent.time().previous().missingLatPps()) &&
-        !(metaEvent.time().previous().missingTimeTone()) &&
 	// Avoid 1/0 error: This could probably be replaced by using 'RollOver' instead  
         // because of the subsequent requirement.   
         (metaEvent.time().current().timeHack().ticks() != 
@@ -227,6 +224,11 @@ double DfiParser::timeForTds(double utc) {
       // Cannot use TimeTone(s) - will assume nominal value for the LAT system clock:
       timestamp = double (metaEvent.time().current().timeSecs())
                   + (clockTicksEvt1PPS/LATSystemClock);
+     
+      // To turn on: EventSelector.EbfDebugLevel = 1;
+      if (EbfDebug::getDebug())
+	std::cout << "ldfReader::DfiParser - Using fixed 20 MHz!" << std::endl;
+      
     }
 
     // Event time stamp:
