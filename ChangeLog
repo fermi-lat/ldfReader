@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: borgland  Mon Jun  9 10:44:34 PDT 2008
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+Fixed event time stamp - see GRINF-48.
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-05-01-00, operation: add
 Package: ldfReader
