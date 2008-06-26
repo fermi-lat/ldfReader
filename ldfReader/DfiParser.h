@@ -25,7 +25,7 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/DfiParser.h,v 1.8 2006/08/01 15:52:15 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/DfiParser.h,v 1.9 2007/11/05 03:02:51 heather Exp $
 */
 
 namespace ldfReader {
@@ -86,6 +86,7 @@ namespace ldfReader {
         lsfData::LsfCcsds m_ccsds;
         lsfData::MetaEvent m_meta;
         eventFile::EBF_Data m_ebf;
+        unsigned char mybuff[128*1024];
 
         bool m_more;
 
