@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Jul  3 13:12:41 PDT 2008
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+forcing a latest build
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-05-02-00, operation: add
 Package: ldfReader
