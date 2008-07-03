@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.32 2008/05/28 20:03:50 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.33.4.1 2008/06/26 19:21:27 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -248,6 +248,11 @@ int DfiParser::loadData() {
         ldfReader::LatData::instance()->setEventSizeInBytes(m_eventSize);
 
         readContextAndInfo();
+
+        memset(mybuff,0,128*1024);
+        memcpy(mybuff, m_ebf.data()+8, m_ebf.size()-8);
+        ldfReader::LatData::instance()->setEbf((char*)mybuff, m_ebf.size()-8);
+
 
         if (ldfReader::LatData::instance()->oldStyleRunId())
             ldfReader::LatData::instance()->setRunId(m_runId);

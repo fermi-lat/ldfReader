@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v5r2    03-Jul-2008 hmk Merge in code to grab ebf blob for TDS
 v5r1p1  09-Jun-2008 awb Fixed event time stamp - see GRINF-48.
 v5r1    28-May-2008 hmk add filter bits
 v5r0    21-Apr-2008 hmk identical to v4r1, but decided this is an interface
