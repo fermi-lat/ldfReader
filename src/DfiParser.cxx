@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.33.4.1 2008/06/26 19:21:27 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.34 2008/07/03 16:46:56 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -24,6 +24,8 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.33.4.1 200
 #include "lsfData/LsfTime.h"
 //#include "./ccsds2lsf.h"
 
+#include "EDS/io/EBF_evts.h"
+
 namespace ldfReader {
 
 DfiParser::DfiParser() {
@@ -31,7 +33,7 @@ DfiParser::DfiParser() {
 }
 
 
-DfiParser::DfiParser(const std::string &filename) {
+DfiParser::DfiParser(const std::string &filename) : m_ebfPkts(0) {
     //Purpose and Method:  Ctor using LPA file as input 
     // Open input file and read in first event
     //Inputs:  filename 
@@ -65,6 +67,12 @@ DfiParser::DfiParser(const std::string &filename) {
 DfiParser::~DfiParser() {
     if (m_file) delete m_file;
     m_file = 0;
+
+    if (m_ebfPkts) 
+    {
+        delete m_ebfPkts;
+        m_ebfPkts = 0;
+    }
 }
 
 void DfiParser::clear() {
@@ -73,6 +81,12 @@ void DfiParser::clear() {
     m_eventSize = 0;
     m_ccsds.clear();
     m_meta.clear();
+
+    if (m_ebfPkts) 
+    {
+        delete m_ebfPkts;
+        m_ebfPkts = 0;
+    }
 }
 
 void DfiParser::printHeader() const {
@@ -235,6 +249,154 @@ double DfiParser::timeForTds(double utc) {
     return timestamp;
 }
 
+unsigned char* DfiParser::rePacketizeEbf(const unsigned char* data, int dataLen, int& packetLen)
+{
+    // As the name implies, this method takes the raw ebf data buffer read back and 
+    // re-packetizes it so that FSW running on the ground can eat it. 
+    // First version, July 4th weekend, 2008
+
+    // Set up to start looping through the data buffer
+    // What follows here will create the EBF_pkts object in C++ (as opposed to C)
+    unsigned int* dataPtr = (unsigned int*)data;
+
+    // Keep track of total packet length
+    packetLen = 0;
+
+    // Use a temporary buffer for storing the packetized data. Will then copy to 
+    // an allocated buffer once the length is known
+    unsigned char  tempBuffer[128*1024];
+    unsigned int*  packetBuf = (unsigned int*)tempBuffer;
+
+    // Preserve the gem contribution (necessary for multi-packet events)
+    EBF_ebw* gem = (EBF_ebw*)dataPtr;
+
+    // Set up to loop over data
+    bool firstPkt = true;
+    int  seq      = 0;
+
+    while(dataLen > 0)
+    {
+        // First data contribution (best be gem word)
+        EBF_ebw* ctb = (EBF_ebw*)dataPtr;
+
+        // Determine max possible size of a packet
+        int maxSize = (1 << 10) * sizeof(int) - 1;
+
+        // Special case, must leave room for restart header if not first packet
+        if (!firstPkt) maxSize -= 4 * sizeof(int);
+
+        // Size of the packet we'll actually work with (tbd)
+        int pktSize = 0;
+
+        // Ok if remaining length is larger than max size allowed, we must search
+        // for the last contributor that would fit
+        if (dataLen > maxSize)
+        {
+            // Loop through contributions look for last in packet
+            while(maxSize > 0)
+            {
+                // size of current contribution
+                int ebwSize = EBF_EBW_LEN_TO_BYTES(ctb->bf.len);
+
+                // Keep track of remaining room in this packet
+                maxSize -= ebwSize;
+
+                // If room remaining, advance pointer and increment packet size
+                if (maxSize >= 0)
+                {
+                    pktSize += ebwSize;
+                    ctb      = (EBF_ebw*)((unsigned char*)ctb + ebwSize);
+                }
+            }
+        }
+        // Otherwise, we can just set the length to the dataLen
+        else pktSize = dataLen;
+
+        // Pointer to the data packet
+        EBF_ebw  ebw  = *gem;
+        EBF_edw  edw;
+
+        edw.ui = 0;
+
+        // If first (or only) packet, then handle here
+        if (firstPkt)
+        {
+            int nWords = (pktSize + sizeof(EBF_pktHdr)) / sizeof(int);
+
+            // Total packet length
+            packetLen += nWords * sizeof(int);
+
+            // Copy this packet to the buffer
+            memcpy(&packetBuf[8], dataPtr, pktSize);
+
+            // Pointer to the packet header so we can fill in the information
+            EBF_pkt* newPkt = (EBF_pkt*)packetBuf;
+
+            // ebw word
+            ebw.bf.seq     = seq++;
+            newPkt->ebw.ui = ebw.ui;
+
+            // edw word
+            edw.bf.len     = pktSize / sizeof(int);
+            edw.bf.rstatus = dataLen - pktSize > 0 
+                           ? EBF_EDW_RSTATUS_K_PACKET_TRUNCATED
+                           : EBF_EDW_RSTATUS_K_SUCCESS;
+
+            newPkt->hdr.undef[7] = edw.ui;
+
+            // Advance the buffer pointer to next potential location
+            packetBuf += nWords;
+
+            firstPkt = false;
+        }
+        // Otherwise, we need to tack on the restart header
+        else
+        {
+            // Size of this packet in words
+            int nWords = (pktSize + sizeof(EBF_pktRestartHdr)) / sizeof(int);
+
+            // Total packet length
+            packetLen += nWords * sizeof(int);
+
+            // Copy the data in this packet
+            memcpy(&packetBuf[12], dataPtr, pktSize);
+
+            // Pointer to the restart header
+            EBF_pktRestartHdr* restart = (EBF_pktRestartHdr*)packetBuf;
+
+            // ebw word
+            ebw.bf.seq     = seq++;
+
+            // edw word(s)
+            edw.bf.len     = (pktSize + 4 * sizeof(int)) / sizeof(int);
+            edw.bf.rstatus = dataLen - pktSize > 0 
+                           ? EBF_EDW_RSTATUS_K_PACKET_TRUNCATED
+                           : EBF_EDW_RSTATUS_K_SUCCESS;
+            edw.bf.xstatus = EBF_EDW_XSTATUS_K_SUCCESS;
+
+            // Update restart header
+            restart->hdr.undef[7] = edw.ui;
+            restart->cell.ebw.ui  = ebw.ui;
+            restart->cell.mbz[0]  = 0;
+            restart->cell.mbz[1]  = 0;
+            restart->cell.mbz[2]  = 0;
+
+            // Advance the buffer pointer to next potential location
+            packetBuf += nWords;
+        }
+
+        // At this point we can advance position in buffer
+        dataPtr += pktSize / sizeof(int);
+        dataLen -= pktSize;
+    }
+
+    // Ok, now have size of packetized data so allocate buffer and copy data
+    unsigned char* pktData = new unsigned char[packetLen];
+
+    memcpy(pktData, tempBuffer, packetLen);
+
+    return pktData;
+}
 
 int DfiParser::loadData() {
 // Purpose and Method:  This routine loads the data from one event
@@ -251,7 +413,19 @@ int DfiParser::loadData() {
 
         memset(mybuff,0,128*1024);
         memcpy(mybuff, m_ebf.data()+8, m_ebf.size()-8);
-        ldfReader::LatData::instance()->setEbf((char*)mybuff, m_ebf.size()-8);
+//        ldfReader::LatData::instance()->setEbf((char*)mybuff, m_ebf.size()-8);
+
+        // Clean up from last time through
+        // In the end, maybe this is better done with a static buffer?
+        if (m_ebfPkts) 
+        {
+            delete m_ebfPkts;
+            m_ebfPkts = 0;
+        }
+
+        // Ok, re-packetize the ebf data
+        m_ebfPkts = rePacketizeEbf(m_ebf.data()+8, m_ebf.size()-8, m_ebfPktsLen);
+        ldfReader::LatData::instance()->setEbf((char*)m_ebfPkts, m_ebfPktsLen);
 
 
         if (ldfReader::LatData::instance()->oldStyleRunId())
