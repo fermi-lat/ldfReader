@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Sun Jul  6 15:23:35 PDT 2008
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+First try at re-packetizing ebf data before storing in the EbfData TDS class
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-05-02-01, operation: add
 Package: ldfReader
