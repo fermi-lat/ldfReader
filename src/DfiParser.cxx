@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.34 2008/07/03 16:46:56 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.35 2008/07/06 22:23:35 usher Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -150,6 +150,9 @@ int DfiParser::readContextAndInfo() {
 
     metaEvent->set(m_meta.run(), m_meta.datagram(), m_meta.scalers(),
                    m_meta.time(), *(m_meta.configuration()), *(m_meta.keys()));
+
+    metaEvent->setCompressionLevel(m_meta.compressionLevel());
+    metaEvent->setCompressedSize(m_meta.compressedSize());
 
     //metaEvent->setHandlerCol(m_meta.lpaHandlerCol());
     if (m_meta.gammaFilter()) metaEvent->addGammaHandler(*(m_meta.gammaFilter())); 
