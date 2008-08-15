@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: ecephas  Fri Aug 15 14:22:47 PDT 2008
+GlastRelease-scons/ldfReader
+
+Added Files:
+	SConscript 
+Log Message:
+Added SConscript files for packages
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-06-00-01, operation: add
 Package: ldfReader
