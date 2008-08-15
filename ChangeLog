@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: ecephas  Fri Aug 15 14:42:39 PDT 2008
+GlastRelease-scons/ldfReader
+
+Added Files:
+	ldfReaderLib.py 
+Log Message:
+Added Lib file (e.g., <package>Lib.py) for each package that creates a library.
+    *
+------------------------------------------------------------
 User: ecephas  Fri Aug 15 14:22:47 PDT 2008
 GlastRelease-scons/ldfReader
 
