@@ -19,265 +19,308 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.
 
 namespace ldfReader {
 
-int ErrParser::gcccError(unsigned /* tower */, unsigned gccc, GCCCerror err)
-{
-  unsigned long long evtId;
-  if (ldfReader::LatData::instance()->contextExists())
-      evtId = ldfReader::LatData::instance()->eventId();
-  else
-      evtId = ldfReader::LatData::instance()->getOsw().evtSequence();
+const unsigned ErrParser::m_gccc[]  = {0, 2, 3, 1};
+const unsigned ErrParser::m_gtcc[]  = {3, 6, 2, 7, 0, 5, 1, 4};
+const char* ErrParser::m_pn[]       = {"+", "-"};
+const char* ErrParser::m_xy[]       = {"X", "Y"};
+const unsigned ErrParser::m_layer[] = {0, 2, 2, 0};
 
+
+int ErrParser::summary(ErrorSummary theError)
+{
+    // Skip this contribution if there was a packet error
+    if ( (EBFcontribution*)contribution()->packetError()) {
+        fprintf(stream(),
+             "Packet Error found in TEM - during error processing - skipping");
+        _handleErrorCommon();
+        return 0;
+    }
+
+    ldfReader::ErrData err;
+    err.initLength(((EBFcontribution*)contribution())->length());
+    //err.initPacketError(((EBFcontribution*)contribution)->packetError());
+
+    unsigned int towerId = LATPcellHeader::source(contribution()->header());
+    LatData* curLatData = LatData::instance();
+    TowerData* tower = curLatData->getTower(towerId);
+    if (!tower) {
+        tower = new TowerData(towerId);
+        curLatData->addTower(tower);
+    }
+
+    tower->getTem().getErr()->setExist();
+
+    tower->getTem().getErr()->initCal(theError.cal());
+    tower->getTem().getErr()->initTkr(theError.tkr());
+    tower->getTem().getErr()->initPhs(theError.phs());
+    tower->getTem().getErr()->initTmo(theError.tmo());
+
+    tower->getTem().getErr()->initLength(ERRcontributionIterator::size());
+
+    return 0;
+}
+
+
+int ErrParser::gaemTMOerror(unsigned cable) {
+  fprintf(stream(), "ErrParser:"
+                    "No start bit seen => cable timeout for cable %d\n",
+          cable);
+
+  _handleErrorCommon();
+
+  return 0;
+}
+
+int ErrParser::gaemHDRParityError(unsigned cable) {
+
+  fprintf(stream(), "ErrParser:"
+                    "Header parity error for cable %d\n",
+          cable);
+  _handleErrorCommon();
+
+  return 0;
+}
+
+
+int ErrParser::gaemPHAParityError(unsigned cable, unsigned channel) {
+  fprintf(stream(), "ErrParser:"
+                    "PHA parity error for cable %d, channel %d\n",
+          cable, channel);
+
+  _handleErrorCommon();
+
+  return 0;
+}
+
+
+
+int ErrParser::gcccError(unsigned tower, unsigned gccc, GCCCerror err)
+{
   ldfReader::LatData::instance()->setGcccErrorFlag();
-  if (err.type() == 0) {
-    fprintf(stderr, 
-        "%s    GCCC %d had missing start bit(s) on sweep %d (raw: 0x%04x):",
-           m_prefix, gccc, err.sweep(), err.param());
-    fprintf(stderr, "  Event %llu Apid: %d\n",
-        evtId,
-        ldfReader::LatData::instance()->getCcsds().getApid());
-  } else {
-    fprintf(stderr,
-        "%s    GCCC %d had parity error(s) on sweep %d (raw: 0x%04x):",
-           m_prefix, gccc, err.sweep(), err.param());
-    fprintf(stderr, "  Event %llu Apid: %d\n",
-        evtId,
-        ldfReader::LatData::instance()->getCcsds().getApid());
-   }
+
+  const char* msg = (err.type() == 0) ? "Missing start bit(s)" : "Parity error(s)";
+  fprintf(stream(),
+          "%s    %s: Tower %d, GCCC %d, sweep %d (raw: 0x%04x):",
+          m_prefix, msg, tower, gccc, err.sweep(), err.raw());
+  unsigned i;
+  for (i=0; i<8; i++)
+  {
+    if (err.param() & (1 << i))
+    {
+      fprintf(stream(), "%s      %s%s%d, wire %d\n", m_prefix,
+              m_pn[i > 3],
+              m_xy[gccc & 1],
+              m_layer[gccc] + ((i >> 1) & 1),
+              i & 1);
+    }
+  }
+  _handleErrorCommon();
+
   return 0;
 }
 
-int ErrParser::gtccError(unsigned /* tower */, unsigned gtcc, GTCCerror err)
+int ErrParser::gtccError(unsigned tower, unsigned gtcc, GTCCerror err)
 {
-  unsigned long long evtId;
-  if (ldfReader::LatData::instance()->contextExists())
-      evtId = ldfReader::LatData::instance()->eventId();
-  else
-      evtId = ldfReader::LatData::instance()->getOsw().evtSequence();
   ldfReader::LatData::instance()->setGtccErrorFlag();
-  fprintf(stderr, "%s  GTCC %d, GTRC %d (msg: 0x%04x):",
-         m_prefix, gtcc, err.GTRC(), err.raw());
-  fprintf(stderr, "  Event %llu Apid: %d\n",
-        evtId,
-        ldfReader::LatData::instance()->getCcsds().getApid());
+
+  fprintf(stream(), "%s  Tower %d, GTCC %d, GTRC %d (raw: 0x%04x):",
+          m_prefix, tower, gtcc, err.GTRC(), err.raw());
+  _handleErrorCommon();
+
   return 0;
 }
 
-int ErrParser::phaseError(unsigned /* tower */, unsigned short err)
+int ErrParser::phaseError(unsigned tower, unsigned short err)
 {
-  unsigned long long evtId;
-  if (ldfReader::LatData::instance()->contextExists())
-      evtId = ldfReader::LatData::instance()->eventId();
-  else
-      evtId = ldfReader::LatData::instance()->getOsw().evtSequence();
   ldfReader::LatData::instance()->setPhaseErrorFlag();
-  fprintf(stderr, "\n");
-  fprintf(stderr, "Event %llu Apid: %d\n",
-        evtId,
-        ldfReader::LatData::instance()->getCcsds().getApid());
-  fprintf(stderr, "%s  Cable Controller phasing error tags (raw: 0x%04x):\n",
-         m_prefix, err);
 
-  unsigned cc[]  = {3, 6, 2, 7, 0, 5, 1, 4};
+  fprintf(stream(), "%s  Cable Controller phasing error: Tower %d, tags (raw: 0x%04x):",
+         m_prefix, tower, err);
+
   unsigned tag[] = {0, 0, 0, 0, 0, 0, 0, 0};
   unsigned i;
   for (i=0; i<8; i++)
   {
-    tag[cc[i]] = (err >> (i << 1)) & 0x0003;
+    tag[m_gtcc[i]] = (err >> (i << 1)) & 0x0003;
   }
-  fprintf(stderr, "%s    GTCC:  0  1  2  3  4  5  6  7\n" , m_prefix);
-  fprintf(stderr, "%s     tag:", m_prefix);
+  fprintf(stream(), "%s    GTCC:  0  1  2  3  4  5  6  7\n" , m_prefix);
+  fprintf(stream(), "%s     tag:", m_prefix);
   for (i=0; i<8; i++)
   {
-      fprintf(stderr, "  %d", tag[i]);
+    fprintf(stream(), "  %d", tag[i]);
   }
-  fprintf(stderr, "\n");
+  fprintf(stream(), "\n");
+  _handleErrorCommon();
   return 0;
 }
 
-int ErrParser::timeoutError(unsigned /* tower */, unsigned short err)
+int ErrParser::timeoutError(unsigned tower, unsigned short err)
 {
-  unsigned long long evtId;
-  if (ldfReader::LatData::instance()->contextExists())
-      evtId = ldfReader::LatData::instance()->eventId();
-  else
-      evtId = ldfReader::LatData::instance()->getOsw().evtSequence();
   ldfReader::LatData::instance()->setTimeoutErrorFlag();
-  fprintf(stderr,"\n");
-  fprintf(stderr, "Event %llu Apid: %d\n",
-        evtId,
-        ldfReader::LatData::instance()->getCcsds().getApid());
-  fprintf(stderr, 
-     "%s  Cable Controller timeouts (raw: 0x%03x):\n", m_prefix, err);
+
+  fprintf(stream(), "%s  Cable Controller timeouts: Tower %d (raw: 0x%03x):\n",
+          m_prefix, tower, err);
   unsigned short cTmos = err & 0x000f;
-  fprintf(stderr, "%s    GCCC:", m_prefix);
+  fprintf(stream(), "%s    GCCC:", m_prefix);
   unsigned i;
   for (i=0; i<4; i++)
   {
-    if (cTmos & (1 << i))  fprintf(stderr," %d", i);
+    if (cTmos & (1 << i))  fprintf(stream(), " %d", m_gccc[i]);
   }
   unsigned short tTmos = (err >> 4) & 0x00ff;
-  fprintf(stderr,", GTCC:");
+  fprintf(stream(), ", GTCC:");
   for (i=0; i<8; i++)
   {
-    if (tTmos & (1 << i))  fprintf(stderr," %d", i);
+    if (tTmos & (1 << i))  fprintf(stream()," %d", m_gtcc[i]);
   }
-  fprintf(stderr, "\n");
+  fprintf(stream(), "\n");
+  _handleErrorCommon();
   return 0;
 }
 
-int ErrParser::gtrcPhaseError (unsigned  /* tower */,
-                                   unsigned  /* gtcc */,
-                                   unsigned  /* gtrc */,
-                                   GTRCerror err)
+int ErrParser::gtrcPhaseError (unsigned  tower,
+                               unsigned  gtcc,
+                               unsigned  gtrc,
+                               GTRCerror err)
 {
-  unsigned long long evtId;
-  if (ldfReader::LatData::instance()->contextExists())
-      evtId = ldfReader::LatData::instance()->eventId();
-  else
-      evtId = ldfReader::LatData::instance()->getOsw().evtSequence();
   ldfReader::LatData::instance()->setGtrcPhaseFlag();
-  fprintf(stderr,"\n");
-  fprintf(stderr, "Event %llu Apid: %d",
-        evtId,
-        ldfReader::LatData::instance()->getCcsds().getApid());
-  fprintf(stderr,
-      "%s    GTRC phasing error (raw: 0x%04x)\n", m_prefix, err.raw());
-  fprintf(stderr,"%s      Current tag number:           %d",
+
+  fprintf(stream(), "%s    GTRC phasing error: "
+          "Tower %d, GTCC %d, GTRC %d (raw: 0x%04x)\n", m_prefix,
+          tower, gtcc, gtrc, err.raw());
+  fprintf(stream(),"%s      Current tag number:           %d",
          m_prefix, err.currentTag());
-  fprintf(stderr,"%s      Layer 0 tag number:           %d\n",
+  fprintf(stream(),"%s      Layer 0 tag number:           %d\n",
          m_prefix, err.layer0Tag());
-  fprintf(stderr,"%s      Expected layer number:        %d\n",
+  fprintf(stream(),"%s      Expected layer number:        %d\n",
          m_prefix, err.expectedLayer());
-  fprintf(stderr,"%s      Layer number received by TEM: %d\n",
+  fprintf(stream(),"%s      Layer number received by TEM: %d\n",
          m_prefix, err.receivedLayer());
+  _handleErrorCommon();
   return 0;
 }
 
-int ErrParser::gtfePhaseError (unsigned       /* tower */,
-                                   unsigned       /* gtcc */,
-                                   unsigned       /* gtrc */,
-                                   unsigned short err1,
-                                   unsigned short err2,
-                                   unsigned short err3,
-                                   unsigned short err4,
-                                   unsigned short err5)
+int ErrParser::gtfePhaseError (unsigned       tower,
+                               unsigned       gtcc,
+                               unsigned       gtrc,
+                               unsigned short tag0,
+                               unsigned short tag1,
+                               unsigned short tag2,
+                               unsigned short tag3,
+                               unsigned short tag4)
 {
-  unsigned long long evtId;
-  if (ldfReader::LatData::instance()->contextExists())
-      evtId = ldfReader::LatData::instance()->eventId();
-  else
-      evtId = ldfReader::LatData::instance()->getOsw().evtSequence();
   ldfReader::LatData::instance()->setGtfePhaseFlag();
-  fprintf(stderr,"\n");
-  fprintf(stderr, "Event %llu Apid: %d",
-        evtId,
-        ldfReader::LatData::instance()->getCcsds().getApid());
-  fprintf(stderr, "%s    GTFE phasing error, GTFE tags: ", m_prefix);
-  fprintf(stderr, " 0x%03x 0x%03x 0x%03x 0x%03x 0x%03x", err1, err2, err3, 
-          err4, err5);
-  fprintf(stderr, "\n");
+
+  fprintf(stream(), "%s    GTFE phasing error: "
+          "Tower %d, GTCC %d, GTRC %d, GTFE tag words (raw: ", m_prefix,
+          tower, gtcc, gtrc);
+  fprintf(stream(), "0x%03x 0x%03x 0x%03x 0x%03x 0x%03x):\n",
+          tag0, tag1, tag2, tag3, tag4);
+  fprintf(stream(), "%s      GTFE  0  1  2  3  4  5  6  7  8  9 10 11\n",
+          m_prefix);
+  fprintf(stream(), "%s      0-11 ", m_prefix);
+  unsigned tag[] = {tag0, tag1, tag2, tag3, tag4};
+  unsigned tags[25];
+  unsigned i;
+  unsigned j;
+  for (i = 0; i < 5; i++)
+  {
+    for (j = 0; j < 5; j++)
+    {
+      tags[5*i + j] = tag[i] & 0x3;
+      tag[i] >>= 2;
+    }
+  }
+  for (i = 0; i < 12; i++)
+    fprintf(stream(), "%2d ", tags[i]);
+  fprintf(stream(), "\n%s     12-23 ", m_prefix);
+  for (i = 12; i < 24; i++)
+    fprintf(stream(), "%2d ", tags[i]);
+  _handleErrorCommon();
   return 0;
 }
 
 int ErrParser::gtccFIFOerror  (unsigned tower,
-                                   unsigned gtcc,
-                                   unsigned short err)
+                               unsigned gtcc,
+                               unsigned gtrc,
+                               unsigned short err)
 {
-  unsigned long long evtId;
-  if (ldfReader::LatData::instance()->contextExists())
-      evtId = ldfReader::LatData::instance()->eventId();
-  else
-      evtId = ldfReader::LatData::instance()->getOsw().evtSequence();
   ldfReader::LatData::instance()->setGtccFifoFlag();
-  fprintf(stderr,"\n");
-  fprintf(stderr, "Event %llu Apid: %d",
-        evtId,
-        ldfReader::LatData::instance()->getCcsds().getApid());
-  fprintf(stderr,"%s    FIFO full error, projected word count = 0x%04x\n",
-         m_prefix, err);
-  ldfReader::LatData::instance()->getTower(tower)->getTem().getErr()->setTkrFifoFull(gtcc);;
+  ldfReader::LatData::instance()->getTower(tower)->getTem().getErr()->setTkrFifoFull(gtcc);
+
+  fprintf(stream(),"%s    FIFO full error: ",
+          "Tower %d, GTCC %d, GTRC %d, projected word count = 0x%04x\n",
+          m_prefix, gtcc, gtrc, err);
+  _handleErrorCommon();
   return 0;
 }
 
-int ErrParser::gtccTMOerror        (unsigned /* tower */,
-                                        unsigned /* gtcc */)
+int ErrParser::gtccTMOerror        (unsigned tower,
+                                    unsigned gtcc,
+                                    unsigned gtrc)
 {
-  unsigned long long evtId;
-  if (ldfReader::LatData::instance()->contextExists())
-      evtId = ldfReader::LatData::instance()->eventId();
-  else
-      evtId = ldfReader::LatData::instance()->getOsw().evtSequence();
   ldfReader::LatData::instance()->setGtccTimeoutFlag();
-  fprintf(stderr,"%s    Cable timeout error", m_prefix);
-  fprintf(stderr, "  Event %llu Apid: %d\n",
-        evtId,
-        ldfReader::LatData::instance()->getCcsds().getApid());
+
+  fprintf(stream(),"%s    Cable timeout error: "
+          "Tower %d, GTCC %d, GTRC %d\n", m_prefix, tower, gtcc, gtrc);
+  _handleErrorCommon();
   return 0;
 }
 
-int ErrParser::gtccHDRParityError  (unsigned /* tower */,
-                                        unsigned /* gtcc */)
+int ErrParser::gtccHDRParityError  (unsigned tower,
+                                    unsigned gtcc,
+                                    unsigned gtrc)
 {
-  unsigned long long evtId;
-  if (ldfReader::LatData::instance()->contextExists())
-      evtId = ldfReader::LatData::instance()->eventId();
-  else
-      evtId = ldfReader::LatData::instance()->getOsw().evtSequence();
   ldfReader::LatData::instance()->setGtccHdrParityFlag();
-  fprintf(stderr,"%s    Header parity error", m_prefix);
-  fprintf(stderr, "  Event %llu Apid: %d\n",
-        evtId,
-        ldfReader::LatData::instance()->getCcsds().getApid());
+
+  fprintf(stream(),"%s    Header parity error: "
+          "Tower %d, GTCC %d, GTRC %d\n", m_prefix, tower, gtcc, gtrc);
+  _handleErrorCommon();
   return 0;
 }
 
-int ErrParser::gtccWCParityError   (unsigned /* tower */,
-                                        unsigned /* gtcc */)
+int ErrParser::gtccWCParityError   (unsigned tower,
+                                    unsigned gtcc,
+                                    unsigned gtrc)
 {
-  unsigned long long evtId;
-  if (ldfReader::LatData::instance()->contextExists())
-      evtId = ldfReader::LatData::instance()->eventId();
-  else
-      evtId = ldfReader::LatData::instance()->getOsw().evtSequence();
   ldfReader::LatData::instance()->setGtccWcParityFlag();
-  fprintf(stderr,"%s    Header parity error", m_prefix);
-  fprintf(stderr,"%s    Word count parity error", m_prefix);
-  fprintf(stderr, "  Event %llu Apid: %d\n",
-        evtId,
-        ldfReader::LatData::instance()->getCcsds().getApid());
+
+  fprintf(stream(),"%s    Word count parity error: "
+          "Tower %d, GTCC %d, GTRC %d\n", m_prefix, tower, gtcc, gtrc);
+  _handleErrorCommon();
   return 0;
 }
 
-int ErrParser::gtrcSummaryError    (unsigned /* tower */,
-                                        unsigned /* gtcc */)
+int ErrParser::gtrcSummaryError    (unsigned tower,
+                                    unsigned gtcc,
+                                    unsigned gtrc)
 {
-  unsigned long long evtId;
-  if (ldfReader::LatData::instance()->contextExists())
-      evtId = ldfReader::LatData::instance()->eventId();
-  else
-      evtId = ldfReader::LatData::instance()->getOsw().evtSequence();
   ldfReader::LatData::instance()->setGtrcSummaryFlag();
-  fprintf(stderr,"%s    GTRC summary error", m_prefix);
-  fprintf(stderr, "  Event %llu Apid: %d\n",
-         evtId,
-        ldfReader::LatData::instance()->getCcsds().getApid());
+
+  fprintf(stream(),"%s    GTRC summary error: "
+          "Tower %d, GTCC %d, GTRC %d\n", m_prefix, tower, gtcc, gtrc);
+  _handleErrorCommon();
   return 0;
 }
 
-int ErrParser::gtccDataParityError (unsigned /* tower */,
-                                        unsigned /* gtcc */)
+int ErrParser::gtccDataParityError (unsigned tower,
+                                    unsigned gtcc,
+                                    unsigned gtrc)
 {
-  unsigned long long evtId;
-  if (ldfReader::LatData::instance()->contextExists())
-      evtId = ldfReader::LatData::instance()->eventId();
-  else
-      evtId = ldfReader::LatData::instance()->getOsw().evtSequence();
   ldfReader::LatData::instance()->setGtccDataParityFlag();
-  fprintf(stderr,"%s    Data parity error\n", m_prefix);
-  fprintf(stderr, "  Event %llu Apid: %d\n",
-         evtId,
-        ldfReader::LatData::instance()->getCcsds().getApid());
+
+  fprintf(stream(),"%s    Data parity error: "
+          "Tower %d, GTCC %d, GTRC %d\n", m_prefix, tower, gtcc, gtrc);
+  _handleErrorCommon();
   return 0;
+}
+
+int ErrParser::handleError(TEMcontribution* contribution,
+                           unsigned code, unsigned p1, unsigned p2) const
+{
+  int rc = ERRcontributionIterator::handleError(contribution,code,p1,p2);
+  _handleErrorCommon();
+  return rc;
 }
 
 } // end namespace ldfReader

@@ -4,7 +4,7 @@
 /** @file CalParser.cxx
 @brief Implementation of the CalParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.6 2006/04/01 09:08:37 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.7 2006/04/07 16:46:49 heather Exp $
 */
 
 // EBF Online Library includes
@@ -27,41 +27,11 @@ namespace {
 }   // end default namespace
 
 namespace ldfReader {
-    CalParser::CalParser(EBFevent* event,
-        CALcontribution* contribution,
-        const char*      prefix) :
-    CALcontributionIterator(event, contribution),
-        m_prefix(prefix)
+    CalParser::CalParser( const char*      prefix) :
+        CALcontributionIterator(), m_prefix(prefix)
     {
     }
 
-
-    void CalParser::parse()
-    {
-        // Purpose and Method:  Calls the CALcontributionIterator::iterate method which causes
-        // CalParser::log to be called which does the real parsing
-
-        unsigned length = contribution()->numLogAccepts();
-        if (length == 0)
-        {
-            if (EbfDebug::getDebug())
-                printf("%sCAL: no data - empty contribution\n", m_prefix);
-            return;
-        }
-        if (EbfDebug::getDebug()) {
-
-            printf("%sCAL:\n", m_prefix);
-            printf("%s  Log Accepts           = 0x%08x\n", m_prefix, contribution()->logAccepts());
-            printf("%s  Number of Log Accepts = %d\n", m_prefix,     contribution()->numLogAccepts());
-
-            printf("%s  Data:\n", m_prefix);
-            printf("%s                            +ADC  +ADC  -ADC  -ADC\n", m_prefix);
-            printf("%s   tower GCCC  layer column value range value range\n", m_prefix);
-        }
-
-        iterate();
-
-    }
 
     void CalParser::log(unsigned tower, unsigned layer, CALlog theLog)
     {
@@ -83,6 +53,15 @@ namespace ldfReader {
         if (!tData) {
             tData = new ldfReader::TowerData(tower);
             curLatData->addTower(tData);
+            ldfReader::EventSummaryCommon summary(((EBFcontribution*)contribution())->summary());
+            ldfReader::TemData tem(summary);
+            //printf("Summary in TEM in CAL\n");
+            //tem.summary().print();
+            tem.setExist();
+            tem.initPacketError(((EBFcontribution*)contribution())->packetError());
+            tem.initLength(((EBFcontribution*)contribution())->length());
+            tData->setTem(tem);
+
         }
 
         // Get the Layer and Column 
@@ -105,9 +84,8 @@ namespace ldfReader {
                 fprintf(stderr, 
                 "Two CalDigis with the same layer/column combination ");
                 fprintf(stderr,
-                " - yet we are in BESTRANGE mode.  Event %llu Apid: %d\n",
-                ldfReader::LatData::instance()->eventId(),
-                ldfReader::LatData::instance()->getCcsds().getApid()); 
+                " - yet we are in BESTRANGE mode.\n");
+                _handleErrorCommon();
             }
         }
 
@@ -121,13 +99,9 @@ namespace ldfReader {
     int CalParser::handleError(CALcontribution *contribution, unsigned code, 
                     unsigned p1, unsigned p2) const {
         
-        fprintf(stderr, 
-           "MyCALiterator::handleError:  Somehow an error occured. \n ");
-        fprintf(stderr, "  code=%d, p1=%d, p2=%d\n", code, p1, p2);
-        fprintf(stderr, " Event: %llu Apid: %d\n", 
-            ldfReader::LatData::instance()->eventId(),
-            ldfReader::LatData::instance()->getCcsds().getApid());
-        return 0;
+        _handleErrorCommon();
+        return CALcontributionIterator::handleError(contribution, code,p1,p2);
+
     }
 
 }

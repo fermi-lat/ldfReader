@@ -4,21 +4,20 @@
 #include "OSWcontributionIterator.h"
 #include "ldfReader/data/LatData.h"
 
-/** @class OswParser 
+/** @class OswParser
 @brief Provides callbacks for OSW .
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/OswParser.h,v 1.2 2004/07/30 04:37:46 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/OswParser.h,v 1.3 2005/04/05 21:23:39 heather Exp $
 */
 namespace ldfReader {
-    class OswParser : public OSWcontributionIterator
+    class OswParser
     {
     public:
-        OswParser(EBFevent* event, OSWcontribution *contrib) :
-            OSWcontributionIterator(event, contrib)  {}
+        OswParser()  {}
 
         virtual ~OswParser() {}
 
 /*
-        virtual int OSWtime(const struct timespec* timeStamp, 
+        virtual int OSWtime(const struct timespec* timeStamp,
                             const OSWtimeBase* timeBase) const {
 
             ldfReader::LatData::instance()->setTime(timeStamp->tv_sec, timeStamp->tv_nsec);
@@ -32,20 +31,32 @@ namespace ldfReader {
         virtual int OSW_time(EBFevent*            event,
                              OSWtimeContribution* contribution) const {
 
+            ldfReader::LatData* curLatData = LatData::instance();
+            curLatData->setSummary(event->summary());
+
+            ldfReader::OswData osw(ldfReader::EventSummaryCommon(((EBFcontribution*)contribution)->summary()));
+            curLatData->setOsw(osw);
+            curLatData->getOsw().initPacketError(contribution->packetError());
+
+            curLatData->getOsw().initLength(((EBFcontribution*)contribution)->length());
+              //osw.initLength(((EBFcontribution*)contribution)->length());
+
+            curLatData->getOsw().setExist();
+
             const struct timespec* ts = contribution->timeStamp();
             const OSWtimeBase*     tb = contribution->timebase();
-            ldfReader::LatData::instance()->setTime(ts->tv_sec, ts->tv_nsec);
-            if (tb) 
-                ldfReader::LatData::instance()->setPpcTimeBase(tb->upper(), tb->lower());
+            curLatData->setTime(ts->tv_sec, ts->tv_nsec);
+            if (tb)
+                curLatData->setPpcTimeBase(tb->upper(), tb->lower());
 
-            ldfReader::LatData::instance()->getOsw().setEvtSequence(contribution->evtSequence());
+            curLatData->getOsw().setEvtSequence(contribution->evtSequence());
 
             return 0;
 
         }
 
         virtual int OSW_UDF(EBFevent* event, OSWcontribution* contribution)const {
-            fprintf(stderr, "Undefined OSW contribution encountered with identity %08x\n", contribution->identity().value());  
+            fprintf(stderr, "Undefined OSW contribution encountered with identity %08x\n", contribution->identity().value());
             return 0;
         } ;
 

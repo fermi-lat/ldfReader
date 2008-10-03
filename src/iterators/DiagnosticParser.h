@@ -4,49 +4,34 @@
 #include <stdio.h>
 #include "DIAGcontributionIterator.h"
 #include "ldfReader/data/DiagnosticData.h"
-//#include "LatComponentParser.h"
-//#include "ldfReader/data/LatData.h"
 
 /** @class DiagnosticParser
 @brief Calls the appropriate routines in the Online/EBF library to 
 processing the diagnostic data
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/DiagnosticParser.h,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/DiagnosticParser.h,v 1.2 2005/04/05 21:23:39 heather Exp $
 */
 
 namespace ldfReader {
-    class DiagnosticParser : public DIAGcontributionIterator
+    class DiagnosticParser : public virtual DIAGcontributionIterator
     {
     public:
-        DiagnosticParser(EBFevent*  event,
-            TEMcontribution* contribution,
-            unsigned         dataStart,
-            ldfReader::DiagnosticData *diagData);
+        DiagnosticParser(const char* prefix) : m_prefix(prefix) { };
 
         virtual ~DiagnosticParser() {}
 
-        //unsigned process(EBFevent* event);
 
         virtual int CALdiag(unsigned tower, unsigned layer, CALdiagnostic diag);
         virtual int TKRdiag(unsigned tower, unsigned gtcc,  TKRdiagnostic diag);
 
         virtual int handleError(TEMcontribution*, unsigned code, unsigned p1=0, unsigned p2=0) const;
 
+   protected :
+        virtual void _handleErrorCommon() const = 0;
+
     private:
-        ldfReader::DiagnosticData *m_diagData;
+        const char *m_prefix;
     };
-    /*
-    unsigned DiagnosticParser::process(EBFevent* event)
-    {
-
-    LatComponentParser lci;
-
-    lci.EBFcontributionIterator::iterate(event);
-
-    return 0;// Return non-zero to abort iteration
-    }
-    */
-
 
 }
 #endif

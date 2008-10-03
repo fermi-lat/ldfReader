@@ -4,7 +4,7 @@
 /** @file TkrParser.cxx
 @brief Implementation of the TkrParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.6 2006/04/01 09:33:38 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.7 2006/04/07 16:46:49 heather Exp $
 */
 #include <stdio.h> // included for TKRcontributionIterator.h
 // Online EBF library includes
@@ -16,7 +16,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.
 #include "../EbfDebug.h"
 
 namespace {
-    /* 
+    /*
     Following utilities are based on Eduardo's tables. Here is
     EM version:
     Offline  CC  RC   Measured   Front end chips read by CC,RC combination
@@ -59,68 +59,10 @@ namespace {
 
 namespace ldfReader {
 
-    TkrParser::TkrParser(EBFevent* event,
-        TKRcontribution* contribution,
-        ldfReader::TowerData *tData,
-        const char* prefix) :
-    TKRcontributionIterator(event, contribution),
-        m_event(event),
-        m_contribution(contribution),
-        m_prefix(prefix),
-        m_tData(tData)
+    TkrParser::TkrParser(const char* prefix) :
+        TKRcontributionIterator(), m_prefix(prefix)
     {
     }
-
-    void TkrParser::parse()
-    {
-        // Purpose and Method:  Initiates the iteration over the TKR data - causing the callbacks
-        // to the strip and ToT methods
-
-        // Check if there is any TKR data in this event
-        unsigned length  = m_contribution->numAccepts(m_event);
-        if (!length)
-        {
-            if (EbfDebug::getDebug()) 
-                printf("%sTKR: no data - empty contribution\n", m_prefix);
-            endTots((unsigned)(m_contribution->accepts(m_event) + 3*sizeof(unsigned) - (char*)contribution()));
-            return;
-        }
-
-        char pfx[80];
-        sprintf(pfx, "%s    ", m_prefix);
-
-        if (EbfDebug::getDebug()) printf("%sTKR:\n", m_prefix);
-
-        unsigned       array[8];              // 8 longwords of space
-        unsigned*      accepts = m_contribution->acceptsMask(m_event, array);
-
-        if (EbfDebug::getDebug()) printf("%s           GTCC   odd even  GTCC\n", m_prefix);
-        unsigned i;
-
-        if (EbfDebug::getDebug()) {
-            for (i = 0; i < 8; i += 2)
-            {
-                printf("%s    %s %5s  %d  0x%03x 0x%03x  %d  %s %-5s\n",
-                    m_prefix, xy[i],        label[i],  gtcc[i], accepts[i],
-                    accepts[i+1], gtcc[i+1], xy[i+1], label[i+1]);
-            }
-
-            printf("%s  Number of Accepts     = %d\n", m_prefix, m_contribution->numAccepts(m_event));
-            printf("%s  Data:\n", m_prefix);
-        }
-
-        if (EbfDebug::getDebug()) {
-            printf("%s             Layer\n", pfx);
-            printf("%sTower Plane   x/y l/h  GTFE Strip   raw  =  raw\n", pfx);
-        }
-        // Iterate over the strip data
-        iterateStrips();
-
-        // Iterate over TOT data
-        if (EbfDebug::getDebug()) printf("\n%sTower layer_end  TOT = TOT\n", pfx);
-        iterateTOTs();
-    }
-
 
 
     // layerEnd uses least sig. bit to keep track of low or high end readout.
@@ -130,6 +72,28 @@ namespace ldfReader {
         // local static object for general access to ldfReader clients.
 
         using namespace ldfReader;
+
+        // Retrieve the tower object we wish to update with this TKR data
+        unsigned int towerId = LATPcellHeader::source(contribution()->header());
+        LatData* curLatData = LatData::instance();
+        TowerData* tData = curLatData->getTower(tower);
+        if (!tData) {
+            tData = new TowerData(tower);
+            curLatData->addTower(tData);
+            /* HMK 09152008 Not sure we need this
+            ldfReader::TemData* tem = tData->getTem();
+            if (!tem) {
+                ldfReader::EventSummaryCommon summary(((EBFcontribution*)contribution())->summary());
+                ldfReader::TemData tem(summary);
+                printf("Summary in TEM in TKR\n");
+                tem.summary().print();
+                tem.setExist();
+                tem.initPacketError(((EBFcontribution*)contribution())->packetError());
+                tem.initLength(((EBFcontribution*)contribution())->length());
+                tData->setTem(tem);
+            }
+           HMK */
+        }
 
         unsigned myPlane = layerEnd >> 1;
         unsigned  myLowHigh = layerEnd & 1;
@@ -142,10 +106,10 @@ namespace ldfReader {
 
         unsigned myLayer = myPlane/2;
 
-        ldfReader::TkrLayer *layer = m_tData->getTkrLayer(myLayer);
+        ldfReader::TkrLayer *layer = tData->getTkrLayer(myLayer);
         if (!layer) {
             layer = new ldfReader::TkrLayer(myLayer);
-            m_tData->addTkrLayer(layer);
+            tData->addTkrLayer(layer);
         }
 
         unsigned short stripId = hit;
@@ -158,33 +122,36 @@ namespace ldfReader {
         } else if ((strcmp(myXy, "y")==0) && (myLowHigh == 1)) {
             layer->addYStripC1(stripId);
         } else {
-            fprintf(stderr, "%s %s %llu %s %d",
-                "failed to find the TKR layer, view, controller combination",
-                "Event: ", ldfReader::LatData::instance()->eventId(),
-                " Apid: ", ldfReader::LatData::instance()->getCcsds().getApid());
+            fprintf(stderr, "%s  failed to find the TKR layer, view, controller combination\n", m_prefix);
+            _handleErrorCommon();
         }
     }
 
     void TkrParser::TOT(unsigned tower, unsigned layerEnd, unsigned tot) {
-        // Purpose and Method:  ToT callback that handles unpacking ToT data for storage in 
+        // Purpose and Method:  ToT callback that handles unpacking ToT data for storage in
         // the ldfReader static object that provides data access for ldfReader clients
 
         using namespace ldfReader;
-
-        unsigned myLowHigh = layerEnd & 1;
-        unsigned myPlane = layerEnd >> 1;
-        const char* myXy = xyByPlane[myPlane % 4];
 
         if (EbfDebug::getDebug()) {
             printf("%s %2d %2d 0x%02x = %3d\n", m_prefix, tower, layerEnd, tot, tot);
         }
 
+        // Retrieve the tower or create a new TowerData object if necessary
+        ldfReader::LatData* curLatData = ldfReader::LatData::instance();
+        ldfReader::TowerData* tData = curLatData->getTower(tower);
+        // No need to check whether TowerData exists since there can not be
+        // and TOTs without strip hits and therefore must exist
+
+        unsigned myLowHigh = layerEnd & 1;
+        unsigned myPlane = layerEnd >> 1;
+        const char* myXy = xyByPlane[myPlane % 4];
         unsigned myLayer = myPlane/2;
 
-        ldfReader::TkrLayer *layer = m_tData->getTkrLayer(myLayer);
+        ldfReader::TkrLayer *layer = tData->getTkrLayer(myLayer);
         if (!layer) {
             layer = new ldfReader::TkrLayer(myLayer);
-            m_tData->addTkrLayer(layer);
+            tData->addTkrLayer(layer);
         }
 
         if ((strcmp(myXy, "x")==0) && (myLowHigh == 0)) {
@@ -196,46 +163,21 @@ namespace ldfReader {
         } else if ((strcmp(myXy, "y")==0) && (myLowHigh == 1)) {
             layer->setY_ToT(1, tot);
         } else {
-            fprintf(stderr, 
+            fprintf(stderr,
                 "failed to find the TKR layer, view, controller combination\n");
-            fprintf(stderr, "%s %llu %s %d\n", " Event: ",
-                ldfReader::LatData::instance()->eventId(), " Apid: ",
-                ldfReader::LatData::instance()->getCcsds().getApid());
+            _handleErrorCommon();
         }
 
     }
 
 
 
-    int TkrParser::handleError(TKRcontribution *contribution, unsigned code, 
+    int TkrParser::handleError(TKRcontribution *contribution, unsigned code,
                     unsigned p1, unsigned p2) const {
 
-        switch (code)
-        {
-            case TKRcontributionIterator::ERR_WrongOrder:
-                fprintf(stderr, "%s %s",
-                    "TKRiterator.iterateTOTs: TOTs can not be accessed",
-                    " before TKRiterator.iterateStrips has executed.");
-                fprintf(stderr, "%s %llu %s %d\n", " Event: ",
-                    ldfReader::LatData::instance()->eventId(), " Apid: ",
-                    ldfReader::LatData::instance()->getCcsds().getApid());
-               return 0;
-            case TKRcontributionIterator::ERR_PastEnd:
-                fprintf(stderr, "TKRcontributionIterator.iterateStrips:"
-                "Iterated past the end of the contribution by %d words", p1);
-                fprintf(stderr, "%s %llu %s %d\n", " Event: ",
-                    ldfReader::LatData::instance()->eventId(), " Apid: ",
-                    ldfReader::LatData::instance()->getCcsds().getApid());
-                return 0;
-            default: 
-                fprintf(stderr, "TKRcontributionIterator.iterate:"
-                "Unrecognized error code found: %d", code);
-                fprintf(stderr, "%s %llu %s %d\n", " Event: ",
-                    ldfReader::LatData::instance()->eventId(), " Apid: ",
-                    ldfReader::LatData::instance()->getCcsds().getApid());
-                return 0;
-        }
-        return 0;
+        int rc = TKRcontributionIterator::handleError(contribution, code,p1,p2);
+        _handleErrorCommon();
+        return rc;
    }
 
 }

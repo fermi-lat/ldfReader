@@ -5,12 +5,10 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.34 2006/08/02 17:25:00 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.35 2007/03/31 16:59:02 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
-#include "iterators/EbfDatagramParser.h"
-#include "iterators/TkrParser.h"
 #include "EbfDebug.h"
 #include "ldfReader/LdfException.h"
 #include <exception>
@@ -40,7 +38,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
     m_fileName(fileName), m_fitsWrap(fitsWrap), m_ebf(0), m_fitsfile(0), 
         m_maxRow(0), m_currentRow(0), m_maxHdu(0), m_currentHdu(0),
         m_rowBuf(0), m_maxSize(0), m_evtCount(0), m_instrument(instrument),
-        m_runId(0), m_eventSize(0)
+        m_runId(0), m_eventSize(0), m_dataParser()
     {
         try {
             // MyTkrIterator::setInstrument(instrument);
@@ -133,26 +131,20 @@ const unsigned LdfParser::BufferSize = 64*1024;
 
                 m_eventSize = getRow();
 
-                // start and end are meaningless in FITS case since EBF 
-                // library does not get us the next event
-                m_datagramParser = new EbfDatagramParser(0, 0);
             }
             else  { // For LDF or ARCH files
                 m_ebf  = file_initialize(m_fileName.c_str());
 
-                char buffer[BufferSize];
-                unsigned size = from_file(m_ebf, buffer);
+                static unsigned char buffer[BufferSize];
+                bool swap;
+                unsigned size = from_file(m_ebf, buffer, &swap);
                 if (size <= 0) throw LdfException("Could not read from LDF file");
                 m_eventSize = size;
-                LATdatagram* start = (LATdatagram*)buffer;
-                LATdatagram* end   = (LATdatagram*)(&buffer[size]);
+                m_swap = swap;
 
-                m_datagram = start;
-                // no need to init start and end for datagramparser
-                //m_datagramParser = new EbfDatagramParser(0, 0);
+                m_maxSize = sizeof(buffer);
+                m_rowBuf = buffer;
 
-                m_start = start;
-                m_end = end;
             }
 
 
@@ -199,7 +191,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
             &heapAddr, &status);
 
         if (status != 0) {
-            printf("FITSIO Status Code: %d curRow = %l\n", status, m_currentRow);
+            printf("FITSIO Status Code: %d curRow = %ld\n", status, m_currentRow);
             throw LdfException("Failed to read row description");
         }
 
@@ -219,17 +211,15 @@ const unsigned LdfParser::BufferSize = 64*1024;
         // fits_read_col_byt(fileptr, column, firstrow, firstarrayix,
         //                   narrayelt, nulval, outputarray, anynulPtr, statusptr)
         // What's "anynul" ?
-        fits_read_col_byt(ffile, 1, m_currentRow, 1, nbytes,    // ffgcvb
-            0, m_rowBuf, 0, &status);
+        fits_read_col_byt(ffile, 1, m_currentRow, 1, nbytes,    
+                          0, m_rowBuf, 0, &status);
         m_currentRow++;
 
         //  pass to EBF stuff, letting it swap if necessary
         if (status != 0) {
             ; //complain
-            m_datagram = 0;
             return 0;    // no bytes read
         }
-        m_datagram = LATdatagram::create(m_rowBuf, nbytes - sizeof(LATdatagram));
 
         // This will do swapping if needed on event data.
 
@@ -254,7 +244,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
             if (m_currentRow > m_evtCount) {
                 if (m_currentHdu == m_maxHdu) {
                     // end of file
-                    m_datagram = 0;
+                    //m_datagram = 0;
                     return -1;
                 }
                 bool DONE = false;
@@ -263,7 +253,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
                     m_currentHdu++;
                     fits_movrel_hdu(ffile, 1, &hduType, &status);   // ffmrhed
                     if (status != 0) {
-                        m_datagram = 0;
+                        //m_datagram = 0;
 
                         // complain
                        return -1; 
@@ -277,13 +267,11 @@ const unsigned LdfParser::BufferSize = 64*1024;
                 }
                 if (!DONE) {
                     printf("No more Event Data HDUs found\n");
-                    m_datagram = 0;
                     return -1;
                 }
 
                 fits_get_num_rows(ffile, &m_maxRow, &status);  // ffgnrw
                 if (status != 0) {
-                    m_datagram = 0;
                     // complain
                     return -1;
                 }
@@ -300,16 +288,13 @@ const unsigned LdfParser::BufferSize = 64*1024;
             return (nbytes > 0) ? 0 : -1;
         }
         else {  // raw ldf
-            //m_datagram = m_datagram->next();
-            char buffer[BufferSize];
-            unsigned size = from_file(m_ebf, buffer);
+            bool swap;
+            unsigned size = from_file(m_ebf, m_rowBuf, &swap);
             m_eventSize = size;
             if (size <= 0) {
               return -1;
             }
-            m_start = (LATdatagram*)buffer;
-            m_end = (LATdatagram*)(&buffer[size]);
-            m_datagram = m_start;
+            m_swap = swap;
           
             return 0;
         }
@@ -343,33 +328,21 @@ const unsigned LdfParser::BufferSize = 64*1024;
         if (ldfReader::LatData::instance()->ignoreSegFault()) 
             ignoreSegFault(true);
 
-        if ( (m_fitsWrap)  && (m_datagram == 0) ) {
-            return -1;
-        }
-        else if ((!m_fitsWrap) && (m_datagram >= m_end)) return -1;
+        // Parse the data buffer
+        //m_dataParser.iterate(m_rowBuf, m_maxSize);
 
-        if (m_fitsWrap) {
-            if (m_datagramParser->process(m_datagram) != 0)
-            {
-                // An error occured
-                throw LdfException("LDF processing failed");
-                //return -1;
-            }
-        } else {
-            EbfDatagramParser ldf(m_start, m_end);
-            ldf.iterate();
-            if (ldf.status()) {
-                std::ostringstream errMsg;
-                errMsg.str("LDF EBFeventParser reported a bad status 0x");
-                errMsg << std::hex << ldf.status() << " = " << std::dec
-                      << ldf.status() << " EventId: " 
-                      << ldfReader::LatData::instance()->getOsw().evtSequence();
-                std::cout << errMsg << std::endl;
-                ldfReader::LatData::instance()->setBadLdfStatusFlag();
-                //throw LdfException(
-                //"LDF LatDatagramIterator reported a bad status");
-            }
-   
+        // Parse the data buffer
+        unsigned int status = m_dataParser.iterate2(m_rowBuf, m_maxSize, m_swap);
+        if (status) {
+            std::ostringstream errMsg;
+            errMsg.str("LDF dataParser reported a bad status 0x");
+            errMsg << std::hex << status << " = " << std::dec
+                   << status << " EventId: "
+                   << ldfReader::LatData::instance()->getOsw().evtSequence();
+            std::cout << errMsg << std::endl;
+            ldfReader::LatData::instance()->setBadLdfStatusFlag();
+            throw LdfException("LDF dataParser reported a bad status");
+
         }
 
         // Store run Id locally if we found a header or trailer
@@ -383,7 +356,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
         // enough file..  I believe we want one where they started to store the
         // event summary in each contribution separately
         if (ldfReader::LatData::instance()->getFormatIdentity() >= 
-            LatComponentParser::ID_WITH_OSW) {
+            EbfDataParser::ID_WITH_OSW) {
 
                 if (!ldfReader::LatData::instance()->eventSeqConsistent()) {
                     printf("Event Sequence numbers are not consistent within all contributions\n");
@@ -437,15 +410,6 @@ const unsigned LdfParser::BufferSize = 64*1024;
             return 0;
     }
 
-    //bool LdfParser::setDebug(bool on) {
-    //    return EbfDebug::setDebug(on);
-   // }
-
-    bool LdfParser::end() {
-        return (m_datagram < m_end);
-    }
-
-
 
 
     FILE* LdfParser::file_initialize(const char* filename) {
@@ -459,7 +423,81 @@ const unsigned LdfParser::BufferSize = 64*1024;
         return fpevents;
     }
 
-    unsigned LdfParser::from_file(FILE* fpevents, char* buffer) {
+
+
+unsigned LdfParser::from_file(FILE* fpevents, unsigned char* buffer, bool* swap)
+                          //bool* swap = 0, IteratePFI* iterate = 0)
+{
+  static const unsigned IntroWords   = 2;
+  static const unsigned InitialWords = 6;
+  unsigned   size = 0;
+  unsigned   id;
+  unsigned   ids;
+
+  if (fpevents) {
+    size_t n = fread(buffer, sizeof(int), IntroWords, fpevents);
+    if (n == IntroWords) {
+      id  = *evtId(buffer);
+      ids = EBF_swap32_lclXbig(id);
+      if      (id  == EBFevent::ID)
+      {
+        if (swap)     *swap    = false;
+        //if (iterate)  *iterate = iterateEBF;
+        size                   = *evtsize(buffer) & 0xffff;
+      }
+      else if (ids == EBFevent::ID)
+      {
+        if (swap)     *swap    = true;
+        //if (iterate)  *iterate = iterateEBF;
+        size                   = EBF_swap32_lclXbig(*evtsize(buffer)) & 0xffff;
+      }
+      else if (id  == LATdatagram::ID)
+      {
+        if (swap)     *swap    = false;
+        //if (iterate)  *iterate = iterateLDF;
+        size                   = *evtsize(buffer);
+      }
+      else if (ids == LATdatagram::ID)
+      {
+        if (swap)     *swap    = true;
+        //if (iterate)  *iterate = iterateLDF;
+        size                   = EBF_swap32_lclXbig(*evtsize(buffer));
+      }
+      else
+      {
+        if (swap)     *swap    = !DFC_BIG_ENDIAN;
+        //if (iterate)  *iterate = iterateLDF;
+        size                   = (InitialWords - IntroWords) << 2;
+      }
+      if (size) {
+        if ((size & 0x3) == 0) {
+          unsigned remaining = (size>>2)-IntroWords;
+          n = fread(evtremaining(buffer), sizeof(int), remaining, fpevents);
+          if (n != remaining) {
+            fprintf(stderr, "*** LDFdump: EOF found while reading\n");
+            size = 0;
+          }
+        } else {
+          fprintf(stderr,"*** LDFdump: datagram size %d not word aligned\n",
+                  size);
+          size = 0;
+        }
+      } else {
+        fprintf(stderr, "*** LDFdump: illegal zero datagram size\n");
+        size = 0;
+      }
+    } else {
+      fprintf(stdout, "LDFdump: reached EOF\n");
+    }
+  }
+  return size;
+}
+
+
+
+
+/* OLD version
+    unsigned LdfParser::from_file(FILE* fpevents, unsigned char* buffer) {
         static const unsigned IntroWords = 2;
         unsigned size = 0;
         if (fpevents) {
@@ -492,6 +530,7 @@ const unsigned LdfParser::BufferSize = 64*1024;
 
          return size;
     }
+*/
 
     void LdfParser::file_finalize(FILE* fpevents) {
         if (fpevents) {
@@ -501,13 +540,18 @@ const unsigned LdfParser::BufferSize = 64*1024;
     }
 
 
-unsigned* LdfParser::evtsize(char* buffer)
+unsigned* LdfParser::evtsize(unsigned char* buffer)
 {
   static const unsigned SizePos = 1<<2;
   return (unsigned*)(buffer+SizePos);
 }
 
-unsigned* LdfParser::evtremaining(char* buffer)
+unsigned* LdfParser::evtId(unsigned char* buffer) {
+  static const unsigned IdPos = 0<<2;
+  return (unsigned*)(buffer+IdPos);
+}
+
+unsigned* LdfParser::evtremaining(unsigned char* buffer)
 {
   static const unsigned EvtRemaining = 2<<2;
   return (unsigned*)(buffer+EvtRemaining);
