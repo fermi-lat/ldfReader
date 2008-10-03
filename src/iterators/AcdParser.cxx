@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.20 2006/12/07 21:03:57 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.21 2008/04/21 03:32:56 heather Exp $
 */
 
 // EBF Online Library includes
@@ -24,11 +24,7 @@ namespace {
 }   // end default namespace
 
 namespace ldfReader {
-    AcdParser::AcdParser(EBFevent*        event,
-                             AEMcontribution* contribution,
-                             const char*      prefix):
-  AEMcontributionIterator(event, contribution),
-  m_prefix(prefix)
+    AcdParser::AcdParser( const char*      prefix) : m_prefix(prefix)
 {
 }
 
@@ -76,6 +72,19 @@ void AcdParser::header(unsigned cable, AEMheader hdr)
 
     ldfReader::LatData* curLatData = ldfReader::LatData::instance();
 
+    ldfReader::AemData summary(contribution()->summary());
+    summary.setExist();
+    summary.initPacketError(contribution()->packetError());
+    curLatData->setAem(summary);
+
+    curLatData->getAem().initLength(((EBFcontribution*)contribution())->length());
+
+//    _acdSrc = LATPcellHeader::source(contribution->header());
+//    if (EbfDebug::getDebug() ) printf("\nAEM %2d:\n", _acdSrc);
+    // HMK 09082008 Not sure how to call this method from EbfDataParser 
+    if (EbfDebug::getDebug() ) commonComponentData((EBFcontribution*)contribution());
+
+
     // loop over all bits in the accept and hit maps, if either is set store
     // a new AcdPmt and if necessary create a new AcdDigi
     unsigned int iChannel;
@@ -84,8 +93,10 @@ void AcdParser::header(unsigned cable, AEMheader hdr)
         bool accept = (acceptMap >> (offsetMap - iChannel)) & 1;
         if (!veto && !accept) continue;
 
+        //LATtypeId id   = AEMcontribution::event()->identity();
         LATtypeId id   = event()->identity();
         // Tile number in [0,107]
+        //const ACDtileSide *pmt = AEMcontribution::map()->lookup(id, cable, iChannel);
         const ACDtileSide *pmt = map()->lookup(id, cable, iChannel);
         char      side = pmt->a() ? 'A' : 'B';
 
@@ -149,6 +160,7 @@ unsigned int AcdParser::constructTileNum(const char *name) {
              printf(" Event: %ull, Apid: %u\n",
                  ldfReader::LatData::instance()->eventId(),
                  ldfReader::LatData::instance()->getCcsds().getApid());
+             _handleErrorCommon();
              tileNum = 0;
          }
 
@@ -174,10 +186,17 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
   unsigned acceptMap = curHeader.acceptMap();
   bool accept = (acceptMap >> (offsetMap - channel)) & 1;
 
-  ldfReader::LatData* curLatData = ldfReader::LatData::instance();
+  if (!accept) {
+    printf("Somehow managed to get into pha() without corresponding acceptMap "
+           "bit being set\n(should be impossible)\n");
+  }
 
+ ldfReader::LatData* curLatData = ldfReader::LatData::instance();
+
+  //LATtypeId id   = AEMcontribution::event()->identity();
   LATtypeId id   = event()->identity();
   // Tile number in [0,107]
+  //const ACDtileSide *pmt = AEMcontribution::map()->lookup(id, cable, channel);
   const ACDtileSide *pmt = map()->lookup(id, cable, channel);
 
   // A or B
@@ -252,31 +271,37 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
 }
 
 
-void AcdParser::parse()
+int AcdParser::gaemTMOerror(unsigned cable)
 {
-    iterate();
+  fprintf(stream(), "AcdParser:"
+                    "No start bit seen => cable timeout for cable %d\n",
+          cable);
+  return 0;
+}
+
+int AcdParser::gaemHDRParityError(unsigned cable, AEMheader hdr)
+{
+  fprintf(stream(), "AcdParser:"
+                    "Header parity error for cable %d\n",
+          cable);
+  return 0;
+}
+
+int AcdParser::gaemPHAParityError(unsigned cable, unsigned channel, ACDpha p)
+{
+  fprintf(stream(), "AcdParser:"
+                    "PHA parity error for cable %d, channel %d\n",
+          cable, channel);
+
+  return 0;
 }
 
 
 
 int AcdParser::handleError(AEMcontribution *contribution, unsigned code,
                             unsigned p1, unsigned p2) const {
-    switch (code)
-    {
-        case AEMcontributionIterator::ERR_TooManyPhas:
-        {
-            fprintf(stderr, "%s %s %s %ull %s %d\n", 
-                      "AEMcontributionIterator::iterate: ",
-                      "more PHA values found than bits set in the Accept Map",
-                      " Event: ", ldfReader::LatData::instance()->eventId(), 
-                      " Apid: ", 
-                      ldfReader::LatData::instance()->getCcsds().getApid());
-             break;
-        }
-
-        default: break;
-    }
-    return 0;
+    _handleErrorCommon();
+    return AEMcontributionIterator::handleError(contribution, code, p1, p2);
 }
 
 

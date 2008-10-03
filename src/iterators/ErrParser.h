@@ -4,69 +4,58 @@
 #include "ERRcontributionIterator.h"
 #include "ldfReader/data/LatData.h"
 
-/** @class ErrParser 
+/** @class ErrParser
 @brief Provides callbacks for Error data .
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/ErrParser.h,v 1.4 2006/04/07 16:46:49 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/ErrParser.h,v 1.5 2006/05/16 23:18:27 heather Exp $
 */
 namespace ldfReader {
-    class ErrParser : public ERRcontributionIterator
+    class ErrParser : public virtual ERRcontributionIterator
     {
     public:
-        ErrParser(EBFevent* event, TEMcontribution *contrib, unsigned dataStart,
-                  const char* prefix) :
-            ERRcontributionIterator(event, contrib),
-            m_prefix(prefix)  { offset(dataStart); }
+        ErrParser(const char* prefix) : m_prefix(prefix)  { }
 
         virtual ~ErrParser() {}
 
         // definable error handlers
-        virtual int gcccError (unsigned tower, unsigned gccc, GCCCerror err);
-        virtual int gtccError (unsigned tower, unsigned gtcc, GTCCerror err);
-        virtual int phaseError (unsigned tower, unsigned short err);
-        virtual int timeoutError (unsigned tower, unsigned short err);
+        virtual int summary            (ErrorSummary);
+        // ACD errors
+        virtual int gaemTMOerror       (unsigned cable);
+        virtual int gaemHDRParityError (unsigned cable);
+        virtual int gaemPHAParityError (unsigned cable, unsigned channel);
+        // TEM errors
+        virtual int gcccError          (unsigned twr, unsigned cc, GCCCerror);
+        virtual int gtccError          (unsigned twr, unsigned cc, GTCCerror);
+        virtual int phaseError         (unsigned twr, unsigned short ew);
+        virtual int timeoutError       (unsigned twr, unsigned short ew);
         // TKR errors
-        virtual int gtrcPhaseError (unsigned tower, unsigned gtcc, 
-                                   unsigned gtrc, GTRCerror err);
-        virtual int gtfePhaseError (unsigned tower, unsigned gtcc, 
-                               unsigned gtrc,
-                               unsigned short err1, unsigned short err2,
-                               unsigned short err3, unsigned short err4, 
-                               unsigned short err5);
-        virtual int gtccFIFOerror (unsigned tower, unsigned gtcc, 
-                              unsigned short err);
-        virtual int gtccTMOerror        (unsigned tower, unsigned gtcc);
-        virtual int gtccHDRParityError  (unsigned tower, unsigned gtcc);
-        virtual int gtccWCParityError   (unsigned tower, unsigned gtcc);
-        virtual int gtrcSummaryError    (unsigned tower, unsigned gtcc);
-        virtual int gtccDataParityError (unsigned tower, unsigned gtcc);
+        virtual int gtrcPhaseError     (unsigned twr, unsigned cc, unsigned rc,
+                                        GTRCerror);
+        virtual int gtfePhaseError     (unsigned twr, unsigned cc, unsigned rc,
+                                        unsigned short ew1, unsigned short ew2,
+                                        unsigned short ew3, unsigned short ew4,
+                                        unsigned short ew5);
+        virtual int gtccFIFOerror      (unsigned twr, unsigned cc, unsigned rc,
+                                        unsigned short ew);
+        virtual int gtccTMOerror       (unsigned twr, unsigned cc, unsigned rc);
+        virtual int gtccHDRParityError (unsigned twr, unsigned cc, unsigned rc);
+        virtual int gtccWCParityError  (unsigned twr, unsigned cc, unsigned rc);
+        virtual int gtrcSummaryError   (unsigned twr, unsigned cc, unsigned rc);
+        virtual int gtccDataParityError(unsigned twr, unsigned cc, unsigned rc);
 
+        virtual int handleError(TEMcontribution* contribution, unsigned code,
+                                unsigned p1=0, unsigned p2=0) const;
 
-        virtual int handleError(TEMcontribution* contribution, unsigned code, 
-                                unsigned p1=0, unsigned p2=0) const {
-
-           switch (code) { 
-               case ERRcontributionIterator::ERR_PastEnd: 
-                    fprintf(stderr,
-                      "ERRcontributionIterator.handleError:  Iterated past the "
-                      "end of the contribution by %d words at stage %d",
-                       p1, p2);
-                   fprintf(stderr, " Event: %llu Apid: %d\n", 
-                      ldfReader::LatData::instance()->eventId(),
-                      ldfReader::LatData::instance()->getCcsds().getApid());
-                   return 0; 
-               default: 
-                   fprintf(stderr, 
-                   "MyERRiterator::handleError:  Somehow an error occured. \n ");
-                    fprintf(stderr, "  code=%d, p1=%d, p2=%d\n", code, p1, p2);
-                    fprintf(stderr, " Event: %llu Apid: %d\n", 
-                        ldfReader::LatData::instance()->eventId(), 
-                        ldfReader::LatData::instance()->getCcsds().getApid());
-               }
-           return 0;
-        }
+   protected :
+        virtual void _handleErrorCommon() const = 0;
 
 
     private:
+        static const unsigned m_gccc[];
+        static const unsigned m_gtcc[];
+        static const char* m_pn[];
+        static const char* m_xy[];
+        static const unsigned m_layer[];
+
         const char* m_prefix;
     };
 

@@ -3,18 +3,15 @@
 
 #include "ldfReader/EbfParser.h"
 #include <string>
-//#include "DFC/EBF_fileIn.h"
 #include "data/LatData.h"
-#include "EBFevent.h"
-#include "LATdatagram.h"
-#include "../src/iterators/EbfDatagramParser.h"
+#include "../src/iterators/LdfDataParser.h"
 
 
 /** @class LdfParser
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/LdfParser.h,v 1.8 2006/05/25 23:59:26 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/LdfParser.h,v 1.9 2006/08/01 15:52:15 heather Exp $
 */
 
 namespace ldfReader {
@@ -51,14 +48,15 @@ namespace ldfReader {
         unsigned long eventSize() { return m_eventSize; };
 
         //bool end(EBFevent *evt);
-        bool end();
+        //bool end();
 
         FILE* file_initialize(const char* filename);
-        unsigned from_file(FILE *fpevents, char* buffer);
+        unsigned from_file(FILE *fpevents, unsigned char* buffer, bool *swap =0);
         void file_finalize(FILE *fpevents);
 
-        unsigned* evtsize(char* buffer);
-        unsigned* evtremaining(char* buffer);
+        unsigned* evtId(unsigned char* buffer);
+        unsigned* evtsize(unsigned char* buffer);
+        unsigned* evtremaining(unsigned char* buffer);
 
         // local exception class
         //class Exception{ };
@@ -98,8 +96,11 @@ namespace ldfReader {
         static const unsigned BufferSize;
 
         //    EBFevent *m_evt, *m_end;
-        LATdatagram *m_end, *m_start, *m_datagram;
-        EbfDatagramParser *m_datagramParser;
+        //LATdatagram *m_end, *m_start, *m_datagram;
+        //EbfDatagramParser *m_datagramParser;
+        LdfDataParser m_dataParser;
+
+        bool m_swap;  // Flag denoting if byte swapping is necessary
 
         /** Local method which attempts to read row from FITS table,
         update LATdatagram pointer.  Swaps data if necessary.

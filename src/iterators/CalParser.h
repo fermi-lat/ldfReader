@@ -1,7 +1,7 @@
 #ifndef CalParser_H
 #define CalParser_H 1
 
-// $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.h,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.h,v 1.2 2005/04/05 21:23:39 heather Exp $
 
 // Online EBF library includes
 #include "CALcontributionIterator.h"
@@ -20,20 +20,20 @@
 
 namespace ldfReader {
 
-    class CalParser : public CALcontributionIterator
+    class CalParser : public virtual CALcontributionIterator
     {
     public:
-        CalParser(EBFevent* event,
-            CALcontribution* contribution,
-            const char* prefix);
+        CalParser( const char* prefix);
 
         virtual ~CalParser() {}
 
         virtual void log(unsigned tower, unsigned layer, CALlog theLog);
 
-        void parse();
-
     virtual int handleError(CALcontribution*, unsigned code, unsigned p1=0, unsigned p2=0) const;
+
+   protected :
+        virtual void _handleErrorCommon() const = 0;
+
 
     private:
         const char *m_prefix;
