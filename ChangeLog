@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Oct  2 20:39:17 PDT 2008
+ldfReader/ldfReader
+
+Modified Files:
+	DfiParser.h LdfParser.h SocketParser.h 
+Log Message:
+toss it all in
+    *
+------------------------------------------------------------
 User: heather  Thu Oct  2 20:39:16 PDT 2008
 ldfReader/doc
 
