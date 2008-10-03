@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Thu Oct  2 20:39:17 PDT 2008
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx LdfParser.cxx SocketParser.cxx 
+Log Message:
+toss it all in
+    *
+------------------------------------------------------------
+User: heather  Thu Oct  2 20:39:17 PDT 2008
 ldfReader/ldfReader
 
 Modified Files:
