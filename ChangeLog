@@ -1,4 +1,22 @@
 ------------------------------------------------------------
+User: heather  Thu Oct  2 20:39:18 PDT 2008
+ldfReader/src/iterators
+
+Modified Files:
+	AcdParser.cxx AcdParser.h CalParser.cxx CalParser.h 
+	DiagnosticParser.cxx DiagnosticParser.h ErrParser.cxx 
+	ErrParser.h OswParser.h TkrParser.cxx TkrParser.h 
+Added Files:
+	EbfDataParser.cxx EbfDataParser.h LdfDataParser.cxx 
+	LdfDataParser.h 
+Removed Files:
+	EbfDatagramParser.cxx EbfDatagramParser.h EbfEventParser.cxx 
+	EbfEventParser.h LatComponentParser.cxx LatComponentParser.h 
+	LatContributionParser.cxx LatContributionParser.h 
+Log Message:
+toss it all in
+    *
+------------------------------------------------------------
 User: heather  Thu Oct  2 20:39:17 PDT 2008
 ldfReader/src
 
