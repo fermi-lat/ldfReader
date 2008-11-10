@@ -1,4 +1,26 @@
 ------------------------------------------------------------
+User: ecephas  Mon Nov 10 08:19:40 PST 2008
+GlastRelease-scons/ldfReader
+
+Modified Files:
+	SConscript 
+Log Message:
+Made formatting changes. 
+
+Changed
+	test_lsfReader = progEnv.Program('test_lsfReader',['src/test/_lsfReader.cxx'])
+to
+	test_lsfReader = progEnv.Program('test_lsfReader',['src/test/test_lsfReader.cxx'])
+
+----
+Changed
+	ldfReader = libEnv.SharedLibrary('ldfReader', listFiles(['src/iterators/*.cxx']) + listFiles(['src/data/*.cxx']))
+to
+	ldfReader = libEnv.SharedLibrary('ldfReader', listFiles(['src/*.cxx','src/iterators/*.cxx','src/data/*.cxx']))
+
+
+    *
+------------------------------------------------------------
 User: heather  Thu Oct  2 20:39:18 PDT 2008
 ldfReader/src/test
 
