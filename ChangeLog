@@ -1,4 +1,20 @@
 ------------------------------------------------------------
+User: ecephas  Mon Nov 10 08:20:39 PST 2008
+GlastRelease-scons/ldfReader
+
+Modified Files:
+	ldfReaderLib.py 
+Log Message:
+Added
+     env.Tool('addLibrary', library = env['ldfLibs'])
+     env.Tool('addLibrary', library = env['cfitsioLibs'])
+     env.Tool('addLibrary', library = env['obfLibs'])
+     env.Tool('facilitiesLib')
+     env.Tool('astroLib')
+     env.Tool('lsfDataLib')
+
+    *
+------------------------------------------------------------
 User: ecephas  Mon Nov 10 08:19:40 PST 2008
 GlastRelease-scons/ldfReader
 
