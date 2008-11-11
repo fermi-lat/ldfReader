@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Mon Nov 10 20:28:55 PST 2008
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+update head of ldfReader for new LDF
+    *
+------------------------------------------------------------
+User: heather  Mon Nov 10 20:28:55 PST 2008
 ldfReader/src
 
 Modified Files:
