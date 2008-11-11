@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.36 2008/08/09 12:14:34 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.37 2008/10/03 03:39:17 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -26,12 +26,12 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.36 2008/08
 
 namespace ldfReader {
 
-DfiParser::DfiParser() {
+DfiParser::DfiParser():m_dataParser("") {
     clear();
 }
 
 
-DfiParser::DfiParser(const std::string &filename) : m_dataParser(), m_ebfPkts(0) {
+DfiParser::DfiParser(const std::string &filename) : m_dataParser(""), m_ebfPkts(0) {
     //Purpose and Method:  Ctor using LPA file as input 
     // Open input file and read in first event
     //Inputs:  filename 
@@ -438,26 +438,31 @@ int DfiParser::loadData() {
 
         //m_dataParser.iterate(m_start, m_end);
         //int status = m_dataParser.EBF(m_start, m_end);
-        unsigned int status = m_dataParser.iterate2(m_ebf.data(), m_ebf.size());
+        unsigned int count = m_dataParser.iterate2(m_ebf.data(), m_ebf.size(), false);
 
         unsigned long long eventId = ldfReader::LatData::instance()->eventId();
         int apid = ldfReader::LatData::instance()->getCcsds().getApid();
 
         if (EbfDebug::getDebug()) 
             std::cout << "Event: " << eventId << " APID: " << apid << std::endl;
+         fflush(0);
         
         ldfReader::LatData::instance()->setTimeInSecTds(timeForTds(ldfReader::LatData::instance()->getCcsds().getUtc()));
 
+
         //if (m_dataParser.status()) {
+        EBFeventIterator *ebfIt = dynamic_cast<EBFeventIterator*>(&m_dataParser);
+        //unsigned int status = m_dataParser.status();
+        unsigned int status = ebfIt->status();
         if (status) {
             std::ostringstream errMsg;
-            errMsg.str("LDF EBFeventParser reported a bad status 0x");
+            errMsg << "LDF EBFeventParser reported a bad status 0x";
             //errMsg << std::hex << m_dataParser.status() << " = " << std::dec 
         //           << m_dataParser.status() << " Event: " << eventId 
             errMsg << std::hex << status << " = " << std::dec 
                    << status << " Event: " << eventId 
                    << " APID: " << apid;
-            std::cout << errMsg << std::endl;
+            std::cout << errMsg.str() << std::endl;
             ldfReader::LatData::instance()->setBadLdfStatusFlag();
             //throw LdfException(errMsg.str());
         }
@@ -478,6 +483,7 @@ int DfiParser::loadData() {
         ldfReader::LatData::instance()->checkTrgParityError();
         ldfReader::LatData::instance()->checkAemError();
         ldfReader::LatData::instance()->checkCalReadout();
+
 
     } catch (LdfException& e) {
        std::cerr << "Caught LdfException: " << e.what() << " Apid: "  

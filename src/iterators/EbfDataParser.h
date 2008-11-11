@@ -13,7 +13,7 @@
 
 /** @class EbfDataParser
 @brief Provides callbacks for each component.
-$Header: $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDataParser.h,v 1.1 2008/10/03 03:39:17 heather Exp $
 */
 namespace ldfReader {
     class EbfDataParser : public AcdParser,
@@ -37,14 +37,18 @@ namespace ldfReader {
                       ACDmap* a = 0, CALmap* c = 0, TKRmap* t = 0);
         virtual ~EbfDataParser() {}
 
+         unsigned int iterate2(const unsigned char* buf, unsigned int len,
+                              bool swap=DFC_BIG_ENDIAN);
+
+
         //! Virtual base class methods that are implemented by this class
         //! These are not meant to be reimplemented by subclasses
-        virtual int UDF(EBFevent*, EBFcontribution*);
-        virtual int UDF(LATcontribution* event, LATcontribution* end);
+        virtual int UDF(const EBFevent*, const EBFcontribution*);
+        virtual int UDF(const LATcontribution* event, const LATcontribution* end);
         virtual int OSW_time(const EBFevent*, const OSWtimeContribution*) const;
         virtual int OSW_UDF(const EBFevent*, const OSWcontribution*) const;
-        virtual int GLT(EBFevent*, GLTcontribution*);
-        virtual int GEM(EBFevent*, GEMcontribution*);
+        virtual int GLT(const EBFevent*, const EBFcontribution*);
+        virtual int GEM(const EBFevent*, const EBFcontribution*);
 
         virtual int commonComponentData(EBFcontribution*);
 

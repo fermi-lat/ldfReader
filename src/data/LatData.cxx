@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.42 2006/08/03 18:42:53 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.43 2008/04/17 16:32:07 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -146,6 +146,7 @@ namespace ldfReader {
             foundFirst = true;
         }
 
+
         if ( (getAem().exist()) && !foundFirst) {
             firstEvtSeq = getAem().summary().eventSequence(); 
             foundFirst = true;
@@ -154,6 +155,7 @@ namespace ldfReader {
                       << getAem().summary().eventSequence() << std::endl;
             return false;
         }
+
 
         if ( (getOsw().exist()) && !foundFirst ){
             firstEvtSeq = getOsw().summary().eventSequence();
@@ -178,6 +180,7 @@ namespace ldfReader {
                 return false;
             }
         }
+
 
         // Assuming ADF will not be the only or first contribution found
         // ADF event number will be one more than EBF contributions
