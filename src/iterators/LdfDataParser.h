@@ -6,7 +6,7 @@
 
 /** @class LdfDataParser
 @brief Provides callbacks for each component.
-$Header$
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/LdfDataParser.h,v 1.1 2008/10/03 03:39:17 heather Exp $
 */
 namespace ldfReader {
     class LdfDataParser : public LDFiteratorBase,
@@ -30,7 +30,7 @@ namespace ldfReader {
 //        virtual int EBF(const EBFevent *start, const EBFevent *end);
 
         unsigned int iterate2(const unsigned char* buf, unsigned int len, 
-                              bool swap=!DFC_BIG_ENDIAN);
+                              bool swap=DFC_BIG_ENDIAN);
 
 //        virtual unsigned int status() { return 0; } //EBFeventIterator.status(); };
 

@@ -11,7 +11,8 @@
 #include "lsfData/LsfCcsds.h"
 #include "eventFile/EBF_Data.h"
 
-#include "../src/iterators/LdfDataParser.h"
+//#include "../src/iterators/LdfDataParser.h"
+#include "../src/iterators/EbfDataParser.h"
 
 #include <vector>
 
@@ -19,7 +20,7 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/DfiParser.h,v 1.11 2008/07/06 22:23:35 usher Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/DfiParser.h,v 1.12 2008/10/03 03:39:17 heather Exp $
 */
 
 namespace ldfReader {
@@ -79,7 +80,7 @@ namespace ldfReader {
 
         EBFevent *m_end, *m_start;
 
-        LdfDataParser m_dataParser;
+        EbfDataParser m_dataParser;
 
         lsfData::LsfCcsds   m_ccsds;
         lsfData::MetaEvent  m_meta;

@@ -3,7 +3,7 @@
 
 /** @class EbfDataParser.cxx
 @brief Implementation of the EbfDataParser class
-$Header: $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDataParser.cxx,v 1.1 2008/10/03 03:39:17 heather Exp $
 */
 
 // ldfReader includes
@@ -42,6 +42,14 @@ EbfDataParser::EbfDataParser(const char* prefix,
 {
 }
 
+unsigned int EbfDataParser::iterate2(const unsigned char* buf, unsigned int len,
+                                    bool swap) {
+
+    return EBFiteratorBase::iterate(buf,len,swap);
+}
+
+
+
 int EbfDataParser::OSW_UDF(const EBFevent*        /* event */,
                              const OSWcontribution* contribution) const
 {
@@ -68,7 +76,7 @@ int EbfDataParser::OSW_time(const EBFevent*            /*event*/,
 
 
 
-int EbfDataParser::UDF(LATcontribution* event, LATcontribution* end)
+int EbfDataParser::UDF(const LATcontribution* event, const LATcontribution* end)
 {
   if (event->identity().getPrimary() == Pri_Id_BtAncEvt) {
     if (EbfDebug::getDebug())
@@ -115,7 +123,7 @@ int EbfDataParser::UDF(LATcontribution* event, LATcontribution* end)
 
 }
 
-int EbfDataParser::UDF(EBFevent* event, EBFcontribution* contribution)
+int EbfDataParser::UDF(const EBFevent* event, const EBFcontribution* contribution)
 {
     printf("Found UDF in EbfDataParser\n");
     //fprintf (stderr, "\nUndefined EBF component\n");
@@ -123,8 +131,9 @@ int EbfDataParser::UDF(EBFevent* event, EBFcontribution* contribution)
     return 0;
 }
 
-int EbfDataParser::GLT(EBFevent* event, GLTcontribution* glt)
+int EbfDataParser::GLT(const EBFevent* event, const EBFcontribution* ebf)
 {
+  const GLTcontribution *glt = ebf;
   //if (EbfDebug::getDebug())  printf("\nGLT:\n");
   ldfReader::LatData::instance()->setSummary(event->summary());
 
@@ -151,9 +160,10 @@ int EbfDataParser::GLT(EBFevent* event, GLTcontribution* glt)
   return 0;
 }
 
-int EbfDataParser::GEM(EBFevent *event, GEMcontribution *contribution) {
+int EbfDataParser::GEM(const EBFevent *event, const EBFcontribution *ebf_contribution) {
 
-    //if (EbfDebug::getDebug())  printf("\nGEM:\n");
+    const GEMcontribution *contribution = ebf_contribution;
+    if (EbfDebug::getDebug())  printf("\nEbfDataParser::GEM:\n");
     ldfReader::GemData gem;
 
     // Set EventSummary here - in case there is no OSW

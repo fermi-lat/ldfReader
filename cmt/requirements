@@ -74,6 +74,7 @@ macro_append cpplinkflags "" WIN32 " oldnames.lib "
 application test_ldfReader -import=eventRet test/test_ldfReader.cxx
 
 #application test_dfiReader -import=eventRet test/test_dfiReader.cxx
+application test_dfiReader -import=eventRet test/test_dfiReader2.cxx
 
 application test_lsfReader -import=eventRet test/test_lsfReader.cxx
 
