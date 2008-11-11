@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Nov 10 20:28:55 PST 2008
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+update head of ldfReader for new LDF
+    *
+------------------------------------------------------------
 User: ecephas  Mon Nov 10 08:20:39 PST 2008
 GlastRelease-scons/ldfReader
 
