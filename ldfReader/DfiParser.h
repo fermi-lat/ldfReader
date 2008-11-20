@@ -5,7 +5,6 @@
 #include <string>
 #include "data/LatData.h"
 #include "EBFevent.h"
-//#include "../src/ccsds2lsf.h"
 
 #include "lsfData/LSFReader.h"
 #include "lsfData/LsfMetaEvent.h"
@@ -25,7 +24,7 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/DfiParser.h,v 1.10 2008/07/03 16:46:56 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/DfiParser.h,v 1.11 2008/07/06 22:23:35 usher Exp $
 */
 
 namespace ldfReader {
