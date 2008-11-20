@@ -1,5 +1,15 @@
 ------------------------------------------------------------
 User: heather  Wed Nov 19 21:06:02 PST 2008
+ldfReader/doc
+
+Modified Files:
+      Tag: GlastReleasev15r49
+	release.notes 
+Log Message:
+declare EbfDatagramParser in forward decl
+    *
+------------------------------------------------------------
+User: heather  Wed Nov 19 21:06:02 PST 2008
 ldfReader/cmt
 
 Modified Files:
