@@ -7,17 +7,17 @@
 #include "data/LatData.h"
 #include "EBFevent.h"
 #include "LATdatagram.h"
-#include "../src/iterators/EbfDatagramParser.h"
-
+//#include "../src/iterators/EbfDatagramParser.h"
 
 /** @class LdfParser
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/LdfParser.h,v 1.8 2006/05/25 23:59:26 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/LdfParser.h,v 1.9 2006/08/01 15:52:15 heather Exp $
 */
 
 namespace ldfReader {
+class EbfDatagramParser;
     class LdfParser : public EbfParser {
     public:
 
