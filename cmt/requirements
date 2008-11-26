@@ -46,10 +46,10 @@ macro_append cppflags  "" \
 library ldfReader EbfParser.cxx EbfDebug.cxx DfiParser.cxx LdfParser.cxx \
                   iterators/*.cxx data/*.cxx \ 
                   ${ldfReader_headers} ${ldfParser_headers} \ 
-                  ${ldfExt_DIR}/test/EBF_fileIn.c
+                  ${ldfExt_PATH}/test/EBF_fileIn.c
 
 # Create this environment macro for use during testing
-set LDFROOT ${ldfExt_DIR}
+set LDFROOT ${ldfExt_PATH}
 
 #apply_pattern package_linkopts
 #apply_pattern package_stamps
