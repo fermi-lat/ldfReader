@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Nov 25 21:36:52 PST 2008
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+migrate to directory structure for LDF external
+    *
+------------------------------------------------------------
 TAG
 Tag name: v6r0p1gr1, operation: add
 Package: ldfReader
