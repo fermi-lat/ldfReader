@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v7r0p1  01-Dec-2008 hmk add new test main test_dfiReader2.cxx to src/test dir
 v7r0    03-Oct-2008 hmk Upgrade for LDf v7-01-01
 v6r0p1  09-Aug-2008 hmk store compressionLevel and compressedSize in MetaEvent
 v6r0    07-Jul-2008 tu  re-packetize ebf blob for use in OnboardFilter
