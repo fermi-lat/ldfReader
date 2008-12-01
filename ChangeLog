@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Dec  1 09:29:52 PST 2008
+ldfReader/src/test
+
+Added Files:
+	test_dfiReader2.cxx 
+Log Message:
+add new test routine
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-07-00-00, operation: add
 Package: ldfReader
