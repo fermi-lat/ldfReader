@@ -1,7 +1,7 @@
 # -*- python -*-
-# $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/SConscript,v 1.2 2008/11/10 16:19:40 ecephas Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/SConscript,v 1.3 2008/11/26 06:30:14 glastrm Exp $
 # Authors: Heather Kelly <heather@lheapop@gsfc.nasa.gov>, Tracy Usher <usher@slac.stanford.edu>
-# Version: ldfReader-07-00-00
+# Version: ldfReader-07-00-01
 Import('baseEnv')
 Import('listFiles')
 Import('packages')
