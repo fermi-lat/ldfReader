@@ -1,4 +1,12 @@
 ------------------------------------------------------------
+User: glastrm  Mon Dec  1 10:30:15 PST 2008
+ldfReader
+
+Modified Files:
+	SConscript 
+Log Message:
+    *
+------------------------------------------------------------
 TAG
 Tag name: v7r0p1, operation: add
 Package: ldfReader
