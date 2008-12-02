@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Dec  2 06:35:23 PST 2008
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+const patches for windows
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-07-00-01, operation: add
 Package: ldfReader
