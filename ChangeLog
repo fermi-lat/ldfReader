@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Tue Dec  2 06:35:23 PST 2008
+ldfReader/src/iterators
+
+Modified Files:
+	EbfDataParser.cxx 
+Log Message:
+const patches for windows
+    *
+------------------------------------------------------------
+User: heather  Tue Dec  2 06:35:23 PST 2008
 ldfReader/doc
 
 Modified Files:
