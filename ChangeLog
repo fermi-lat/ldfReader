@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+TAG
+Tag name: v7r0p2, operation: mov
+Package: ldfReader
+User: glastrm  Tue Dec  2 07:30:39 2008
+Files:
+  ldfReader/SConscript  1.5
+
+    *
+------------------------------------------------------------
 User: glastrm  Tue Dec  2 07:30:33 PST 2008
 ldfReader
 
