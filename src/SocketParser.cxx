@@ -4,7 +4,7 @@
 /** @file SocketParser.cxx
 @brief Implementation of the SocketParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/SocketParser.cxx,v 1.6 2006/08/16 19:31:15 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/SocketParser.cxx,v 1.7 2008/10/03 03:39:17 heather Exp $
 */
 
 #include "ldfReader/SocketParser.h"
@@ -182,12 +182,17 @@ int SocketParser::loadData() {
 //        ldf.iterate();
 //        if (ldf.status()) {
         //Parse the data
-        m_dataParser.iterate(m_buffer,m_eventSize);
-        if (m_dataParser.status()) {
+        //m_dataParser.iterate(m_buffer,m_eventSize);
+        unsigned int count = m_dataParser.iterate2(m_buffer, m_eventSize, false);  // not sure how to set swap by default
+        EBFeventIterator *ebfIt = dynamic_cast<EBFeventIterator*>(&m_dataParser);
+        //unsigned int status = m_dataParser.status();
+        unsigned int status = ebfIt->status();
+
+        if (status) {
             std::ostringstream errMsg;
             errMsg.str("LDF EBFeventParser reported a bad status 0x");
-            errMsg << std::hex << m_dataParser.status() << " = " << std::dec
-                   << m_dataParser.status() << " EventId: " 
+            errMsg << std::hex << status << " = " << std::dec
+                   << status << " EventId: " 
                    << ldfReader::LatData::instance()->getOsw().evtSequence();
             std::cout << errMsg << std::endl;
             ldfReader::LatData::instance()->setBadLdfStatusFlag();
@@ -207,7 +212,7 @@ int SocketParser::loadData() {
         // enough file..  I believe we want one where they started to store the
         // event summary in each contribution separately
         if (ldfReader::LatData::instance()->getFormatIdentity() >= 
-            LatComponentParser::ID_WITH_OSW) {
+            EbfDataParser::ID_WITH_OSW) {
 
         if (!ldfReader::LatData::instance()->eventSeqConsistent()) {
             printf("Event Sequence numbers are not consistent within all contributions\n");
