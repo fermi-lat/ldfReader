@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Dec  3 07:42:59 PST 2008
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+reactivate SocketParser for windows for now
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-07-00-02, operation: add
 Package: ldfReader
