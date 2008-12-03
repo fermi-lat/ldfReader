@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 @verbatim
 
+v7r0p3  03-Dec-2008 hmk reactivate SocketParser for now
 v7r0p2  02-Dec-2008 hmk const patches for windows
 v7r0p1  01-Dec-2008 hmk add new test main test_dfiReader2.cxx to src/test dir
 v7r0    03-Oct-2008 hmk Upgrade for LDf v7-01-01

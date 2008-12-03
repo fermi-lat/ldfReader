@@ -1,5 +1,5 @@
 package ldfReader
-version v7r0p2
+version v7r0p3
 
 author Heather Kelly <heather@lheapop@gsfc.nasa.gov>
 author Tracy Usher   <usher@slac.stanford.edu>
@@ -43,7 +43,8 @@ macro_append cppflags  "" \
 
 
 
-library ldfReader EbfParser.cxx EbfDebug.cxx DfiParser.cxx LdfParser.cxx \
+#library ldfReader EbfParser.cxx EbfDebug.cxx DfiParser.cxx LdfParser.cxx \
+library ldfReader *.cxx \
                   iterators/*.cxx data/*.cxx \ 
                   ${ldfReader_headers} ${ldfParser_headers} \ 
                   ${ldfExt_PATH}/test/EBF_fileIn.c

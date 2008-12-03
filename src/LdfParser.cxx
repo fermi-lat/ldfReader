@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.35 2007/03/31 16:59:02 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.36 2008/10/03 03:39:17 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -332,7 +332,12 @@ const unsigned LdfParser::BufferSize = 64*1024;
         //m_dataParser.iterate(m_rowBuf, m_maxSize);
 
         // Parse the data buffer
-        unsigned int status = m_dataParser.iterate2(m_rowBuf, m_maxSize, m_swap);
+        unsigned int count = m_dataParser.iterate2(m_rowBuf, m_maxSize, m_swap);
+
+        EBFeventIterator *ebfIt = dynamic_cast<EBFeventIterator*>(&m_dataParser);
+        //unsigned int status = m_dataParser.status();
+        unsigned int status = ebfIt->status();
+
         if (status) {
             std::ostringstream errMsg;
             errMsg.str("LDF dataParser reported a bad status 0x");
