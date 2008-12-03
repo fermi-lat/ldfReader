@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Wed Dec  3 07:42:59 PST 2008
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+reactivate SocketParser for windows for now
+    *
+------------------------------------------------------------
+User: heather  Wed Dec  3 07:42:59 PST 2008
 ldfReader/cmt
 
 Modified Files:
