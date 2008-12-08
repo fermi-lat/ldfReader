@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+TAG
+Tag name: ldfReader-06-00-01-01, operation: add
+Package: ldfReader
+User: ecephas  Mon Dec  8 14:20:03 2008
+Files:
+  ldfReader/SConscript  1.7
+
+    *
+------------------------------------------------------------
 User: ecephas  Mon Dec  8 14:19:04 PST 2008
 GlastRelease-scons/ldfReader
 
