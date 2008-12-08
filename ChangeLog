@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 TAG
+Tag name: v6r0p1gr1, operation: add
+Package: ldfReader
+User: ecephas  Mon Dec  8 14:20:38 2008
+Files:
+  ldfReader/SConscript  1.7
+
+    *
+------------------------------------------------------------
+TAG
 Tag name: ldfReader-06-00-01-01, operation: add
 Package: ldfReader
 User: ecephas  Mon Dec  8 14:20:03 2008
