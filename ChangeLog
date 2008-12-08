@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: ecephas  Mon Dec  8 14:19:04 PST 2008
+GlastRelease-scons/ldfReader
+
+Modified Files:
+	SConscript 
+Log Message:
+check in ldfReader/SConscript for ldfReader v6r0p1gr1 (branch tag, GlastReleasev15r49)
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-07-00-03, operation: add
 Package: ldfReader
