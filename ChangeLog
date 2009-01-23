@@ -1,5 +1,18 @@
 ------------------------------------------------------------
 TAG
+Tag name: GlastRelease-15-49-00, operation: mov
+Package: ldfReader
+User: glastrm  Fri Jan 23 12:59:33 2009
+Files:
+  ldfReader/cmt/requirements  1.115.40.1
+  ldfReader/doc/release.notes  1.114.40.1
+  ldfReader/ldfReader/DfiParser.h  1.11.62.1
+  ldfReader/ldfReader/SocketParser.h  1.3.430.1
+  ldfReader/ldfReader/LdfParser.h  1.9.430.1
+
+    *
+------------------------------------------------------------
+TAG
 Tag name: v6r0p1gr1, operation: mov
 Package: ldfReader
 User: glastrm  Thu Jan 22 16:45:04 2009
