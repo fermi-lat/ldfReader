@@ -1,5 +1,13 @@
 ------------------------------------------------------------
 TAG
+Tag name: ldfReader-06-00-01-01, operation: mov
+Package: ldfReader
+User: glastrm  Thu Jan 22 16:44:06 2009
+Files:
+
+    *
+------------------------------------------------------------
+TAG
 Tag name: ldfReader-06-00-01, operation: del
 Package: ldfReader
 User: glastrm  Thu Jan 22 16:43:55 2009
