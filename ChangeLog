@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: ecephas  Thu Jan 22 16:07:08 PST 2009
+GlastRelease-scons/ldfReader
+
+Modified Files:
+	SConscript 
+Log Message:
+Check in for GlastRelease-15-49-00
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-15-49-00, operation: add
 Package: ldfReader
