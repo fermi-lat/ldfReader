@@ -1,4 +1,17 @@
 ------------------------------------------------------------
+TAG
+Tag name: v6r0p1, operation: mov
+Package: ldfReader
+User: glastrm  Thu Jan 22 16:31:31 2009
+Files:
+  ldfReader/SConscript  1.8
+  ldfReader/SConscript  1.8
+  ldfReader/ldfReaderLib.py  1.1
+  ldfReader/ldfReaderLib.py  1.1
+  ldfReader/ldfReaderLib.py  1.1
+
+    *
+------------------------------------------------------------
 User: ecephas  Thu Jan 22 16:07:08 PST 2009
 GlastRelease-scons/ldfReader
 
