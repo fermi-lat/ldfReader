@@ -1,5 +1,13 @@
 ------------------------------------------------------------
 TAG
+Tag name: v6r0p1gr1, operation: add
+Package: ldfReader
+User: glastrm  Thu Jan 22 16:39:27 2009
+Files:
+
+    *
+------------------------------------------------------------
+TAG
 Tag name: v6r0p1, operation: del
 Package: ldfReader
 User: glastrm  Thu Jan 22 16:38:19 2009
