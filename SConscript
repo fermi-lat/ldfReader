@@ -1,7 +1,8 @@
 # -*- python -*-
-# $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/SConscript,v 1.6 2008/12/03 16:30:14 glastrm Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/SConscript,v 1.7 2008/12/08 22:19:04 ecephas Exp $
 # Authors: Heather Kelly <heather@lheapop@gsfc.nasa.gov>, Tracy Usher <usher@slac.stanford.edu>
 # Version: ldfReader-06-00-01-01
+
 Import('baseEnv')
 Import('listFiles')
 Import('packages')
@@ -30,6 +31,7 @@ progEnv.Tool('registerObjects', package = 'ldfReader',
 						  test_lsfReader,
 						  test_socketReader],
 	                                          includes = listFiles(['ldfReader/*'], recursive=True))
+
 
 
 
