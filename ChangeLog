@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 TAG
+Tag name: ldfReader-06-00-01, operation: del
+Package: ldfReader
+User: glastrm  Thu Jan 22 16:43:55 2009
+Files:
+  ldfReader/ldfReaderLib.py  1.1
+
+    *
+------------------------------------------------------------
+TAG
 Tag name: v6r0p1, operation: del
 Package: ldfReader
 User: glastrm  Thu Jan 22 16:42:34 2009
