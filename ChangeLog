@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 TAG
+Tag name: ldfReader-06-00-01-01, operation: mov
+Package: ldfReader
+User: glastrm  Sat Jan 24 09:48:37 2009
+Files:
+  ldfReader/ldfReaderLib.py  1.3
+
+    *
+------------------------------------------------------------
+TAG
 Tag name: v6r0p1gr1, operation: mov
 Package: ldfReader
 User: glastrm  Sat Jan 24 09:48:12 2009
