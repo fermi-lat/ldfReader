@@ -1,4 +1,21 @@
 ------------------------------------------------------------
+User: ecephas  Sat Jan 24 09:46:06 PST 2009
+GlastRelease-scons/ldfReader
+
+Modified Files:
+	ldfReaderLib.py 
+Log Message:
+
+Added the following:
+
+     env.Tool('addLibrary', library = env['ldfLibs'])
+     env.Tool('facilitiesLib')
+     env.Tool('eventFileLib')
+     env.Tool('lsfDataLib')
+     env.Tool('astroLib')
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-15-49-00, operation: mov
 Package: ldfReader
