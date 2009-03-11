@@ -124,6 +124,7 @@ namespace ldfReader {
         void setTimeoutErrorFlag() { m_flags |= enums::TIMEOUTERROR; };
         void setCalReadoutFlag() { m_flags |= enums::MISSINGCALREADOUT; };
         void setLdfWarningFlag() { m_flags |= enums::LDFWARNING; };
+        void setTemBugFlag()     { m_flags |= enums::TEMBUG; };
 
         unsigned checkTemError();
         unsigned checkPacketError();

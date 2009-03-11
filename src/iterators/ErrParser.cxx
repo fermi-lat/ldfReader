@@ -318,6 +318,16 @@ int ErrParser::gtccDataParityError (unsigned tower,
 int ErrParser::handleError(TEMcontribution* contribution,
                            unsigned code, unsigned p1, unsigned p2) const
 {
+  switch (code) {
+      case ERR_TEMbug:
+      {
+          ldfReader::LatData::instance()->setTemBugFlag();
+          break;
+      }
+      default:
+          break;
+  } // end switch (code)
+
   int rc = ERRcontributionIterator::handleError(contribution,code,p1,p2);
   _handleErrorCommon();
   return rc;
