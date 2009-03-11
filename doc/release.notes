@@ -2,8 +2,9 @@
 Package ldfReader
 @verbatim
 Coordinator:H.Kelly
-@verbatim
-
+EOH
+v7r1    11-Mar-2009 hmk add handling for TEM bug as well as use of 
+        handleError callback
 v7r0p3  03-Dec-2008 hmk reactivate SocketParser for now
 v7r0p2  02-Dec-2008 hmk const patches for windows
 v7r0p1  01-Dec-2008 hmk add new test main test_dfiReader2.cxx to src/test dir
@@ -200,6 +201,5 @@ v0r1    11-Apr-2003 jrb  Just to get a better tag name
 v0r0    11-Apr-2003 jrb  fix up #includes to work properly
 head updates    09-Apr-2003 HMK update for Online/EBF v01-00-00
 v0      18-Mar-2003 HMK initial import
-@endverbatim
 
 */
