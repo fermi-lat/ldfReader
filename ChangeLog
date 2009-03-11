@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Mar 10 21:25:37 PDT 2009
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+TEM bug
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-15-49-00, operation: mov
 Package: ldfReader
