@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Mar 12 19:58:24 PDT 2009
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+fix up handleError for TEMbug
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-07-01-00, operation: add
 Package: ldfReader
