@@ -3,7 +3,7 @@
 
 /** @class EbfDataParser.cxx
 @brief Implementation of the EbfDataParser class
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDataParser.cxx,v 1.3 2008/12/02 14:35:23 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDataParser.cxx,v 1.4 2009/03/11 04:25:37 heather Exp $
 */
 
 // ldfReader includes
@@ -164,7 +164,7 @@ int EbfDataParser::GLT(const EBFevent* event, const EBFcontribution* ebf)
 int EbfDataParser::GEM(const EBFevent *event, const EBFcontribution *ebf_contribution) {
 
     const GEMcontribution *contribution = (const GEMcontribution*) ebf_contribution;
-    if (EbfDebug::getDebug())  printf("\nEbfDataParser::GEM:\n");
+    //if (EbfDebug::getDebug())  printf("\nEbfDataParser::GEM:\n");
     ldfReader::GemData gem;
 
     // Set EventSummary here - in case there is no OSW
@@ -195,6 +195,10 @@ int EbfDataParser::GEM(const EBFevent *event, const EBFcontribution *ebf_contrib
 
 
     ldfReader::LatData::instance()->setGem(gem);
+    if (EbfDebug::getDebug()) {
+       gem.print();
+       summary.print();
+    }
     return 0;
 }
 
@@ -272,6 +276,7 @@ int EbfDataParser::handleError(const AEMcontribution* c, unsigned code,
 int EbfDataParser::handleError(const TEMcontribution* c, unsigned code,
                            unsigned p1, unsigned p2) const
 {
+  ErrParser::handleError(c,code,p1,p2);
   int rc = EBFiteratorBase::handleError(c, code, p1, p2);
   _handleErrorCommon();
   return rc;

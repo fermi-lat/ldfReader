@@ -3,6 +3,7 @@ Package ldfReader
 @verbatim
 Coordinator:H.Kelly
 EOH
+v7r2    13-Mar-2009 hmk Fix up use of handleError callbacks for TEM bug
 v7r1    11-Mar-2009 hmk add handling for TEM bug as well as use of 
         handleError callback
 v7r0p3  03-Dec-2008 hmk reactivate SocketParser for now

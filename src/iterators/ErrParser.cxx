@@ -322,16 +322,17 @@ int ErrParser::handleError(TEMcontribution* contribution,
       case ERR_TEMbug:
       {
           ldfReader::LatData::instance()->setTemBugFlag();
+          fprintf(stream(),"Setting TEMBugFlag\n");
           break;
       }
       default:
           break;
   } // end switch (code)
 
-  int rc = ERRcontributionIterator::handleError(contribution,code,p1,p2);
-  _handleErrorCommon();
-  return rc;
+  return 0;  //rc
 }
+
+
 
 } // end namespace ldfReader
 
