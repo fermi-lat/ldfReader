@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Thu Mar 12 19:58:24 PDT 2009
+ldfReader/src/iterators
+
+Modified Files:
+	EbfDataParser.cxx ErrParser.cxx 
+Log Message:
+fix up handleError for TEMbug
+    *
+------------------------------------------------------------
+User: heather  Thu Mar 12 19:58:24 PDT 2009
 ldfReader/doc
 
 Modified Files:
