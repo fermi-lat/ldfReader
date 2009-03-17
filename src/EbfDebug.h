@@ -7,18 +7,25 @@
 Although this class is actually publicly accessible outside
 the scope of the ldfReader package, the intention is to 
 keep it private to the package.
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/EbfDebug.h,v 1.1 2003/05/20 16:10:08 jrb Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/EbfDebug.h,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
 */
 
 class EbfDebug {
 public:
 
     /// Turn on or off debug output.  Returns old value of flag
-    static bool setDebug(bool debugOn);
-    static bool getDebug() {return m_debug;}
+    static int setDebug(int debugOn);
+
+    static int getDebug() {return m_debug;}
+
+    typedef enum {
+       NONE = 0,
+       ERRMSG = 1,
+       ALL = 4
+    } Verbosity;
 
 private:
-    static bool m_debug;
+    static int m_debug;
 };
 
 #endif

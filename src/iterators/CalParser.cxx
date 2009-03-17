@@ -4,7 +4,7 @@
 /** @file CalParser.cxx
 @brief Implementation of the CalParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.7 2006/04/07 16:46:49 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.8 2008/10/03 03:39:17 heather Exp $
 */
 
 // EBF Online Library includes
@@ -40,7 +40,7 @@ namespace ldfReader {
 
         char name[10];
         sprintf(name, "  %1d    %2s ", gccc[layer], layerTag[layer]);
-        if (EbfDebug::getDebug()) {
+        if (EbfDebug::getDebug()==EbfDebug::ALL) {
             printf("%s     %2d   %10s   %2d   0x%03x   %1d   0x%03x   %1d\n",
                 m_prefix, tower, name, theLog.column(),
                 theLog.positive().value(), theLog.positive().range(),

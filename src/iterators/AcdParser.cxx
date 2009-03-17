@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.21 2008/04/21 03:32:56 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.22 2008/10/03 03:39:17 heather Exp $
 */
 
 // EBF Online Library includes
@@ -33,7 +33,7 @@ void AcdParser::header(unsigned cable, AEMheader hdr)
     // Store this header for use when parsing each PMT 
     setCurHeader(hdr);
 
-    if (EbfDebug::getDebug()) {
+    if (EbfDebug::getDebug()==EbfDebug::ALL) {
 
         printf("%s  Cable %d = FREE board %s header:\n", m_prefix, cable,
             map()->freeName(event()->identity(), cable));
@@ -82,7 +82,7 @@ void AcdParser::header(unsigned cable, AEMheader hdr)
 //    _acdSrc = LATPcellHeader::source(contribution->header());
 //    if (EbfDebug::getDebug() ) printf("\nAEM %2d:\n", _acdSrc);
     // HMK 09082008 Not sure how to call this method from EbfDataParser 
-    if (EbfDebug::getDebug() ) commonComponentData((EBFcontribution*)contribution());
+    if (EbfDebug::getDebug()==EbfDebug::ALL ) commonComponentData((EBFcontribution*)contribution());
 
 
     // loop over all bits in the accept and hit maps, if either is set store
@@ -201,7 +201,7 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
 
   // A or B
   char      side = pmt->a() ? 'A' : 'B'; 
-  if (EbfDebug::getDebug()) {
+  if (EbfDebug::getDebug()==EbfDebug::ALL) {
       printf("%s  %2d   %4s     %c    %d   %4d = 0x%03x    %d     %d\n",
          "PMT Info: ", channel, pmt->name(), side,
          p.ADCrange(), p.ADCvalue(), p.ADCvalue(), p.parityError(), p.more());
@@ -213,7 +213,7 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
       if (stat < 0) {
             tileName = pmt->name();
             side = pmt->a() ? 'A' : 'B';
-       } else if (EbfDebug::getDebug()) {
+       } else if (EbfDebug::getDebug()==EbfDebug::ALL) {
            printf("Remapping %s:%c to %s:%c\n", pmt->name(), sideSave, tileName.c_str(), side);
         }
    } else { // typical case with no remapping
@@ -262,7 +262,7 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
   }
 
 
-  if (EbfDebug::getDebug()) {
+  if (EbfDebug::getDebug()==EbfDebug::ALL) {
       const ldfReader::AcdDigi::AcdPmt* curPmt = acd->getPmtSide(digiSide);
       printf("name: %s, id: %u\n", acd->getTileName(), acd->getTileId());
       if (curPmt) curPmt->print(true);

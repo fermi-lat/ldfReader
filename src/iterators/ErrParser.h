@@ -6,7 +6,7 @@
 
 /** @class ErrParser
 @brief Provides callbacks for Error data .
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/ErrParser.h,v 1.5 2006/05/16 23:18:27 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/ErrParser.h,v 1.6 2008/10/03 03:39:17 heather Exp $
 */
 namespace ldfReader {
     class ErrParser : public virtual ERRcontributionIterator
@@ -42,7 +42,8 @@ namespace ldfReader {
         virtual int gtrcSummaryError   (unsigned twr, unsigned cc, unsigned rc);
         virtual int gtccDataParityError(unsigned twr, unsigned cc, unsigned rc);
 
-        virtual int handleError(TEMcontribution* contribution, unsigned code,
+        virtual int handleError(const TEMcontribution* contribution, 
+                                unsigned code,
                                 unsigned p1=0, unsigned p2=0) const;
 
    protected :

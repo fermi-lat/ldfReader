@@ -1,12 +1,10 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/EbfDebug.cxx,v 1.1 2003/05/20 16:10:08 jrb Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/EbfDebug.cxx,v 1.1.1.1 2004/04/15 20:02:22 heather Exp $
 #include "EbfDebug.h"
 
-bool EbfDebug::setDebug(bool debugOn) {
+int EbfDebug::setDebug(int debugOn) {
     bool old = m_debug;
     m_debug = debugOn;
     return old;
 }
-// Do this one inline
-// bool EbfDebuf::getDebug() {return m_debug;}
 
-bool EbfDebug::m_debug;
+int EbfDebug::m_debug;

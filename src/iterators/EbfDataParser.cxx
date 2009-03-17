@@ -3,7 +3,7 @@
 
 /** @class EbfDataParser.cxx
 @brief Implementation of the EbfDataParser class
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDataParser.cxx,v 1.4 2009/03/11 04:25:37 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDataParser.cxx,v 1.5 2009/03/13 02:58:24 heather Exp $
 */
 
 // ldfReader includes
@@ -80,7 +80,7 @@ int EbfDataParser::UDF(const LATcontribution* event, const LATcontribution* end)
 {
     //(LATcontribution*) eventString = const_cast<LATcontribution*>event;
   if (event->identity().getPrimary() == Pri_Id_BtAncEvt) {
-    if (EbfDebug::getDebug())
+    if (EbfDebug::getDebug()==EbfDebug::ALL)
         printf("Found BtAncEvt, 0x%08X\n", event->identity().value());
     const unsigned char* buf = (const_cast<LATcontribution*>(event))->string(false);
     int status = m_adf.parseEvent(buf);
@@ -97,7 +97,7 @@ int EbfDataParser::UDF(const LATcontribution* event, const LATcontribution* end)
     //unsigned int remainingBytes = len - 16;
 
   } else if (event->identity().getPrimary() == Pri_Id_BtAncHdr) {
-      if (EbfDebug::getDebug())
+      if (EbfDebug::getDebug()==EbfDebug::ALL)
           printf("Found BtAncHdr, 0x%08X\n", event->identity().value());
       const unsigned char* buf = (const_cast<LATcontribution*>(event))->string(false);
       int status = m_adf.parseHeader(buf);
@@ -109,7 +109,7 @@ int EbfDataParser::UDF(const LATcontribution* event, const LATcontribution* end)
       //printf("runNum 0x%08X %u\n", runNum, runNum);
 
   } else if (event->identity().getPrimary() == Pri_Id_BtAncTlr) {
-      if (EbfDebug::getDebug())
+      if (EbfDebug::getDebug()==EbfDebug::ALL)
           printf("Found BtAncTlr, 0x%08X\n", event->identity().value());
       const unsigned char* buf = (const_cast<LATcontribution*>(event))->string(false);
       int status = m_adf.parseTrailer(buf);
@@ -195,7 +195,7 @@ int EbfDataParser::GEM(const EBFevent *event, const EBFcontribution *ebf_contrib
 
 
     ldfReader::LatData::instance()->setGem(gem);
-    if (EbfDebug::getDebug()) {
+    if (EbfDebug::getDebug()==EbfDebug::ALL) {
        gem.print();
        summary.print();
     }
