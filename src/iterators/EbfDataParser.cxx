@@ -3,7 +3,7 @@
 
 /** @class EbfDataParser.cxx
 @brief Implementation of the EbfDataParser class
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDataParser.cxx,v 1.5 2009/03/13 02:58:24 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDataParser.cxx,v 1.6 2009/03/17 13:21:46 heather Exp $
 */
 
 // ldfReader includes
@@ -277,8 +277,12 @@ int EbfDataParser::handleError(const TEMcontribution* c, unsigned code,
                            unsigned p1, unsigned p2) const
 {
   ErrParser::handleError(c,code,p1,p2);
-  int rc = EBFiteratorBase::handleError(c, code, p1, p2);
-  _handleErrorCommon();
+  int rc=code;
+  // Always print out log messages that are not TEMbug
+  if ((EbfDebug::getDebug() >= EbfDebug::ERRMSG) || (code != ERR_TEMbug)) {
+      rc = EBFiteratorBase::handleError(c, code, p1, p2);
+      _handleErrorCommon();
+  }
   return rc;
 }
 
