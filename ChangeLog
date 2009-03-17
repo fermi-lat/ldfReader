@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Mar 17 06:21:46 PDT 2009
+ldfReader/src
+
+Modified Files:
+	DfiParser.cxx EbfDebug.cxx EbfDebug.h 
+Log Message:
+modify EbfDebug handling for more flexibility
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-07-02-00, operation: add
 Package: ldfReader
