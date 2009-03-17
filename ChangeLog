@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Mar 17 06:29:55 PDT 2009
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+EbfDebug handling
+    *
+------------------------------------------------------------
 User: heather  Tue Mar 17 06:21:46 PDT 2009
 ldfReader/src/iterators
 
