@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.37 2008/10/03 03:39:17 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.38 2008/11/11 04:28:55 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -167,7 +167,7 @@ int DfiParser::readContextAndInfo() {
     //ldfReader::LatData::instance()->setTimeInSecTds(timeForTds(m_ccsds.getUtc()));
     ldfReader::LatData::instance()->setEventId(m_meta.scalers().sequence());
  
-    if (EbfDebug::getDebug()) ccsdsData->print();
+    if (EbfDebug::getDebug()==EbfDebug::ALL) ccsdsData->print();
     return 0;
 }
 
@@ -241,7 +241,7 @@ double DfiParser::timeForTds(double utc) {
                   + (clockTicksEvt1PPS/LATSystemClock);
      
       // To turn on: EventSelector.EbfDebugLevel = 1;
-      if (EbfDebug::getDebug())
+      if (EbfDebug::getDebug()>=EbfDebug::ERRMSG)
 	std::cout << "ldfReader::DfiParser - Using fixed 20 MHz!" << std::endl;
       
     }
@@ -443,7 +443,7 @@ int DfiParser::loadData() {
         unsigned long long eventId = ldfReader::LatData::instance()->eventId();
         int apid = ldfReader::LatData::instance()->getCcsds().getApid();
 
-        if (EbfDebug::getDebug()) 
+        if (EbfDebug::getDebug()==EbfDebug::ALL) 
             std::cout << "Event: " << eventId << " APID: " << apid << std::endl;
          fflush(0);
         
@@ -479,8 +479,9 @@ int DfiParser::loadData() {
 
 
         ldfReader::LatData::instance()->checkTemError();
-        ldfReader::LatData::instance()->checkPacketError();
-        ldfReader::LatData::instance()->checkTrgParityError();
+        // These are now handled by handleError callbacks
+        //ldfReader::LatData::instance()->checkPacketError();
+        //ldfReader::LatData::instance()->checkTrgParityError();
         ldfReader::LatData::instance()->checkAemError();
         ldfReader::LatData::instance()->checkCalReadout();
 
