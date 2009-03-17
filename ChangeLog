@@ -1,5 +1,15 @@
 ------------------------------------------------------------
 User: heather  Tue Mar 17 06:21:46 PDT 2009
+ldfReader/src/iterators
+
+Modified Files:
+	AcdParser.cxx CalParser.cxx EbfDataParser.cxx ErrParser.cxx 
+	ErrParser.h TkrParser.cxx 
+Log Message:
+modify EbfDebug handling for more flexibility
+    *
+------------------------------------------------------------
+User: heather  Tue Mar 17 06:21:46 PDT 2009
 ldfReader/src
 
 Modified Files:
