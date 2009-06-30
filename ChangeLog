@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Jun 30 05:27:25 PDT 2009
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+patch check on size of diagnostic data
+    *
+------------------------------------------------------------
 User: heather  Tue Jun 30 05:27:24 PDT 2009
 ldfReader/cmt
 
