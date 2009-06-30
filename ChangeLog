@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Tue Jun 30 05:27:25 PDT 2009
+ldfReader/src/iterators
+
+Modified Files:
+	DiagnosticParser.cxx 
+Log Message:
+patch check on size of diagnostic data
+    *
+------------------------------------------------------------
+User: heather  Tue Jun 30 05:27:25 PDT 2009
 ldfReader/doc
 
 Modified Files:
