@@ -3,6 +3,7 @@ Package ldfReader
 @verbatim
 Coordinator:H.Kelly
 EOH
+v7r3p1  30-Jun-2009 hmk patch check on diagnostic size
 v7r3    17-Mar-2009 hmk Update EbfDebug for more flexibility and limit log
         messages
 v7r2    13-Mar-2009 hmk Fix up use of handleError callbacks for TEM bug

@@ -4,7 +4,7 @@
 /** @file DiagnosticParser.cxx
 @brief Implementation of the DiagnosticParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/DiagnosticParser.cxx,v 1.4 2006/04/07 16:46:49 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/DiagnosticParser.cxx,v 1.5 2008/10/03 03:39:17 heather Exp $
 */
 
 #include "DiagnosticParser.h"
@@ -32,11 +32,11 @@ namespace ldfReader {
         ldfReader::DiagnosticData* diagData = twrData->getTem().getDiagnostic();
         diagData->setExist();
 
-        unsigned long diagSize = diagData->lenInBytes();
-
         const ldfReader::CalDiagnosticData calDiagData(cal.datum(), tower, layer);
         diagData->addCalDiagnostic(calDiagData);
         diagData->initLength(DIAGcontributionIterator::size());
+
+        unsigned long diagSize = diagData->lenInBytes();
 
         if (DIAGcontributionIterator::size() != diagSize)
           printf("WARNING - Diagnostic data size is not %d, it is %d\n",
