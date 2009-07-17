@@ -4,7 +4,7 @@
 /** @file TkrParser.cxx
 @brief Implementation of the TkrParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.8 2008/10/03 03:39:18 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.9 2009/03/17 13:21:46 heather Exp $
 */
 #include <stdio.h> // included for TKRcontributionIterator.h
 // Online EBF library includes
@@ -80,27 +80,27 @@ namespace ldfReader {
         if (!tData) {
             tData = new TowerData(tower);
             curLatData->addTower(tData);
-            /* HMK 09152008 Not sure we need this
-            ldfReader::TemData* tem = tData->getTem();
-            if (!tem) {
-                ldfReader::EventSummaryCommon summary(((EBFcontribution*)contribution())->summary());
-                ldfReader::TemData tem(summary);
-                printf("Summary in TEM in TKR\n");
-                tem.summary().print();
-                tem.setExist();
-                tem.initPacketError(((EBFcontribution*)contribution())->packetError());
-                tem.initLength(((EBFcontribution*)contribution())->length());
-                tData->setTem(tem);
-            }
-           HMK */
         }
+            // HMK 09152008 Not sure we need this
+        ldfReader::TemData& tem = tData->getTem();
+        if (!tem.exist()) {
+             ldfReader::EventSummaryCommon summary(((EBFcontribution*)contribution())->summary());
+             tem.initSummary(summary);
+        //     ldfReader::TemData temNew(summary);
+             //tem.summary().print();
+             tem.setExist();
+             tem.initPacketError(((EBFcontribution*)contribution())->packetError());
+             tem.initLength(((EBFcontribution*)contribution())->length());
+          //      tData->setTem(temNew);
+        }
+           //HMK 
 
         unsigned myPlane = layerEnd >> 1;
         unsigned  myLowHigh = layerEnd & 1;
         const char* myXy = xyByPlane[myPlane % 4];
         if (EbfDebug::getDebug()==EbfDebug::ALL) {
-            printf("%s  %d   %d   %s  %d   %02d    %02d  0x%03x = %4d\n",
-                m_prefix, tower, myPlane, myXy, myLowHigh,
+            printf("%s  %s  %d   %d   %s  %d   %02d    %02d  0x%03x = %4d\n",
+                m_prefix, "TkrParser::strip ", tower, myPlane, myXy, myLowHigh,
                 TKRstrip::gtfe(hit), TKRstrip::strip(hit), hit, hit);
         }
 
@@ -134,7 +134,7 @@ namespace ldfReader {
         using namespace ldfReader;
 
         if (EbfDebug::getDebug()==EbfDebug::ALL) {
-            printf("%s %2d %2d 0x%02x = %3d\n", m_prefix, tower, layerEnd, tot, tot);
+            printf("%s %s %2d %2d 0x%02x = %3d\n", m_prefix, "TOT", tower, layerEnd, tot, tot);
         }
 
         // Retrieve the tower or create a new TowerData object if necessary

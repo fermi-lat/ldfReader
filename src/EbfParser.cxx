@@ -6,14 +6,14 @@
 /** @file EbfParser.cxx
 @brief Implementation of the EbfParser base class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/EbfParser.cxx,v 1.5 2006/08/01 15:52:15 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/EbfParser.cxx,v 1.6 2008/04/17 16:32:06 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
 #include "ldfReader/EbfParser.h"
 namespace ldfReader {
 
-bool EbfParser::setDebug(bool on) {
+int EbfParser::setDebug(int on) {
     return EbfDebug::setDebug(on);
 }
 

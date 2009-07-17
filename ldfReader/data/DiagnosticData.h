@@ -22,6 +22,7 @@ namespace ldfReader {
             m_tkr = d.m_tkr;
             m_cal = d.m_cal;
             m_lenInBytes = d.m_lenInBytes;
+            m_exist = d.m_exist;
         }
         ~DiagnosticData() {}
 
@@ -36,6 +37,18 @@ namespace ldfReader {
             }
             printf("Diagnostic Data:\n");
             printf("Len: %lu\n\n", m_lenInBytes);
+            printf("CAL Diagnostics:\n");
+            std::vector<CalDiagnosticData>::iterator it;
+            for (it = m_cal.begin(); it!= m_cal.end(); it++) {
+                printf("Tower: %d, Layer: %d, DataWord: %u\n",
+                   it->tower(), it->layer(), it->dataWord());
+            }
+            printf("TKR Diagnostics:\n");
+            std::vector<TkrDiagnosticData>::iterator tkrit;
+            for (tkrit = m_tkr.begin(); tkrit!= m_tkr.end(); tkrit++) {
+              printf("Tower: %d, GTCC: %d, DataWord: %u\n", 
+                   tkrit->tower(), tkrit->gtcc(), tkrit->dataWord());
+            }
         }
 
 	// Added 03.19.2005 by awb to get all Tkr and Cal diagnostics contributions:

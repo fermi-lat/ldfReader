@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.43 2008/04/17 16:32:07 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.44 2008/11/11 04:28:55 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -235,9 +235,11 @@ namespace ldfReader {
 
     unsigned LatData::checkTemError() {
         // Assumes m_eventId has been set for any error messages
+        // Also checks the diagnostic bit across all TEMs
 
         unsigned orAll = 0;
         unsigned int temOrAll = 0;
+        unsigned int diagOrAll = 0;
 
         std::map<unsigned int, TowerData*>::const_iterator towerIter = m_towerMap.begin();
         while(towerIter != m_towerMap.end())
@@ -249,9 +251,17 @@ namespace ldfReader {
                 //tem.summary().print();
                 //printf("tem error %d\n", tem.summary().error());
                 orAll |= tem.summary().error();
+                diagOrAll |= tem.summary().diagnostic();
                 //printf("orAll = %d\n", orAll);
             }
         }
+
+        if (getAem().exist()) 
+            diagOrAll |= getAem().summary().diagnostic();
+
+        if (diagOrAll != 0) 
+            setDiagnostic();
+ 
         if ( getOsw().exist()) {
             orAll |= getOsw().summary().error();
             if (temOrAll != getOsw().summary().error()) 
@@ -265,6 +275,7 @@ namespace ldfReader {
                       <<  m_eventId << " Apid: " 
                       << getCcsds().getApid() << std::endl;
             setTemErrorFlag();
+            setError();
         }
         return (orAll);
     }

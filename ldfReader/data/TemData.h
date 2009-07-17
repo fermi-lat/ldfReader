@@ -11,7 +11,7 @@ namespace ldfReader {
 
     /** @class TemData
       * @brief Local storage of TEM data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TemData.h,v 1.9 2005/01/31 20:16:18 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TemData.h,v 1.10 2005/03/15 19:57:33 heather Exp $
     */
     class TemData {
     public:
@@ -58,6 +58,7 @@ namespace ldfReader {
 
         const EventSummaryCommon& summary() const { return m_summary; };
         void initSummary(unsigned summary) { m_summary.setSummary(summary);};
+        void initSummary(const EventSummaryCommon& summary) { m_summary = summary;};
 
 //       void setDiagnostic(const DiagnosticData& diag) { m_diag = diag; };
        DiagnosticData* getDiagnostic() { return &m_diag; };

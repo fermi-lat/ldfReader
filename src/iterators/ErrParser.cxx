@@ -48,6 +48,18 @@ int ErrParser::summary(ErrorSummary theError)
         curLatData->addTower(tower);
     }
 
+    ldfReader::TemData& tem = tower->getTem();
+    if (!tem.exist()) {
+        printf("WARNING TemData does not exist for tower %d creating now\n", towerId);
+       ldfReader::EventSummaryCommon summary(((EBFcontribution*)contribution())->summary());
+        //ldfReader::TemData temNew(summary);
+        tem.initSummary(summary);
+        tem.setExist();
+        tem.initPacketError(((EBFcontribution*)contribution())->packetError());
+        tem.initLength(((EBFcontribution*)contribution())->length());
+        //tower->setTem(temNew);
+    }
+
     tower->getTem().getErr()->setExist();
 
     tower->getTem().getErr()->initCal(theError.cal());

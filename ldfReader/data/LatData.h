@@ -60,6 +60,15 @@ namespace ldfReader {
 
         void setTime(unsigned sec, unsigned nanosec) { m_summaryData.setTime(sec, nanosec); }
         void setPpcTimeBase(unsigned upperWord, unsigned lowerWord) { m_summaryData.setPpcTimeBase(upperWord, lowerWord); };
+
+        /// Set Diagnostic bit in EventSummary if ldfReader determines the
+        /// the OR across contributions is set
+        void setDiagnostic() { m_summaryData.setDiagnostic(); };
+
+        /// Set Error bit in EventSummary if ldfReader determines the
+        /// the OR across contributions is set
+        void setError() { m_summaryData.setError(); };
+
         const EventSummaryData& summaryData() { return m_summaryData;};
 
         void setRunId(unsigned int runId) { m_runId = runId; };
