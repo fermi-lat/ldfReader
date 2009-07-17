@@ -3,7 +3,7 @@
 
 /** @class EbfDataParser.cxx
 @brief Implementation of the EbfDataParser class
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDataParser.cxx,v 1.6 2009/03/17 13:21:46 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDataParser.cxx,v 1.7 2009/03/17 13:29:56 heather Exp $
 */
 
 // ldfReader includes
@@ -137,6 +137,7 @@ int EbfDataParser::GLT(const EBFevent* event, const EBFcontribution* ebf)
   const GLTcontribution *glt = (const GLTcontribution*)ebf;
   //if (EbfDebug::getDebug())  printf("\nGLT:\n");
   ldfReader::LatData::instance()->setSummary(event->summary());
+  //ldfReader::LatData::instance()->summaryData().print();
 
   // N.B. the payload of the GEM contribution will change in the future
   //unsigned seconds     = ((unsigned*)gem->data())[0];
@@ -171,6 +172,7 @@ int EbfDataParser::GEM(const EBFevent *event, const EBFcontribution *ebf_contrib
     ldfReader::LatData::instance()->setSummary(event->summary());
 
     ldfReader::EventSummaryCommon summary(((EBFcontribution*)contribution)->summary());
+
     gem.setExist();
     gem.initPacketError(contribution->packetError());
 

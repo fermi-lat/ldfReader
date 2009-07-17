@@ -5,7 +5,7 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/EbfParser.h,v 1.7 2006/08/01 15:52:15 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/EbfParser.h,v 1.8 2008/04/17 16:32:06 heather Exp $
 */
 
 #include <string>
@@ -32,7 +32,7 @@ namespace ldfReader {
         virtual unsigned long long eventCount() const = 0;
 
         /// Turn on or off debug output.  Returns old value of flag
-        virtual bool setDebug(bool on);
+        virtual int setDebug(int on);
 
         virtual int setAcdRemap(const std::string &filename) ;
 

@@ -1,6 +1,6 @@
 /* @class EventSummaryData
 * @brief Class for accessing fields in the event summary longword.
-* $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/EventSummaryData.h,v 1.2 2004/07/29 22:00:50 heather Exp $
+* $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/EventSummaryData.h,v 1.3 2004/08/25 22:35:07 heather Exp $
 */
 
 #ifndef ldfReaderEventSummaryData_H
@@ -43,6 +43,14 @@ namespace ldfReader {
         void setPpcTimeBase(unsigned upperWord, unsigned lowerWord) { 
             m_upperPpcTimeBase = upperWord; m_lowerPpcTimeBase = lowerWord; 
         };
+        
+        /// Allow ldfReader to set diagnostic bit after taking OR across
+        ///  all contributions
+        void setDiagnostic() { m_summary |= (1 << 20); };
+
+        /// Allow ldfReader to set diagnostic bit after taking OR across
+        ///  all contributions
+        void setError() { m_summary |= (1<<21); };
 
         long timeSec() { return m_timeSec; }
         long timeNanoSec() { return m_timeNanoSec; }

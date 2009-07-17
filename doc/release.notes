@@ -3,6 +3,9 @@ Package ldfReader
 @verbatim
 Coordinator:H.Kelly
 EOH
+v7r4    15-Jul-2009 hmk patch to set diagnostic and error bits properly by 
+        taking OR across contributions and making sure all diagnostic data
+        is stored, even those without associated CAL or TKR data
 v7r3p1  30-Jun-2009 hmk patch check on diagnostic size
 v7r3    17-Mar-2009 hmk Update EbfDebug for more flexibility and limit log
         messages
