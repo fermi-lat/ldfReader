@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Jul 17 05:46:55 PDT 2009
+ldfReader/src/data
+
+Modified Files:
+	LatData.cxx 
+Log Message:
+udpates to store diagnostic and error bits properly
+    *
+------------------------------------------------------------
 User: heather  Fri Jul 17 05:46:54 PDT 2009
 ldfReader/src
 
