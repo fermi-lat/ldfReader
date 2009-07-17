@@ -1,5 +1,15 @@
 ------------------------------------------------------------
 User: heather  Fri Jul 17 05:46:55 PDT 2009
+ldfReader/src/iterators
+
+Modified Files:
+	CalParser.cxx DiagnosticParser.cxx EbfDataParser.cxx 
+	ErrParser.cxx TkrParser.cxx 
+Log Message:
+udpates to store diagnostic and error bits properly
+    *
+------------------------------------------------------------
+User: heather  Fri Jul 17 05:46:55 PDT 2009
 ldfReader/src/data
 
 Modified Files:
