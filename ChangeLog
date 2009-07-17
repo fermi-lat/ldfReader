@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Fri Jul 17 05:46:54 PDT 2009
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+udpates to store diagnostic and error bits properly
+    *
+------------------------------------------------------------
+User: heather  Fri Jul 17 05:46:54 PDT 2009
 ldfReader/cmt
 
 Modified Files:
