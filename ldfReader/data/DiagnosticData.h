@@ -38,13 +38,13 @@ namespace ldfReader {
             printf("Diagnostic Data:\n");
             printf("Len: %lu\n\n", m_lenInBytes);
             printf("CAL Diagnostics:\n");
-            std::vector<CalDiagnosticData>::iterator it;
+            std::vector<CalDiagnosticData>::const_iterator it;
             for (it = m_cal.begin(); it!= m_cal.end(); it++) {
                 printf("Tower: %d, Layer: %d, DataWord: %u\n",
                    it->tower(), it->layer(), it->dataWord());
             }
             printf("TKR Diagnostics:\n");
-            std::vector<TkrDiagnosticData>::iterator tkrit;
+            std::vector<TkrDiagnosticData>::const_iterator tkrit;
             for (tkrit = m_tkr.begin(); tkrit!= m_tkr.end(); tkrit++) {
               printf("Tower: %d, GTCC: %d, DataWord: %u\n", 
                    tkrit->tower(), tkrit->gtcc(), tkrit->dataWord());

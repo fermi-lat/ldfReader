@@ -3,6 +3,8 @@ Package ldfReader
 @verbatim
 Coordinator:H.Kelly
 EOH
+
+v7r4p1  18-Jul-2009 hmk windows patch to use const_iterator versus iterator
 v7r4    15-Jul-2009 hmk patch to set diagnostic and error bits properly by 
         taking OR across contributions and making sure all diagnostic data
         is stored, even those without associated CAL or TKR data
