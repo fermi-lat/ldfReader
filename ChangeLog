@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Sat Jul 18 11:30:45 PDT 2009
+ldfReader/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+win patch to use const_iterator
+    *
+------------------------------------------------------------
 User: heather  Sat Jul 18 11:30:44 PDT 2009
 ldfReader/cmt
 
