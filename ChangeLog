@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Sat Jul 18 11:30:45 PDT 2009
+ldfReader/ldfReader/data
+
+Modified Files:
+	DiagnosticData.h 
+Log Message:
+win patch to use const_iterator
+    *
+------------------------------------------------------------
+User: heather  Sat Jul 18 11:30:45 PDT 2009
 ldfReader/doc
 
 Modified Files:
