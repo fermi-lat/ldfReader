@@ -3,11 +3,12 @@
 
 /** @class EbfDataParser.cxx
 @brief Implementation of the EbfDataParser class
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDataParser.cxx,v 1.7 2009/03/17 13:29:56 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/EbfDataParser.cxx,v 1.8 2009/07/17 12:46:55 heather Exp $
 */
 
 // ldfReader includes
-#include "EbfDataParser.h"
+//#include "EbfDataParser.h"
+#include "ldfReader/iterators/EbfDataParser.h"
 #include "ldfReader/data/LatData.h"
 #include "ldfReader/LdfException.h"
 #include "../EbfDebug.h"

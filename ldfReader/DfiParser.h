@@ -12,7 +12,8 @@
 #include "eventFile/EBF_Data.h"
 
 //#include "../src/iterators/LdfDataParser.h"
-#include "../src/iterators/EbfDataParser.h"
+//#include "../src/iterators/EbfDataParser.h"
+#include "ldfReader/iterators/EbfDataParser.h"
 
 #include <vector>
 
@@ -20,7 +21,7 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/DfiParser.h,v 1.12 2008/10/03 03:39:17 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/ldfReader/DfiParser.h,v 1.13 2008/11/11 04:28:55 heather Exp $
 */
 
 namespace ldfReader {

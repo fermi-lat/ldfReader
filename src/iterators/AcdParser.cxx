@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.22 2008/10/03 03:39:17 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/AcdParser.cxx,v 1.23 2009/03/17 13:21:46 heather Exp $
 */
 
 // EBF Online Library includes
@@ -13,7 +13,8 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.
 #include <assert.h>
 
 // ldfReader includes
-#include "AcdParser.h"
+//#include "AcdParser.h"
+#include "ldfReader/iterators/AcdParser.h"
 #include "ldfReader/data/LatData.h"
 #include "ldfReader/LdfException.h"
 #include "../EbfDebug.h"

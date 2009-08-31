@@ -12,7 +12,8 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.cxx,v 1.
 #include <assert.h>
 
 // ldfReader includes
-#include "ErrParser.h"
+//#include "ErrParser.h"
+#include "ldfReader/iterators/ErrParser.h"
 #include "ldfReader/data/LatData.h"
 #include "ldfReader/LdfException.h"
 #include "../EbfDebug.h"

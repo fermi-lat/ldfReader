@@ -13,14 +13,15 @@
 #include <netinet/in.h>
 #endif
 
-#include "../src/iterators/LdfDataParser.h"
+//#include "../src/iterators/LdfDataParser.h"
+#include "ldfReader/iterators/LdfDataParser.h"
 
 
 /** @class SocketParser
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure, when using a socket to obtain data.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/SocketParser.h,v 1.3 2006/08/16 19:31:10 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/ldfReader/SocketParser.h,v 1.4 2008/10/03 03:39:17 heather Exp $
 */
 
 namespace ldfReader {

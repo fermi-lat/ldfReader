@@ -1,7 +1,7 @@
 #ifndef CalParser_H
 #define CalParser_H 1
 
-// $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/CalParser.h,v 1.2 2005/04/05 21:23:39 heather Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/CalParser.h,v 1.3 2008/10/03 03:39:17 heather Exp $
 
 // Online EBF library includes
 #include "CALcontributionIterator.h"
