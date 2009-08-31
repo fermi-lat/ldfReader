@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Aug 31 11:58:06 PDT 2009
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+updating version in reqs file
+    *
+------------------------------------------------------------
 User: jrb  Mon Aug 31 11:17:58 PDT 2009
 GlastRelease-scons/ldfReader/src/iterators
 
