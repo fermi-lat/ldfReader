@@ -1,5 +1,18 @@
 ------------------------------------------------------------
 User: jrb  Mon Aug 31 11:17:57 PDT 2009
+GlastRelease-scons/ldfReader/ldfReader
+
+Modified Files:
+	DfiParser.h LdfParser.h SocketParser.h 
+Log Message:
+Move .h files in src/iterators to ldfReader/iterators.  They are included
+by public files hence need to be installed by SCons
+SConscript: convert to use registerTargets
+.cvsignore: ignore SCons build products build/, *.pyc
+
+    *
+------------------------------------------------------------
+User: jrb  Mon Aug 31 11:17:57 PDT 2009
 GlastRelease-scons/ldfReader
 
 Modified Files:
