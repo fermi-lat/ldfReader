@@ -2,12 +2,14 @@
 #define LDFDATAPARSER_CXX 1
 
 #include "LDFiteratorBase.h"
-#include "EbfDataParser.h"
-#include "LdfDataParser.h"
+//#include "EbfDataParser.h"
+#include "ldfReader/iterators/EbfDataParser.h"
+//#include "LdfDataParser.h"
+#include "ldfReader/iterators/LdfDataParser.h"
 
 /** @class LdfDataParser
 @brief Provides callbacks for each component.
-$Header$
+$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/LdfDataParser.cxx,v 1.1 2008/10/03 03:39:17 heather Exp $
 */
 namespace ldfReader {
 

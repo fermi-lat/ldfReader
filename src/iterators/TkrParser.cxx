@@ -4,13 +4,14 @@
 /** @file TkrParser.cxx
 @brief Implementation of the TkrParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.9 2009/03/17 13:21:46 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/TkrParser.cxx,v 1.10 2009/07/17 12:46:55 heather Exp $
 */
 #include <stdio.h> // included for TKRcontributionIterator.h
 // Online EBF library includes
 #include "TKRstrip.h"
 // ldfReader includes
-#include "TkrParser.h"
+//#include "TkrParser.h"
+#include "ldfReader/iterators/TkrParser.h"
 #include "ldfReader/LdfException.h"
 #include "ldfReader/data/LatData.h"
 #include "../EbfDebug.h"

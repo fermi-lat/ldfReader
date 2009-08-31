@@ -6,7 +6,7 @@
 
 /** @class OswParser
 @brief Provides callbacks for OSW .
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/OswParser.h,v 1.3 2005/04/05 21:23:39 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/OswParser.h,v 1.4 2008/10/03 03:39:18 heather Exp $
 */
 namespace ldfReader {
     class OswParser

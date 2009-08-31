@@ -5,3 +5,5 @@ i386_linux*
 Linux*
 VC7*
 rh*
+build
+*.pyc

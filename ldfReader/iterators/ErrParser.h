@@ -6,7 +6,7 @@
 
 /** @class ErrParser
 @brief Provides callbacks for Error data .
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/ErrParser.h,v 1.6 2008/10/03 03:39:17 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/ErrParser.h,v 1.7 2009/03/17 13:21:46 heather Exp $
 */
 namespace ldfReader {
     class ErrParser : public virtual ERRcontributionIterator

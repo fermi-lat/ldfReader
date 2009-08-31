@@ -4,14 +4,15 @@
 /** @file AdfParser.cxx
 @brief Implementation of the AdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AdfParser.cxx,v 1.3 2006/07/26 05:30:19 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/AdfParser.cxx,v 1.4 2006/08/01 15:52:15 heather Exp $
 */
 
 #include <stdio.h>
 #include <assert.h>
 
 // ldfReader includes
-#include "AdfParser.h"
+//#include "AdfParser.h"
+#include "ldfReader/iterators/AdfParser.h"
 #include "ldfReader/data/LatData.h"
 #include "ldfReader/LdfException.h"
 #include "../EbfDebug.h"

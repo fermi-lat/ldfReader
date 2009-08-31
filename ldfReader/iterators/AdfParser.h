@@ -1,7 +1,7 @@
 #ifndef AdfParser_H
 #define AdfParser_H 1
 
-// $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AdfParser.h,v 1.2 2005/04/05 21:23:39 heather Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/AdfParser.h,v 1.1 2006/07/24 20:07:41 heather Exp $
 
 /** @class AdfParser
 * @brief The parsing of the Ancillary BeamTest contributions.

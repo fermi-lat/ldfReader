@@ -1,7 +1,7 @@
 #ifndef AcdParser_H
 #define AcdParser_H 1
 
-// $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.h,v 1.5 2006/07/28 23:26:24 heather Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/AcdParser.h,v 1.6 2008/10/03 03:39:17 heather Exp $
 
 // Online EBF library includes
 #include "AEMcontributionIterator.h"

@@ -4,10 +4,11 @@
 /** @file DiagnosticParser.cxx
 @brief Implementation of the DiagnosticParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/DiagnosticParser.cxx,v 1.6 2009/06/30 12:27:25 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/DiagnosticParser.cxx,v 1.7 2009/07/17 12:46:55 heather Exp $
 */
 
-#include "DiagnosticParser.h"
+//#include "DiagnosticParser.h"
+#include "ldfReader/iterators/DiagnosticParser.h"
 
 //#include "ldfReader/EbfException.h"
 #include "ldfReader/data/LatData.h"

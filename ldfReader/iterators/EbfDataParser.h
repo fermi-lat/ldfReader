@@ -13,7 +13,7 @@
 
 /** @class EbfDataParser
 @brief Provides callbacks for each component.
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDataParser.h,v 1.1 2008/10/03 03:39:17 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/EbfDataParser.h,v 1.2 2008/11/11 04:28:56 heather Exp $
 */
 namespace ldfReader {
     class EbfDataParser : public AcdParser,

@@ -9,7 +9,7 @@
 @brief Calls the appropriate routines in the Online/EBF library to 
 processing the diagnostic data
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/DiagnosticParser.h,v 1.2 2005/04/05 21:23:39 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/DiagnosticParser.h,v 1.3 2008/10/03 03:39:17 heather Exp $
 */
 
 namespace ldfReader {
