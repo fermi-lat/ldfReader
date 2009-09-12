@@ -6,7 +6,7 @@
 
 /** @class OswParser
 @brief Provides callbacks for OSW .
-$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/OswParser.h,v 1.4 2008/10/03 03:39:18 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/iterators/OswParser.h,v 1.1 2009/08/31 18:17:57 jrb Exp $
 */
 namespace ldfReader {
     class OswParser
@@ -55,13 +55,13 @@ namespace ldfReader {
 
         }
 
-        virtual int OSW_UDF(EBFevent* event, OSWcontribution* contribution)const {
+        virtual int OSW_UDF(EBFevent* /*event*/, OSWcontribution* contribution)const {
             fprintf(stderr, "Undefined OSW contribution encountered with identity %08x\n", contribution->identity().value());
             return 0;
         } ;
 
 
-        virtual int handleError(OSWcontribution *contribution, unsigned code,
+        virtual int handleError(OSWcontribution* /*contribution*/, unsigned code,
                                 unsigned p1=0, unsigned p2=0) const {
             fprintf(stderr, "MyOSWiterator::handleError:  Somehow an error occured. \n ");
             fprintf(stderr, "  code=%d, p1=%d, p2=%d\n", code, p1, p2);

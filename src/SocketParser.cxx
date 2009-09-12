@@ -4,7 +4,7 @@
 /** @file SocketParser.cxx
 @brief Implementation of the SocketParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/SocketParser.cxx,v 1.7 2008/10/03 03:39:17 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/SocketParser.cxx,v 1.8 2008/12/03 15:43:00 heather Exp $
 */
 
 #include "ldfReader/SocketParser.h"
@@ -120,7 +120,7 @@ SocketParser::SocketParser(unsigned int server) {
         try {
 #ifndef WIN32
             static char buffer[BufferSize+1];
-            int ibuf;
+            unsigned int ibuf;
             for (ibuf = 0; ibuf < BufferSize+1; ibuf++)
                 buffer[ibuf] = 0;
             if (EbfDebug::getDebug())
@@ -183,7 +183,7 @@ int SocketParser::loadData() {
 //        if (ldf.status()) {
         //Parse the data
         //m_dataParser.iterate(m_buffer,m_eventSize);
-        unsigned int count = m_dataParser.iterate2(m_buffer, m_eventSize, false);  // not sure how to set swap by default
+        /*unsigned int count =*/ m_dataParser.iterate2(m_buffer, m_eventSize, false);  // not sure how to set swap by default
         EBFeventIterator *ebfIt = dynamic_cast<EBFeventIterator*>(&m_dataParser);
         //unsigned int status = m_dataParser.status();
         unsigned int status = ebfIt->status();
@@ -286,7 +286,7 @@ double SocketParser::timeForTds() {
     double ppcSeconds =  upper + lower;
     float ppcWholeSeconds = floor(ppcSeconds);
     double frac = ppcSeconds - ppcWholeSeconds;
-    int ppcNanoSec = frac / 0.000000001;
+    int ppcNanoSec = (int)floor(frac / 0.000000001);
 
     // To eliminate duplicate times, we make use of the PPC time as suggested
     // by Jim Panetta.  Here we ignore the fractional seconds from the "real"

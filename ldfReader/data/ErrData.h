@@ -9,7 +9,7 @@ namespace ldfReader {
 
     /** @class ErrData
       * @brief Local storage of error data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/ErrData.h,v 1.9 2005/06/10 06:17:45 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/ErrData.h,v 1.10 2006/05/16 23:18:26 heather Exp $
     */
     class ErrData {
     public:
@@ -70,12 +70,12 @@ namespace ldfReader {
         void initTmo(unsigned short tmo) { m_tmo = tmo; };
 
         void setTkrFifoFull(unsigned int gtcc, unsigned char val=1) {
-           if((gtcc >= 0) && (gtcc < enums::numGtcc))
+           if (gtcc < enums::numGtcc)
                m_tkrFifoFullCol[gtcc] = val;
         }
         const unsigned char* tkrFifoFull() const { return m_tkrFifoFullCol; };
         unsigned int tkrFifoFull(unsigned gtcc) const { 
-            if ((gtcc >= 0) && (gtcc < enums::numGtcc) ) 
+            if (gtcc < enums::numGtcc)  
                 return ((unsigned int)m_tkrFifoFullCol[gtcc]); 
         }
 

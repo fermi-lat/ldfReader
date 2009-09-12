@@ -5,7 +5,7 @@
 /** @file LdfParser.cxx
 @brief Implementation of the LdfParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.36 2008/10/03 03:39:17 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/LdfParser.cxx,v 1.37 2008/12/03 15:42:59 heather Exp $
 */
 
 #include "ldfReader/LdfParser.h"
@@ -575,7 +575,7 @@ double LdfParser::timeForTds() {
     double ppcSeconds =  upper + lower;
     float ppcWholeSeconds = floor(ppcSeconds);
     double frac = ppcSeconds - ppcWholeSeconds;
-    int ppcNanoSec = frac / 0.000000001;
+    int ppcNanoSec = (int)floor(frac / 0.000000001);
 
     // To eliminate duplicate times, we make use of the PPC time as suggested
     // by Jim Panetta.  Here we ignore the fractional seconds from the "real"

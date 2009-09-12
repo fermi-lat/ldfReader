@@ -4,7 +4,7 @@
 /** @file TkrParser.cxx
 @brief Implementation of the TkrParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/TkrParser.cxx,v 1.10 2009/07/17 12:46:55 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/TkrParser.cxx,v 1.11 2009/08/31 18:17:58 jrb Exp $
 */
 #include <stdio.h> // included for TKRcontributionIterator.h
 // Online EBF library includes
@@ -75,7 +75,7 @@ namespace ldfReader {
         using namespace ldfReader;
 
         // Retrieve the tower object we wish to update with this TKR data
-        unsigned int towerId = LATPcellHeader::source(contribution()->header());
+        /* unsigned int towerId =*/ LATPcellHeader::source(contribution()->header());
         LatData* curLatData = LatData::instance();
         TowerData* tData = curLatData->getTower(tower);
         if (!tData) {
