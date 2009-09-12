@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Sep 11 21:00:40 PDT 2009
+ldfReader/src
+
+Modified Files:
+	LdfParser.cxx SocketParser.cxx 
+Log Message:
+more warnings
+    *
+------------------------------------------------------------
 User: heather  Fri Sep 11 21:00:39 PDT 2009
 ldfReader/ldfReader/iterators
 
