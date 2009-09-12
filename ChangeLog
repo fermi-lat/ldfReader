@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri Sep 11 21:00:39 PDT 2009
+ldfReader
+
+Modified Files:
+	SConscript 
+Log Message:
+more warnings
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-07-04-02, operation: add
 Package: ldfReader
