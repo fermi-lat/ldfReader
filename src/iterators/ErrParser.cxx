@@ -328,8 +328,8 @@ int ErrParser::gtccDataParityError (unsigned tower,
   return 0;
 }
 
-int ErrParser::handleError(const TEMcontribution* contribution,
-                           unsigned code, unsigned p1, unsigned p2) const
+int ErrParser::handleError(const TEMcontribution* /*contribution*/,
+                           unsigned code, unsigned /*p1*/, unsigned /*p2*/) const
 {
   switch (code) {
       case ERR_TEMbug:
