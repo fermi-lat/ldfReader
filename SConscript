@@ -1,5 +1,5 @@
 # -*- python -*-
-# $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/SConscript,v 1.16 2009/08/31 18:59:33 heather Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/SConscript,v 1.17 2009/09/12 04:00:38 heather Exp $
 # Authors: Heather Kelly <heather@lheapop@gsfc.nasa.gov>, Tracy Usher <usher@slac.stanford.edu>
 # Version: ldfReader-07-04-03
 
@@ -13,7 +13,7 @@ progEnv = baseEnv.Clone()
 libEnv = baseEnv.Clone()
 
 
-libEnv.Tool('ldfReaderLib', depsOnly = 1)
+libEnv.Tool('addLinkDeps', package='ldfReader', toBuild='shared')
 #ebf_file = libEnv.SharedObject('src/EBF_fileIn.os',
 #                              '/afs/slac/g/glast/ground/GLAST_EXT/redhat4-i686-32bit/ldf/v06-02-00/gcc34/test/EBF_fileIn.c')
 
