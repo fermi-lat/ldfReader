@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 EOH
 
+ ldfReader-07-04-05 15-Jul-2010    jrb patch to SConscript for Windows
  ldfReader-07-04-04 13-Jun-2010    jrb upgrades for SCons builds
 v7r4p3  10-Sep-2009 hmk fix up warnings
 v7r4p2  31-Aug-2009 jrb moving *.h files from src/iterators into 
