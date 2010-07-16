@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Thu Jul 15 17:28:51 PDT 2010
+GlastRelease-scons/ldfReader
+
+Modified Files:
+	SConscript 
+Log Message:
+on Windows add cpp define of _WIN32_LDF_STATIC
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-07-04-04, operation: add
 Package: ldfReader
