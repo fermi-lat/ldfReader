@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Nov 23 10:41:22 PST 2010
+ldfReader/src/iterators
+
+Modified Files:
+	AcdParser.cxx 
+Log Message:
+patch
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-07-04-01-gr01, operation: add
 Package: ldfReader
