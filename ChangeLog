@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: heather  Tue Nov 23 08:48:06 PST 2010
+ldfReader
+
+Modified Files:
+      Tag: GlastReleasev15r47p12
+	SConscript 
+Log Message:
+initialize acdPmt fully
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-07-04-05, operation: add
 Package: ldfReader
