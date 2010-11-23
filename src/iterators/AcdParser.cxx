@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.22 2008/10/03 03:39:17 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.23 2009/03/17 13:21:46 heather Exp $
 */
 
 // EBF Online Library includes
@@ -134,7 +134,9 @@ void AcdParser::header(unsigned cable, AEMheader hdr)
         acd->addPmt(ldfReader::AcdDigi::AcdPmt(digiSide, iChannel, veto, accept,
                                                headerParity));
         AcdDigi::AcdPmt* newPmt = acd->getPmtSide(digiSide);
-        if(pmt) newPmt->initCable(cable);
+        if(newPmt) {
+           newPmt->initCable(cable);
+        }
     }
 
 // HMK new ACD end

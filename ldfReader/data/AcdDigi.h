@@ -6,7 +6,7 @@
 namespace ldfReader {
     /** @class AcdDigi
       * @brief Local storage of CAL log data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.9 2006/08/05 06:02:03 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.10 2008/04/21 03:32:56 heather Exp $
     */
     class AcdDigi {
     public:
@@ -29,7 +29,10 @@ namespace ldfReader {
 
         class AcdPmt {
         public:
-            AcdPmt() {};
+            AcdPmt():m_pha(0),m_range(0),m_side(B),m_channel(0),
+                     m_cable(NOCABLE),m_hit(false),m_accept(false),
+                     m_oddError(NOERROR), m_headerParity(NOERROR) {};
+
             AcdPmt(unsigned int pha, int r, PmtSide s, short c, short m, 
                    bool hit, bool phaAccept, ParityError err = NOERROR, 
                    ParityError headerParity=NOERROR) {
@@ -57,6 +60,8 @@ namespace ldfReader {
                  m_accept = phaAccept;
                  m_oddError = err;
                  m_headerParity = headerParity;
+                 m_pha = 0;
+                 m_range = 0;
              };
 
              void initPhaValues(unsigned int pha, int r, short more,
