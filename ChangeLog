@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Nov 23 10:42:13 PST 2010
+ldfReader/ldfReader/data
+
+Modified Files:
+	AcdDigi.h 
+Log Message:
+properly init all member vars
+    *
+------------------------------------------------------------
 User: heather  Tue Nov 23 10:41:22 PST 2010
 ldfReader/src/iterators
 
