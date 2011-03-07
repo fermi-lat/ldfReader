@@ -11,7 +11,7 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/LdfParser.h,v 1.9 2006/08/01 15:52:15 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/LdfParser.h,v 1.10 2008/10/03 03:39:17 heather Exp $
 */
 
 namespace ldfReader {
@@ -37,6 +37,11 @@ namespace ldfReader {
         virtual unsigned long long eventCount() const { return m_evtCount; }
 
         void ignoreSegFault(bool value);
+
+
+        /// Do nothing for LdfParser case
+        virtual void setGemIdSkipList(const std::vector<unsigned long long> &gemList) { };
+        virtual void setEventIndexSkipList(const std::vector<unsigned long long> &eventList) { }; 
 
         /// Turn on or off debug output.  Returns old value of flag
         //bool setDebug(bool on);
