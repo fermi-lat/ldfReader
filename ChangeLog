@@ -1,5 +1,15 @@
 ------------------------------------------------------------
 User: heather  Mon Mar  7 11:52:59 PST 2011
+ldfReader/src
+
+Modified Files:
+      Tag: GlastReleasev15r47p12
+	DfiParser.cxx 
+Log Message:
+GRINF-54
+    *
+------------------------------------------------------------
+User: heather  Mon Mar  7 11:52:59 PST 2011
 ldfReader/ldfReader
 
 Modified Files:
