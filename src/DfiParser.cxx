@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.38 2008/11/11 04:28:55 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.39 2009/03/17 13:21:46 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -42,7 +42,6 @@ DfiParser::DfiParser(const std::string &filename) : m_dataParser(""), m_ebfPkts(
        std::cout << "Created eventFile" << std::endl;
        m_runId = m_file->runid();
        m_more = m_file->read(m_ccsds, m_meta, m_ebf);
-       std::cout<< "After first read " << std::endl;
        if (!m_more) {
            std::cout << "No events in input file" << std::endl;
            throw;
@@ -74,11 +73,14 @@ DfiParser::~DfiParser() {
 }
 
 void DfiParser::clear() {
+    m_indexCounter=0;
     m_runId = 0;
     m_eventId = 0;
     m_eventSize = 0;
     m_ccsds.clear();
     m_meta.clear();
+    m_gemIdSkipList.clear();
+    m_eventIndexSkipList.clear();
 
     if (m_ebfPkts) 
     {
@@ -114,6 +116,7 @@ void DfiParser::printHeader() const {
 
 int DfiParser::nextEvent() {
     try {
+        m_indexCounter++;
         m_ccsds.clear();
         m_meta.clear();
         bool m_more = m_file->read(m_ccsds, m_meta, m_ebf);
@@ -412,6 +415,31 @@ int DfiParser::loadData() {
 
         readContextAndInfo();
 
+        if (ldfReader::LatData::instance()->oldStyleRunId())
+            ldfReader::LatData::instance()->setRunId(m_runId);
+        else{
+            const lsfData::MetaEvent& meta = ldfReader::LatData::instance()->getMetaEvent();
+            ldfReader::LatData::instance()->setRunId(meta.run().startTime());
+        }
+
+/* Disable this for now, while sorting out need to insert an empty event
+   in output ROOT files
+
+        /// Before proceeding, check to see if this an event we are to skip
+        if (m_gemIdSkipList.size() > 0) {
+            if (std::find( m_gemIdSkipList.begin(),m_gemIdSkipList.end(),ldfReader::LatData::instance()->eventId() ) != m_gemIdSkipList.end()) return 0;
+        }
+
+        if (m_eventIndexSkipList.size() > 0) {
+            if (std::find(m_eventIndexSkipList.begin(),m_eventIndexSkipList.end(),m_indexCounter) != m_eventIndexSkipList.end()) {
+                std::cout << "Skipping Event Index " << m_indexCounter 
+                          << " per JO Request" << std::endl;
+                return 0;
+            }
+        }
+*/
+
+
         memset(mybuff,0,128*1024);
         memcpy(mybuff, m_ebf.data()+8, m_ebf.size()-8);
 //        ldfReader::LatData::instance()->setEbf((char*)mybuff, m_ebf.size()-8);
@@ -428,13 +456,6 @@ int DfiParser::loadData() {
         m_ebfPkts = rePacketizeEbf(m_ebf.data()+8, m_ebf.size()-8, m_ebfPktsLen);
         ldfReader::LatData::instance()->setEbf((char*)m_ebfPkts, m_ebfPktsLen);
 
-
-        if (ldfReader::LatData::instance()->oldStyleRunId())
-            ldfReader::LatData::instance()->setRunId(m_runId);
-        else{
-            const lsfData::MetaEvent& meta = ldfReader::LatData::instance()->getMetaEvent();
-            ldfReader::LatData::instance()->setRunId(meta.run().startTime());
-        }
 
         //m_dataParser.iterate(m_start, m_end);
         //int status = m_dataParser.EBF(m_start, m_end);
