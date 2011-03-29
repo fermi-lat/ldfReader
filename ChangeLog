@@ -1,5 +1,15 @@
 ------------------------------------------------------------
 User: heather  Mon Mar 28 21:42:38 PDT 2011
+ldfReader/src
+
+Modified Files:
+      Tag: GlastReleasev15r47p12
+	DfiParser.cxx 
+Log Message:
+add ability to print event index
+    *
+------------------------------------------------------------
+User: heather  Mon Mar 28 21:42:38 PDT 2011
 ldfReader/ldfReader/data
 
 Modified Files:
