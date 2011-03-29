@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: heather  Mon Mar 28 21:42:38 PDT 2011
+ldfReader/cmt
+
+Modified Files:
+      Tag: GlastReleasev15r47p12
+	requirements 
+Log Message:
+add ability to print event index
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-07-04-01-gr02, operation: add
 Package: ldfReader
