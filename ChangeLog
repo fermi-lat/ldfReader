@@ -1,5 +1,15 @@
 ------------------------------------------------------------
 User: heather  Tue Mar 29 19:58:24 PDT 2011
+ldfReader/doc
+
+Modified Files:
+      Tag: GlastReleasev15r47p12
+	release.notes 
+Log Message:
+patch index printing
+    *
+------------------------------------------------------------
+User: heather  Tue Mar 29 19:58:24 PDT 2011
 ldfReader/cmt
 
 Modified Files:
