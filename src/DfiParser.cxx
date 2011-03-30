@@ -5,7 +5,7 @@
 /** @file DfiParser.cxx
 @brief Implementation of the DfiParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.39.68.1 2011/03/07 19:52:59 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/DfiParser.cxx,v 1.39.68.2 2011/03/29 04:42:38 heather Exp $
 */
 
 #include "ldfReader/DfiParser.h"
@@ -31,7 +31,7 @@ DfiParser::DfiParser():m_dataParser("") {
 }
 
 
-DfiParser::DfiParser(const std::string &filename) : m_dataParser(""), m_ebfPkts(0) {
+DfiParser::DfiParser(const std::string &filename) : m_dataParser(""), m_ebfPkts(0), m_indexCounter(0) {
     //Purpose and Method:  Ctor using LPA file as input 
     // Open input file and read in first event
     //Inputs:  filename 
@@ -46,6 +46,7 @@ DfiParser::DfiParser(const std::string &filename) : m_dataParser(""), m_ebfPkts(
            std::cout << "No events in input file" << std::endl;
            throw;
        }
+       m_indexCounter++;
 
        m_start = const_cast<EBFevent*>(m_ebf.start());
        m_end = const_cast<EBFevent*>(m_ebf.end());
@@ -73,7 +74,6 @@ DfiParser::~DfiParser() {
 }
 
 void DfiParser::clear() {
-    m_indexCounter=0;
     m_runId = 0;
     m_eventId = 0;
     m_eventSize = 0;
@@ -169,7 +169,7 @@ int DfiParser::readContextAndInfo() {
     // Do this after reading LDF data
     //ldfReader::LatData::instance()->setTimeInSecTds(timeForTds(m_ccsds.getUtc()));
     ldfReader::LatData::instance()->setEventId(m_meta.scalers().sequence());
-    ldfReader::LatData::instance()->setEventIndex(eventCount());
+    ldfReader::LatData::instance()->setEventIndex(m_indexCounter);
  
     if (EbfDebug::getDebug()==EbfDebug::ALL) ccsdsData->print();
     return 0;
