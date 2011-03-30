@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 EOH
 
+v7r4p1gr04 29-Mar-2011 hmk patch indexCounter printing
 v7r4p1gr03 28-Mar-2011 hmk JIRA GRINF-54 add ability to print event index
 v7r4p1gr02 07-Mar-2011 hmk JIRA GRINF-54
 v7r4p1gr01 22-Nov-2010 hmk Patch AcdDigi class to initialize all data members
