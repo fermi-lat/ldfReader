@@ -5,10 +5,11 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/EbfParser.h,v 1.8 2008/04/17 16:32:06 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/EbfParser.h,v 1.9.6.1 2011/03/07 19:52:59 heather Exp $
 */
 
 #include <string>
+#include <vector>
 
 namespace ldfReader {
     class EbfParser {
@@ -43,6 +44,10 @@ namespace ldfReader {
         /// the run ID.  We may use the LdfReader::runId routine (old I&T)
         /// or use ctx.run.startedAt (real data)
         virtual void setOldStyleRunId(bool flag=true);
+
+        /// Allow for skipping events according to GEM Id or Event Indices
+        virtual void setGemIdSkipList(const std::vector<unsigned long long> &gemIdSkipList) = 0;
+        virtual void setEventIndexSkipList(const std::vector<unsigned long long> &eventIndexSkipList) = 0;
 
         // local exception class
         class Exception{ };

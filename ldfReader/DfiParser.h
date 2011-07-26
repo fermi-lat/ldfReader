@@ -21,7 +21,7 @@
 @brief Provides access to the EBF parsing routines and is the gateway to
 filling the LatData structure.
 
-$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/ldfReader/DfiParser.h,v 1.13 2008/11/11 04:28:55 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/DfiParser.h,v 1.13.100.1 2011/03/07 19:52:59 heather Exp $
 */
 
 namespace ldfReader {
@@ -62,6 +62,14 @@ namespace ldfReader {
         // local exception class
         //class Exception{ };
 
+        virtual void setGemIdSkipList(const std::vector<unsigned long long> &gemList) {
+            m_gemIdSkipList = gemList; 
+        }
+
+        virtual void setEventIndexSkipList(const std::vector<unsigned long long> &eventList) {
+            m_eventIndexSkipList = eventList;
+        }
+
     private:
         double timeForTds(double utc);
 
@@ -92,7 +100,12 @@ namespace ldfReader {
 
         bool m_more;
 
+        std::vector<unsigned long long> m_gemIdSkipList;
+        std::vector<unsigned long long> m_eventIndexSkipList;
+
   //      ldfReader::ccsds2lsf m_cnv;
+
+        unsigned long long m_indexCounter;
 
     };
 }
