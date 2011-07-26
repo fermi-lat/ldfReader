@@ -179,6 +179,9 @@ namespace ldfReader {
         void setEventSizeInBytes(unsigned long size){ m_eventSize = size; };
         unsigned long eventSizeInBytes() const { return m_eventSize; };
 
+        void setEventIndex(unsigned long long ind) { m_eventIndex = ind; }
+        unsigned long long eventIndex() const { return m_eventIndex; }
+
         void setTimeInSecTds(double t) { m_timeInSecTds = t; };
         double getTimeInSecTds() const { return m_timeInSecTds; };
 
@@ -230,6 +233,8 @@ namespace ldfReader {
         bool m_contextExists;
 
         bool m_ignoreSegFault;
+  
+        unsigned long long m_eventIndex;
 
         /// Flag set via LdfConverter's JO
         /// Specifies which runId to access, lsfData::LsfReader::runId()

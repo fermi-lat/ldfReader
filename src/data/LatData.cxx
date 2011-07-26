@@ -4,7 +4,7 @@
 /** @file LatData.cxx
 @brief Implementation of the LatData class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.44 2008/11/11 04:28:55 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/data/LatData.cxx,v 1.45.6.1 2011/03/29 04:42:38 heather Exp $
 */
 
 #include "ldfReader/data/LatData.h"
@@ -123,6 +123,7 @@ namespace ldfReader {
         m_aem.clear();
         m_flags = 0;
         m_eventSize = 0;
+        m_eventIndex = 0;
         m_metaEvent.clear();
         m_ccsds.clear();
         m_eventId = 0;
@@ -227,7 +228,8 @@ namespace ldfReader {
         if (orAll != 0) {
             std::cout << "Setting Packet Error Flag, Event: " 
                       << m_eventId << " Apid: "
-                      << getCcsds().getApid() << std::endl;
+                      << getCcsds().getApid() 
+                      << " Event Index: " << m_eventIndex << std::endl;
             setPacketErrorFlag();
         }
         return (orAll);
@@ -268,12 +270,14 @@ namespace ldfReader {
                 std::cout << "OSW error summary bit does not match OR of all " 
                           << "error bits across all TEM contributions, "
                           << "event Num: " << m_eventId  
-                          << " Apid: " << getCcsds().getApid() << std::endl;
+                          << " Apid: " << getCcsds().getApid() 
+                          << " Event Index: " << m_eventIndex << std::endl;
         }
         if (orAll != 0) {
             std::cout << "Event Summary Error Flag Set, Event:  "
                       <<  m_eventId << " Apid: " 
-                      << getCcsds().getApid() << std::endl;
+                      << getCcsds().getApid() 
+                      << " Event Index: " << m_eventIndex << std::endl;
             setTemErrorFlag();
             setError();
         }
@@ -314,12 +318,14 @@ namespace ldfReader {
                           << getOsw().summary().trgParityError() 
                           << " Event: "
                           <<  m_eventId << " Apid: " 
-                          << getCcsds().getApid() << std::endl;
+                          << getCcsds().getApid() 
+                          << " Event Index: " << m_eventIndex << std::endl;
         }
         if (orAll != 0) {
             std::cout << "Trg Parity Error Flag Set, Event: " 
                       <<  m_eventId << " Apid: " 
-                      << getCcsds().getApid() << std::endl;
+                      << getCcsds().getApid() 
+                      << " Event Index: " << m_eventIndex << std::endl;
             setTrgParityErrorFlag();
         }
         return (orAll);
@@ -347,7 +353,8 @@ second->getReadout();
                       << curReadout->getSide()
                       << " Event: "
                       <<  m_eventId << " Apid: " 
-                      << getCcsds().getApid() << std::endl;
+                      << getCcsds().getApid() 
+                      << " Event Index: "<< m_eventIndex << std::endl;
             err = true;
         }
   
@@ -357,7 +364,8 @@ second->getReadout();
                       << " Side: " << curReadout->getSide()
                       << " Event: "
                       <<  m_eventId << " Apid: " 
-                      << getCcsds().getApid() << std::endl;
+                      << getCcsds().getApid() 
+                      << " Event Index: " << m_eventIndex << std::endl;
             err = true;
         }
       }
@@ -394,7 +402,8 @@ unsigned LatData::checkCalReadout() {
         std::cout << "Setting Missing Cal Readout Flag, "
                   << orAll << " CalDigis are missing readouts for Event: " 
                   << m_eventId << " Apid: "
-                  << getCcsds().getApid() << std::endl;
+                  << getCcsds().getApid() 
+                  << " Event Index: " << m_eventIndex << std::endl;
         setCalReadoutFlag();
     }
     return (orAll);
