@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Jul 26 07:57:51 PDT 2011
+ldfReader
+
+Modified Files:
+	SConscript 
+Log Message:
+merge in GlastReleasev15r47p12 branch
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-07-04-01-gr04, operation: add
 Package: ldfReader
