@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Tue Jul 26 07:57:51 PDT 2011
+ldfReader/ldfReader
+
+Modified Files:
+	DfiParser.h EbfParser.h LdfParser.h SocketParser.h 
+Log Message:
+merge in GlastReleasev15r47p12 branch
+    *
+------------------------------------------------------------
+User: heather  Tue Jul 26 07:57:51 PDT 2011
 ldfReader/doc
 
 Modified Files:
