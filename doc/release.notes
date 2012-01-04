@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 EOH
 
+ ldfReader-07-04-07 04-Jan-2012    jrb patch for gcc41; fix typo in SConscript for test programs
  ldfReader-07-04-06 26-Jul-2011    hmk Merge in GlastReleasev15r47p12 branch
       from old L1proc
  ldfReader-07-04-05 15-Jul-2010    jrb patch to SConscript for Windows
