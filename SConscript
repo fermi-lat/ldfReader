@@ -1,5 +1,5 @@
 # -*- python -*-
-# $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/SConscript,v 1.14.2.4 2011/03/30 02:58:24 heather Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/SConscript,v 1.22 2011/07/26 14:57:50 heather Exp $
 # Authors: Heather Kelly <heather@lheapop@gsfc.nasa.gov>, Tracy Usher <usher@slac.stanford.edu>
 # Version: ldfReader-07-04-06
 
@@ -44,7 +44,7 @@ test_socketReader = progEnv.Program('test_socketReader',
 
 progEnv.Tool('registerTargets', package = 'ldfReader',
 	     libraryCxts = [[ldfReader, libEnv]],
-             testApps = [[test_ldfReader, progEnv], [test_lsfReader,progEnv],
+             testAppCxts = [[test_ldfReader, progEnv], [test_lsfReader,progEnv],
                          [test_socketReader, progEnv]],
              includes = listFiles(['ldfReader/*'], recursive=True))
 
