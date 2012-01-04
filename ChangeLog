@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Wed Jan  4 11:37:17 PST 2012
+GlastRelease-scons/ldfReader/src/iterators
+
+Modified Files:
+	EbfDataParser.cxx 
+Log Message:
+patch for gcc41
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-17-35-24-gr17, operation: add
 Package: ldfReader
