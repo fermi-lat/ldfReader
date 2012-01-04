@@ -3,7 +3,7 @@
 
 /** @class EbfDataParser.cxx
 @brief Implementation of the EbfDataParser class
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/EbfDataParser.cxx,v 1.9 2009/08/31 18:17:57 jrb Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/EbfDataParser.cxx,v 1.10 2009/09/12 04:00:40 heather Exp $
 */
 
 // ldfReader includes
@@ -311,8 +311,8 @@ void EbfDataParser::_handleErrorCommon() const
   unsigned long long  evtId   = ((latData->contextExists()) ?
                                  latData->eventId() :
                                  latData->getOsw().evtSequence());
-
-  fprintf(stream(), "\n Event: %llu Apid: %d\n",
+  // Hoping that it doesn't matter which stream( ) function we call
+  fprintf(EBFiteratorBase::stream(), "\n Event: %llu Apid: %d\n",
           evtId, latData->getCcsds().getApid());
 }
 
