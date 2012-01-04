@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Wed Jan  4 11:38:05 PST 2012
+GlastRelease-scons/ldfReader
+
+Modified Files:
+	SConscript 
+Log Message:
+fix typo so that test programs are targets rather than being ignored
+    *
+------------------------------------------------------------
 User: jrb  Wed Jan  4 11:37:17 PST 2012
 GlastRelease-scons/ldfReader/src/iterators
 
