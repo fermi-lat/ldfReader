@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Fri Jan  6 11:52:53 PST 2012
+GlastRelease-scons/ldfReader/src/test
+
+Modified Files:
+	test_ldfReader.cxx 
+Log Message:
+patches to get test program to run for SCons build
+    *
+------------------------------------------------------------
 User: jrb  Fri Jan  6 11:52:52 PST 2012
 GlastRelease-scons/ldfReader
 
