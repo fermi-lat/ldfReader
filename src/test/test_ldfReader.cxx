@@ -5,7 +5,7 @@
 /** @file test_ldfReader.cxx
 @brief Test routine for the new EBF reader
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.18 2006/08/01 15:52:16 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/test/test_ldfReader.cxx,v 1.19 2008/10/03 03:39:18 heather Exp $
 */
 
 #include <csignal>
@@ -13,6 +13,7 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.
 
 #include "ldfReader/LdfParser.h"
 #include "facilities/Util.h"
+#include "facilities/commonUtilities.h"
 #include "../../src/EbfDebug.h" 
 #include "ldfReader/data/LatData.h"
 
@@ -20,7 +21,14 @@ $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/test/test_ldfReader.cxx,v 1.
 int main(int argn, char** argc) {
   try {
     using namespace ldfReader;
+#ifndef LDFTESTPATH
     std::string filename = "$(LDFROOT)/test/data/muon-5.arch";
+#else
+    std::string filename = LDFTESTPATH;
+    filename = facilities::commonUtilities::joinPath(filename, "data");
+    filename = facilities::commonUtilities::joinPath(filename, "muon-5.arch");
+#endif
+
     std::string remap = "";
 
     bool fitsWrap = false;
