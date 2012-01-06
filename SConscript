@@ -1,5 +1,5 @@
 # -*- python -*-
-# $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/SConscript,v 1.23 2012/01/04 19:38:05 jrb Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/SConscript,v 1.24 2012/01/04 19:39:05 jrb Exp $
 # Authors: Heather Kelly <heather@lheapop@gsfc.nasa.gov>, Tracy Usher <usher@slac.stanford.edu>
 # Version: ldfReader-07-04-07
 
@@ -35,6 +35,11 @@ ldfReader = libEnv.SharedLibrary('ldfReader',
 							
 
 progEnv.Tool('ldfReaderLib')
+
+# test_ldfReader needs to find file under test subdir of ldf external
+testPath = baseEnv['ldfTestPath']
+testPathDef = 'LDFTESTPATH=\\"' + testPath + '\\"'
+progEnv.AppendUnique(CPPDEFINES = [testPathDef])
 test_ldfReader = progEnv.Program('test_ldfReader',
                                  ['src/test/test_ldfReader.cxx'])
 test_lsfReader = progEnv.Program('test_lsfReader',
