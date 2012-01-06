@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Fri Jan  6 11:52:52 PST 2012
+GlastRelease-scons/ldfReader
+
+Modified Files:
+	SConscript 
+Log Message:
+patches to get test program to run for SCons build
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-07-04-07, operation: add
 Package: ldfReader
