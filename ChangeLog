@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Fri Jan  6 11:53:57 PST 2012
+ldfReader
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
 User: jrb  Fri Jan  6 11:52:53 PST 2012
 GlastRelease-scons/ldfReader/src/test
 
