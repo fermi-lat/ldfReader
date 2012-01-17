@@ -2,6 +2,7 @@
 #define ldfReader_AcdDigi_CXX
 
 #include "ldfReader/data/AcdDigi.h"
+#include <cstring>
 
 namespace ldfReader {
 

@@ -2,11 +2,12 @@
 #define ldfReader_AcdDigi_H
 
 #include <vector>
+#include <cstdio>
 
 namespace ldfReader {
     /** @class AcdDigi
       * @brief Local storage of CAL log data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/AcdDigi.h,v 1.10.300.1 2010/11/23 16:48:07 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/ldfReader/data/AcdDigi.h,v 1.12 2011/07/26 14:57:51 heather Exp $
     */
     class AcdDigi {
     public:

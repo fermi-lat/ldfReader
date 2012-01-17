@@ -4,6 +4,7 @@
 #include "TkrDiagnosticData.h"
 #include "CalDiagnosticData.h"
 #include <vector>
+#include <cstdio>
 
 //#include "EventSummaryCommon.h"
 
