@@ -2,6 +2,7 @@
 #define ldfReader_GemData_H
 
 #include <vector>
+#include <cstdio>
 
 #include "EventSummaryCommon.h"
 #include "GEMcontribution.h"
@@ -134,7 +135,7 @@ private:
 
     /** @class GemData
       * @brief Local storage of GEM data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/GemData.h,v 1.8 2005/03/16 15:52:51 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/ldfReader/data/GemData.h,v 1.9 2005/04/18 17:36:16 heather Exp $
     */
     class GemData {
     public:

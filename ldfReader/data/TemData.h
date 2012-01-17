@@ -2,6 +2,7 @@
 #define ldfReader_TemData_H
 
 #include <vector>
+#include <cstdio>
 
 #include "EventSummaryCommon.h"
 #include "DiagnosticData.h"
@@ -11,7 +12,7 @@ namespace ldfReader {
 
     /** @class TemData
       * @brief Local storage of TEM data
-      * $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/ldfReader/data/TemData.h,v 1.10 2005/03/15 19:57:33 heather Exp $
+      * $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/ldfReader/data/TemData.h,v 1.11 2009/07/17 12:46:54 heather Exp $
     */
     class TemData {
     public:
