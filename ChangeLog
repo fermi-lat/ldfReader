@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: cohen  Tue Jan 17 08:52:05 PST 2012
+GlastRelease-scons/ldfReader/ldfReader/data
+
+Modified Files:
+	AcdDigi.h DiagnosticData.h GemData.h TemData.h 
+Log Message:
+fix C library includes for gcc4.4 compilation
+    *
+------------------------------------------------------------
 TAG
 Tag name: ldfReader-07-04-08, operation: add
 Package: ldfReader
