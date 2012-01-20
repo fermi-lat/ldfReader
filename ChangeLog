@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Fri Jan 20 15:22:21 PST 2012
+GlastRelease-scons/ldfReader/src/iterators
+
+Modified Files:
+	AcdParser.cxx 
+Log Message:
+patch for vc90 compiler
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-17-35-24-br01, operation: add
 Package: ldfReader
