@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.23.68.1 2010/11/23 16:48:07 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/AcdParser.cxx,v 1.27 2011/07/26 14:57:52 heather Exp $
 */
 
 // EBF Online Library includes
@@ -152,7 +152,7 @@ unsigned int AcdParser::constructTileNum(const char *name) {
     if (strncmp(name, "NA", 2) == 0) {
         if ( (strlen(name) == 3) || (strlen(name) == 4) ) {
             char num[10];
-            char* strptr = strpbrk(name, "0123456789");
+            const char* strptr = strpbrk(name, "0123456789");       // jrb
             tileNum = 0;
             if (strptr) {
                 strcpy(num, strptr );
