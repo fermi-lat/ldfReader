@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Mar 13 07:49:50 PDT 2012
+ldfReader
+
+Modified Files:
+	SConscript 
+Log Message:
+patch printing FIFO full error
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-17-35-24-gr24, operation: add
 Package: ldfReader
