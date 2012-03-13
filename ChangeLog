@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Tue Mar 13 07:49:51 PDT 2012
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+patch printing FIFO full error
+    *
+------------------------------------------------------------
 User: heather  Tue Mar 13 07:49:50 PDT 2012
 ldfReader
 
