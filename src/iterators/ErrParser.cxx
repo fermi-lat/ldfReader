@@ -263,7 +263,7 @@ int ErrParser::gtccFIFOerror  (unsigned tower,
 
   fprintf(stream(),"%s    FIFO full error: ",
           "Tower %d, GTCC %d, GTRC %d, projected word count = 0x%04x\n",
-          m_prefix, gtcc, gtrc, err);
+          m_prefix, tower, gtcc, gtrc, err);
   _handleErrorCommon();
   return 0;
 }
