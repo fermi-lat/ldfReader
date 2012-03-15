@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Thu Mar 15 11:35:14 PDT 2012
+ldfReader/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+fix all fprintfs
+    *
+------------------------------------------------------------
+User: heather  Thu Mar 15 11:35:14 PDT 2012
 ldfReader
 
 Modified Files:
