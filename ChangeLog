@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Thu Mar 15 11:35:15 PDT 2012
+ldfReader/src/iterators
+
+Modified Files:
+	AcdParser.cxx ErrParser.cxx 
+Log Message:
+fix all fprintfs
+    *
+------------------------------------------------------------
+User: heather  Thu Mar 15 11:35:15 PDT 2012
 ldfReader/doc
 
 Modified Files:
