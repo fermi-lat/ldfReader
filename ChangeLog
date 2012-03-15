@@ -1,13 +1,4 @@
 ------------------------------------------------------------
-User: heather  Thu Mar 15 11:35:14 PDT 2012
-ldfReader
-
-Modified Files:
-	SConscript 
-Log Message:
-fix all fprintfs
-    *
-------------------------------------------------------------
 TAG
 Tag name: GlastRelease-17-35-24-lp18, operation: add
 Package: ldfReader
