@@ -4,7 +4,7 @@
 /** @file AcdParser.cxx
 @brief Implementation of the AcdParser class
 
-$Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/src/iterators/AcdParser.cxx,v 1.27 2011/07/26 14:57:52 heather Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/ldfReader/src/iterators/AcdParser.cxx,v 1.28 2012/01/20 23:22:21 jrb Exp $
 */
 
 // EBF Online Library includes
@@ -276,24 +276,19 @@ void AcdParser::pha(unsigned cable, unsigned channel, ACDpha p)
 
 int AcdParser::gaemTMOerror(unsigned cable)
 {
-  fprintf(stream(), "AcdParser:"
-                    "No start bit seen => cable timeout for cable %d\n",
-          cable);
+  fprintf(stream(), "AcdParser: No start bit seen => cable timeout for cable %d\n", cable);
   return 0;
 }
 
 int AcdParser::gaemHDRParityError(unsigned cable, AEMheader /*hdr*/)
 {
-  fprintf(stream(), "AcdParser:"
-                    "Header parity error for cable %d\n",
-          cable);
+  fprintf(stream(), "AcdParser: Header parity error for cable %d\n", cable);
   return 0;
 }
 
 int AcdParser::gaemPHAParityError(unsigned cable, unsigned channel, ACDpha /*p*/)
 {
-  fprintf(stream(), "AcdParser:"
-                    "PHA parity error for cable %d, channel %d\n",
+  fprintf(stream(), "AcdParser: PHA parity error for cable %d, channel %d\n",
           cable, channel);
 
   return 0;

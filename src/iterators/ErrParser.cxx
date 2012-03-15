@@ -75,9 +75,7 @@ int ErrParser::summary(ErrorSummary theError)
 
 
 int ErrParser::gaemTMOerror(unsigned cable) {
-  fprintf(stream(), "ErrParser:"
-                    "No start bit seen => cable timeout for cable %d\n",
-          cable);
+  fprintf(stream(), "ErrParser: No start bit seen => cable timeout for cable %d\n", cable);
 
   _handleErrorCommon();
 
@@ -86,8 +84,7 @@ int ErrParser::gaemTMOerror(unsigned cable) {
 
 int ErrParser::gaemHDRParityError(unsigned cable) {
 
-  fprintf(stream(), "ErrParser:"
-                    "Header parity error for cable %d\n",
+  fprintf(stream(), "ErrParser: Header parity error for cable %d\n",
           cable);
   _handleErrorCommon();
 
@@ -96,8 +93,7 @@ int ErrParser::gaemHDRParityError(unsigned cable) {
 
 
 int ErrParser::gaemPHAParityError(unsigned cable, unsigned channel) {
-  fprintf(stream(), "ErrParser:"
-                    "PHA parity error for cable %d, channel %d\n",
+  fprintf(stream(), "ErrParser: PHA parity error for cable %d, channel %d\n",
           cable, channel);
 
   _handleErrorCommon();
@@ -198,9 +194,8 @@ int ErrParser::gtrcPhaseError (unsigned  tower,
 {
   ldfReader::LatData::instance()->setGtrcPhaseFlag();
 
-  fprintf(stream(), "%s    GTRC phasing error: "
-          "Tower %d, GTCC %d, GTRC %d (raw: 0x%04x)\n", m_prefix,
-          tower, gtcc, gtrc, err.raw());
+  fprintf(stream(), "%s    GTRC phasing error: Tower %d, GTCC %d, GTRC %d (raw: 0x%04x)\n", 
+                   m_prefix, tower, gtcc, gtrc, err.raw());
   fprintf(stream(),"%s      Current tag number:           %d",
          m_prefix, err.currentTag());
   fprintf(stream(),"%s      Layer 0 tag number:           %d\n",
@@ -224,9 +219,7 @@ int ErrParser::gtfePhaseError (unsigned       tower,
 {
   ldfReader::LatData::instance()->setGtfePhaseFlag();
 
-  fprintf(stream(), "%s    GTFE phasing error: "
-          "Tower %d, GTCC %d, GTRC %d, GTFE tag words (raw: ", m_prefix,
-          tower, gtcc, gtrc);
+  fprintf(stream(), "%s    GTFE phasing error: Tower %d, GTCC %d, GTRC %d, GTFE tag words (raw: ", m_prefix, tower, gtcc, gtrc);
   fprintf(stream(), "0x%03x 0x%03x 0x%03x 0x%03x 0x%03x):\n",
           tag0, tag1, tag2, tag3, tag4);
   fprintf(stream(), "%s      GTFE  0  1  2  3  4  5  6  7  8  9 10 11\n",
@@ -261,9 +254,7 @@ int ErrParser::gtccFIFOerror  (unsigned tower,
   ldfReader::LatData::instance()->setGtccFifoFlag();
   ldfReader::LatData::instance()->getTower(tower)->getTem().getErr()->setTkrFifoFull(gtcc);
 
-  fprintf(stream(),"%s    FIFO full error: ",
-          "Tower %d, GTCC %d, GTRC %d, projected word count = 0x%04x\n",
-          m_prefix, tower, gtcc, gtrc, err);
+  fprintf(stream(),"%s    FIFO full error: Tower %d, GTCC %d, GTRC %d, projected word count = 0x%04x\n", m_prefix, tower, gtcc, gtrc, err);
   _handleErrorCommon();
   return 0;
 }
@@ -274,8 +265,7 @@ int ErrParser::gtccTMOerror        (unsigned tower,
 {
   ldfReader::LatData::instance()->setGtccTimeoutFlag();
 
-  fprintf(stream(),"%s    Cable timeout error: "
-          "Tower %d, GTCC %d, GTRC %d\n", m_prefix, tower, gtcc, gtrc);
+  fprintf(stream(),"%s    Cable timeout error: Tower %d, GTCC %d, GTRC %d\n", m_prefix, tower, gtcc, gtrc);
   _handleErrorCommon();
   return 0;
 }
@@ -286,8 +276,7 @@ int ErrParser::gtccHDRParityError  (unsigned tower,
 {
   ldfReader::LatData::instance()->setGtccHdrParityFlag();
 
-  fprintf(stream(),"%s    Header parity error: "
-          "Tower %d, GTCC %d, GTRC %d\n", m_prefix, tower, gtcc, gtrc);
+  fprintf(stream(),"%s    Header parity error: Tower %d, GTCC %d, GTRC %d\n", m_prefix, tower, gtcc, gtrc);
   _handleErrorCommon();
   return 0;
 }
@@ -298,8 +287,7 @@ int ErrParser::gtccWCParityError   (unsigned tower,
 {
   ldfReader::LatData::instance()->setGtccWcParityFlag();
 
-  fprintf(stream(),"%s    Word count parity error: "
-          "Tower %d, GTCC %d, GTRC %d\n", m_prefix, tower, gtcc, gtrc);
+  fprintf(stream(),"%s    Word count parity error: Tower %d, GTCC %d, GTRC %d\n", m_prefix, tower, gtcc, gtrc);
   _handleErrorCommon();
   return 0;
 }
@@ -310,8 +298,7 @@ int ErrParser::gtrcSummaryError    (unsigned tower,
 {
   ldfReader::LatData::instance()->setGtrcSummaryFlag();
 
-  fprintf(stream(),"%s    GTRC summary error: "
-          "Tower %d, GTCC %d, GTRC %d\n", m_prefix, tower, gtcc, gtrc);
+  fprintf(stream(),"%s    GTRC summary error: Tower %d, GTCC %d, GTRC %d\n", m_prefix, tower, gtcc, gtrc);
   _handleErrorCommon();
   return 0;
 }
@@ -322,8 +309,7 @@ int ErrParser::gtccDataParityError (unsigned tower,
 {
   ldfReader::LatData::instance()->setGtccDataParityFlag();
 
-  fprintf(stream(),"%s    Data parity error: "
-          "Tower %d, GTCC %d, GTRC %d\n", m_prefix, tower, gtcc, gtrc);
+  fprintf(stream(),"%s    Data parity error: Tower %d, GTCC %d, GTRC %d\n", m_prefix, tower, gtcc, gtrc);
   _handleErrorCommon();
   return 0;
 }
