@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Wed May 30 12:34:47 PDT 2012
+GlastRelease-scons/ldfReader
+
+Modified Files:
+	SConscript 
+Log Message:
+special arrangement for vc90 only
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-17-35-24-lp28, operation: add
 Package: ldfReader
