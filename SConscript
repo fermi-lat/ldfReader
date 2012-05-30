@@ -1,5 +1,5 @@
 # -*- python -*-
-# $Header: /nfs/slac/g/glast/ground/cvs/ldfReader/SConscript,v 1.28 2012/03/13 14:49:50 heather Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/ldfReader/SConscript,v 1.29 2012/03/15 18:35:14 heather Exp $
 # Authors: Heather Kelly <heather@lheapop@gsfc.nasa.gov>, Tracy Usher <usher@slac.stanford.edu>
 # Version: ldfReader-07-04-11
 
@@ -18,20 +18,30 @@ libEnv.Tool('addLinkDeps', package='ldfReader', toBuild='shared')
 #                              '/afs/slac/g/glast/ground/GLAST_EXT/redhat4-i686-32bit/ldf/v06-02-00/gcc34/test/EBF_fileIn.c')
 
 if baseEnv['PLATFORM'] != 'win32':
-	progEnv.AppendUnique(CPPDEFINES = '_FILE_OFFSET_BITS=64')
+    progEnv.AppendUnique(CPPDEFINES = '_FILE_OFFSET_BITS=64')
 else:
-        progEnv.AppendUnique(CPPDEFINES = 'WIN32')
-        progEnv.AppendUnique(CPPDEFINES = '_WIN32_LDF_STATIC')
-        libEnv.AppendUnique(CPPDEFINES = 'WIN32')
-        libEnv.AppendUnique(CPPDEFINES = '_WIN32_LDF_STATIC')
+    progEnv.AppendUnique(CPPDEFINES = 'WIN32')
+    progEnv.AppendUnique(CPPDEFINES = '_WIN32_LDF_STATIC')
+    libEnv.AppendUnique(CPPDEFINES = 'WIN32')
+    libEnv.AppendUnique(CPPDEFINES = '_WIN32_LDF_STATIC')
 
-ebf_file = libEnv.SharedObject('src/EFF_fileIn.os',
-                               os.path.join(baseEnv['ldfTestPath'], 'EBF_fileIn.c'))
-##libEnv.AppendUnique(CPPPATH=[baseEnv['ldfTestPath']])
-ldfReader = libEnv.SharedLibrary('ldfReader',
-                                 listFiles(['src/iterators/*.cxx',
-                                            'src/data/*.cxx',
-                                            'src/*.cxx']) + [ebf_file])
+if baseEnv['COMPILERNAME'] == 'vc90':
+    libEnv.Tool('addLibrary', library = libEnv['ldfExtraLibs'])
+    #print "Value of ldfExtraLibs: ",str(libEnv['ldfExtraLibs'])
+    #print "LIBS: ", str(libEnv['LIBS'])
+    ldfReader = libEnv.SharedLibrary('ldfReader',
+				     listFiles(['src/iterators/*.cxx',
+						'src/data/*.cxx',
+						'src/*.cxx']) )
+else:
+    ebf_file = libEnv.SharedObject('src/EBF_fileIn.os',
+				   os.path.join(baseEnv['ldfTestPath'], 
+						'EBF_fileIn.c'))
+    ##libEnv.AppendUnique(CPPPATH=[baseEnv['ldfTestPath']])
+    ldfReader = libEnv.SharedLibrary('ldfReader',
+				     listFiles(['src/iterators/*.cxx',
+						'src/data/*.cxx',
+						'src/*.cxx']) + [ebf_file])
 							
 
 progEnv.Tool('ldfReaderLib')
