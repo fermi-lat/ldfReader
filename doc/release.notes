@@ -4,6 +4,7 @@ Package ldfReader
 Coordinator:H.Kelly
 EOH
 
+ ldfReader-07-04-12 30-May-2012    jrb For vc90 only so that project file will work
  ldfReader-07-04-11 15-Mar-2012    hmk patch all the fprintf statements
  ldfReader-07-04-10 13-Mar-2012    hmk patch priting FIFO Full error
  ldfReader-07-04-09 20-Jan-2012    jrb patch for vc90 compiler 
