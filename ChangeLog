@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Fri Aug 17 17:31:31 PDT 2012
+GlastRelease-scons/ldfReader
+
+Modified Files:
+	ldfReaderLib.py 
+Log Message:
+support no-install headers on Windows
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-20-04-02, operation: add
 Package: ldfReader
