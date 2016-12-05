@@ -2,6 +2,14 @@
 TAG
 Tag name: GlastRelease-20-10-04-gr01, operation: add
 Package: ldfReader
+User: heather  Mon Dec  5 09:22:22 2016
+Files:
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: GlastRelease-20-10-04-gr01, operation: add
+Package: ldfReader
 User: heather  Mon Dec  5 09:00:59 2016
 Files:
   ldfReader/.cvsignore  1.2
